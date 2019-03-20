@@ -2,6 +2,8 @@
 clear;
 close all;
 clc;
+
+time_start = datetime;
 %% ================= 25 #important KP ===========================
 % 01. engine speed          14. vehicle speed       16. Longitudinal acceleration  17. Lateral acceleration
 % 20. Acc. pedal position  21. Throttle position  23. Kickdown                          24. Engine torque
@@ -91,6 +93,8 @@ myArteon.id18_start.acc_pedal = arteon_id18_acc_pedal_kd_score6d9;
 myArteon.id18_start.throttle_pos = arteon_id18_throttle_pos_kd_score6d9;
 myArteon.id18_start.kick_down = arteon_id18_kick_down_kd_score6d9;
 myArteon.id18_start.engine_torque = arteon_id18_engine_torque_kd_score6d9;
+
+time_end = datetime; disp('in old, time needed: '); disp(time_end - time_start);
 
 %% load start(2) id: 25, 26, 27, 28, 29
 load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat');
@@ -218,6 +222,7 @@ myArteon.id29_start.throttle_pos = arteon_id29_throttle_pos_kd_score6d7;
 myArteon.id29_start.kick_down = arteon_id29_kick_down_kd_score6d7;
 myArteon.id29_start.engine_torque = arteon_id29_engine_torque_kd_score6d7;
 
+time_end = datetime; disp('in old, time needed: '); disp(time_end - time_start);
 %%
 % struct2array
 myArteonArr = struct2array(myArteon);
@@ -228,4 +233,4 @@ save myArteonArr myArteonArr
 
 disp('save over')
 
-
+time_end = datetime; disp('in old, time needed: '); disp(time_end - time_start);

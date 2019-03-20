@@ -9,6 +9,7 @@ classdef ID17Start
         m_details = 'Arteon, Start, Fp100'
         m_time_begin = 9155;
         m_time_end = 9655;
+        m_kd = 0;
     end
     
     methods
@@ -27,7 +28,8 @@ classdef ID17Start
                 thisid.m_score,...
                 thisid.m_details,...
                 thisid.m_time_begin,...
-                thisid.m_time_end);
+                thisid.m_time_end,...
+                thisid.m_kd);
             myArteon_new = sf.sf_loadsave(myArteon_old);
 
             

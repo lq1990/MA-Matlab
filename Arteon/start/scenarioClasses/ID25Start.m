@@ -8,6 +8,7 @@ classdef ID25Start
         m_details = 'Arteon, Start, Fp25'
         m_time_begin = 3436;
         m_time_end = 3936;
+        m_kd = 0;
     end
     
     methods
@@ -26,7 +27,8 @@ classdef ID25Start
                 thisid.m_score,...
                 thisid.m_details,...
                 thisid.m_time_begin,...
-                thisid.m_time_end);
+                thisid.m_time_end,...
+                thisid.m_kd);
             myArteon_new = sf.sf_loadsave(myArteon_old);
             
 %             load(file) % 每个id类都要 重新load，耗时，尝试做成一个 单例，实现共享

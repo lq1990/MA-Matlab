@@ -9,6 +9,7 @@ classdef ID18Start
         m_details = 'Arteon, Start, KickDown'
         m_time_begin = 10455;
         m_time_end = 10955;
+        m_kd = 1;
     end
     
     methods
@@ -27,7 +28,8 @@ classdef ID18Start
                 thisid.m_score,...
                 thisid.m_details,...
                 thisid.m_time_begin,...
-                thisid.m_time_end);
+                thisid.m_time_end,...
+                thisid.m_kd);
             myArteon_new = sf.sf_loadsave(myArteon_old);
             
 %             load(file)
