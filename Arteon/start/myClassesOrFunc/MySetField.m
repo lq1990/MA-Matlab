@@ -38,14 +38,13 @@ classdef MySetField
             old.(mysf.m_fieldname).ax = ds.sync_AccelerationChassis_SMO_20_t11(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).ay = ds.sync_AccelerationLateral_t60_mySMO(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).acc_pedal = ds.my_acc_pedal(mysf.m_time_begin : mysf.m_time_end);
-            temp1 = extendArr( ...
-                    ds.sync_CAN2_OBD_01_OBD_Abs_Throttle_Pos_t7(floor(mysf.m_time_begin/10) : floor(mysf.m_time_end/10)),...
-                    10);
-            old.(mysf.m_fieldname).throttle_pos = temp1(1:end-9);
+            old.(mysf.m_fieldname).throttle_pos = ds.my_throttle_pos(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).kick_down = extendArr([mysf.m_kd] ,length(mysf.m_time_begin : mysf.m_time_end));
             old.(mysf.m_fieldname).engine_torque = ds.sync_CAN2_Motor_11_MO_Mom_Ist_Summe_t4(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).transmission_input_speed = ds.my_transmission_input_speed(mysf.m_time_begin : mysf.m_time_end);
-            
+            old.(mysf.m_fieldname).target_gear = ds.my_target_gear(mysf.m_time_begin : mysf.m_time_end);
+            old.(mysf.m_fieldname).shift_process = ds.my_shift_process(mysf.m_time_begin : mysf.m_time_end);
+            old.(mysf.m_fieldname).brake_pressure_raw = ds.my_brake_pressure_raw(mysf.m_time_begin : mysf.m_time_end);
             
             % return
             new = old;
