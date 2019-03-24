@@ -1,4 +1,6 @@
+% 说明：数据中 my开头的都是我进一步处理的
 clear; clc; close all;
+
 
 %% load
 load('.\DataFinalSave\myArteonArr.mat');
@@ -20,3 +22,5 @@ addpath(genpath(pwd));
 % MyPlot(myArteonArr, TargetGear);
 % MyPlot(myArteonArr, ShiftProcess);
 MyPlot(myArteonArr, BrakePressureRaw);
+MyPlot(myArteonArr, SteeringWheelAngle);
+MyPlot(myArteonArr, SteeringWheelSpeed);

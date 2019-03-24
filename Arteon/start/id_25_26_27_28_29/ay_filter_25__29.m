@@ -45,7 +45,7 @@ plot(t, con(1+order/2: end-order/2)); grid on;
 
 %% save con(1+order/2: end-order/2)
 con_clip = con(1+order/2: end-order/2);
-sync_AccelerationLateral_t60_mySMO = con_clip;
-save sync_AccelerationLateral_t60_mySMO sync_AccelerationLateral_t60_mySMO
+my_ay = con_clip;
+save my_ay my_ay
 
 

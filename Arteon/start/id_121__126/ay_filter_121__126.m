@@ -2,13 +2,12 @@ clear
 close all
 clc
 %%
-load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat');
+load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat');
 
 %%
 ay_t60 = sync_AccelerationLateral_t60;
 len = length(ay_t60);
 t = 1:len;
-
 figure(1);
 subplot(211)
 plot(t, ay_t60); grid on;

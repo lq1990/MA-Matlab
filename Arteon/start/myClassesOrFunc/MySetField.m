@@ -36,7 +36,7 @@ classdef MySetField
             old.(mysf.m_fieldname).engine_speed = ds.sync_CAN2_Motor_12_MO_Drehzahl_01_t5(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).vehicle_speed = ds.sync_VehicleSpeed_t10(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).ax = ds.sync_AccelerationChassis_SMO_20_t11(mysf.m_time_begin : mysf.m_time_end);
-            old.(mysf.m_fieldname).ay = ds.sync_AccelerationLateral_t60_mySMO(mysf.m_time_begin : mysf.m_time_end);
+            old.(mysf.m_fieldname).ay = ds.my_ay(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).acc_pedal = ds.my_acc_pedal(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).throttle_pos = ds.my_throttle_pos(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).kick_down = extendArr([mysf.m_kd] ,length(mysf.m_time_begin : mysf.m_time_end));
@@ -45,6 +45,9 @@ classdef MySetField
             old.(mysf.m_fieldname).target_gear = ds.my_target_gear(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).shift_process = ds.my_shift_process(mysf.m_time_begin : mysf.m_time_end);
             old.(mysf.m_fieldname).brake_pressure_raw = ds.my_brake_pressure_raw(mysf.m_time_begin : mysf.m_time_end);
+            old.(mysf.m_fieldname).steering_wheel_angle = ds.sync_CAN6_LWI_01_LWI_Lenkradwinkel_t53(mysf.m_time_begin : mysf.m_time_end);
+            old.(mysf.m_fieldname).steering_wheel_speed = ds.sync_CAN6_LWI_01_LWI_Lenkradw_Geschw_t55(mysf.m_time_begin : mysf.m_time_end);
+            
             
             % return
             new = old;
