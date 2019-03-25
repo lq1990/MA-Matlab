@@ -19,7 +19,7 @@ addpath(genpath(pwd)); % 添加所有子目录
 %% load start(1) id: 16, 17, 18
 % 16，17, 18三者是在 同一个测试环境下，间隔一定时间 评分 3次。
 loadDataS = load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat');
-% load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat')
+ load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat')
 
 % -------------- 原始数据不符合要求， 比如需要 filtered, extended ------------------
 temp_ay = load('.\id_16_17_18\my_ay.mat');
