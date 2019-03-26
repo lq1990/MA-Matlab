@@ -1,4 +1,0 @@
-id	fieldname	score	t_begin	t_end	details	dir
-16	id16_start	6.8	6955	7255	Arteon_start_Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
-17	id17_start	6.7	9155	9655	Arteon_start_Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
-18	id18_start	6.9	10455	10955	Arteon_start_KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18

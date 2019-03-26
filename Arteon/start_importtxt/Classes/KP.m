@@ -1,4 +1,7 @@
 classdef KP
+    % KP Class, connect dir/filename. 
+    % dir is from scenarioTable,  filename is from kpTable.
+    % importdata
     properties
         m_kpname;
         m_filename;
@@ -7,8 +10,8 @@ classdef KP
     end
     
     methods
-        function kp = KP(kpname, filename, dir)
-            kp.m_kpname = kpname;
+        function kp = KP(filename, dir)
+%             kp.m_kpname = kpname;
             kp.m_filename = filename;
             kp.m_dir = dir;
             kp.m_fullpath = strcat(dir, '\', filename);
@@ -21,6 +24,7 @@ classdef KP
         end
         
         function fi = filter(kp)
+            % Ay Òª±»¹ýÂË
         end
         
         function ex = extend(kp)

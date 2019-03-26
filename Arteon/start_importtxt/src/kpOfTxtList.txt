@@ -1,0 +1,12 @@
+kpName	filename	unit
+AccPedal	AcceleratorPedal.txt	%
+Ax	AccelerationChassis_SMO_20.txt	m/s2
+Ay	AccelerationLateral.txt	m/s2
+BrakePressureRaw	Brake_Pressure.txt	bar
+EngineSpeed	EngineSpeed.txt	1/min
+EngineTorque	Engine_Torque.txt	Nm
+KickDown	Kickdown.txt	0/1
+ShiftProcess	GE_Schaltablauf.txt	-
+SteeringWheelAngle	SteeringWheelAngle.txt	Grad
+CurrentGear	Gear.txt	-
+VehicleSpeed	VehicleSpeed.txt	km/h
