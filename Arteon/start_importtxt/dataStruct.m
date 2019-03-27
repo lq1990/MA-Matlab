@@ -16,11 +16,11 @@ disp('----------- txt to table over 1/3 ----------------');
 % 取出 场景id17，经过过滤等预处理后的AccPedal。共给场景类用
 dataS = struct; % 存储所有kp数据
 
-
 for i = 1 : height(scenarioTable) % loop over scenarioTable
     % 对应dataSArr 行
     idx_scenario = i;
     id = scenarioTable.id(idx_scenario);
+    fprintf('id: %d\n', id);
     score = scenarioTable.score(idx_scenario);
     details_cell = scenarioTable.details(idx_scenario); details= details_cell{1,1};
     t_begin = scenarioTable.t_begin(idx_scenario); % 一个场景下的，时间开始
@@ -39,15 +39,34 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
         filename_cell = kpTable.filename(idx_kp); filename = filename_cell{1,1};
         
         akp = KP(filename, dir);
-        akp_alldata = akp.import();
+        try
+            % 有可能某一个file不存在
+            if strcmp(kpname, 'Ay')  ||...
+                    strcmp(kpname, 'AcceVerticalWheel') ||...
+                    strcmp(kpname, 'AcceSeat') ||...
+                    strcmp(kpname, 'Power') ||...
+                    strcmp(kpname, 'EngineTorque')
+                % 需要滤波
+                akp_alldata = akp.import_filter(13); % 导入后滤波， cut_off: 13 Hz
+            else
+                akp_alldata = akp.import(); % 其它数据，不需要滤波。直接导入就行。
+            end
+
+            akp_clip = akp_alldata(t_begin : t_end);
+            dataS.(fieldname).(kpname) = akp_clip;
+            
+        catch
+            % 如果某一个文件不存在，则令这一列数据 NaN
+            akp_alldata = linspace(NaN, NaN, t_end-t_begin+1);
+            akp_alldata = transpose(akp_alldata);
+            dataS.(fieldname).(kpname) = akp_alldata;
+        end
         
-        akp_clip = akp_alldata(t_begin : t_end);
-        dataS.(fieldname).(kpname) = akp_clip;
     end
     
 end
 
-clearvars idx_kp idx_scenario id score details_cell details t_begin t_end dir_cell dir;
+clearvars idx_kp idx_scenario id score details_cell details t_begin t_end dir_cell dir mf;
 clearvars fieldname_cell fieldname i j kpname kpname_cell filename filename_cell akp akp_alldata akp_clip;
 disp('---------------- loop over 2/3 ----------------');
 

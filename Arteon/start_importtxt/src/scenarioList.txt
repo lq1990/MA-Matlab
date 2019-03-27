@@ -1,17 +1,24 @@
 id	fieldname	score	t_begin	t_end	details	dir
-16	id16_start	6.8	6955	7255	Arteon-start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
-17	id17_start	6.7	9155	9655	Arteon-start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
-18	id18_start	6.9	10455	10955	Arteon-start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
-25	id25_start	7.9	3436	3936	Arteon-start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
-26	id26_start	7.2	5036	5436	Arteon-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
-27	id27_start	7.6	6036	6536	Arteon-start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
-28	id28_start	6.4	7136	7536	Arteon-start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
-29	id29_start	6.7	7936	8436	Arteon-start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
-121	id121_start	8.9	52403	52613	Arteon-start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
-122.1	id122_1_start	7.6	14700	15000	Arteon-start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
-122.2	id122_2_start	8.2	15900	16300	Arteon-start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
-122.3	id122_3_start	7.9	19500	19800	Arteon-start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
-123	id123_start	7.0	21800	22100	Arteon-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
-124	id124_start	6.7	36533	36953	Arteon-start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
-125	id125_start	6.1	41533	41933	Arteon-start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
-126	id126_start	6.6	56133	56483	Arteon-start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+16	id16_start	6.8	6955	7255	Arteon-16start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
+17	id17_start	6.7	9155	9655	Arteon-17start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
+18	id18_start	6.9	10455	10955	Arteon-18start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\16-17-18
+25	id25_start	7.9	3436	3936	Arteon-25start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
+26	id26_start	7.2	5036	5436	Arteon-26start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
+27	id27_start	7.6	6036	6536	Arteon-27start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
+28	id28_start	6.4	7136	7536	Arteon-28start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
+29	id29_start	6.7	7936	8436	Arteon-29start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\AVL_Drive\25-26-27-28-29
+121	id121_start	8.9	52403	52613	Arteon-121start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+122.1	id122_1_start	7.6	14700	15000	Arteon-122.1start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+122.2	id122_2_start	8.2	15900	16300	Arteon-122.2start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+122.3	id122_3_start	7.9	19500	19800	Arteon-122.3start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+123	id123_start	7.0	21800	22100	Arteon-123start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+124	id124_start	6.7	36533	36953	Arteon-124start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+125	id125_start	6.1	41533	41933	Arteon-125start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+126	id126_start	6.6	56133	56483	Arteon-126start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\ohne startstop all
+127	id127_start	6.6	3917	4567	Arteon-127start-R-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_25.04.18_dry\AVL_Drive\127
+133.1	id133_1_start	6.9	1445	1695	Arteon-133.1start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_16.01.18\AVL_Drive\133-2
+133.2	id133_2_start	7.7	5663	6273	Arteon-133.2start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\25%  50%  mit startstop
+134	id134_start	6.6	22783	23333	Arteon-134start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\AVL_Drive\25%  50%  mit startstop
+135	id135_start	7.5	13622	14922	Arteon-135start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_20.02.18_dry\AVL_Drive\135-390-393-394-399
+136	id136_start	7.2	6455	7595	Arteon-136start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.02.18_dry\AVL_Drive\136-137-151
+137	id137_start	7.0	12815	14065	Arteon-137start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.02.18_dry\AVL_Drive\136-137-151

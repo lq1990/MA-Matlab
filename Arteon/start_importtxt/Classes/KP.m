@@ -15,16 +15,19 @@ classdef KP
             kp.m_filename = filename;
             kp.m_dir = dir;
             kp.m_fullpath = strcat(dir, '\', filename);
+%             disp(kp.m_fullpath);
         end
         
         function imData = import(kp)
             tmp = importdata(kp.m_fullpath);
             imData = tmp.data;
-            
         end
         
-        function fi = filter(kp)
-            % Ay 要被过滤
+        function fiData = import_filter(kp, cut_off)
+            imData = kp.import();
+            % 过滤
+            mf = MyFilter(imData, cut_off); % cut_off: 13 ~15 Hz
+            fiData = mf.filter();
         end
         
         function ex = extend(kp)
