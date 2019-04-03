@@ -41,7 +41,8 @@ myArteon = ID18Start.loadsave(loadDataS, myArteon);
 % id 16 17 18 数据来源于一个大场景，因此只需要load一次数据，可实际上在三个类中各自都load了一次，改进？！方法：传参数
 
 %% load start(2) id: 25, 26, 27, 28, 29
-loadDataS = load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat');
+loadDataS = ...
+    load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat');
 % load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat')
 
 % -------------- 原始数据不符合要求， 比如需要 filtered, extended ------------------
@@ -96,7 +97,22 @@ myArteon = ID126Start.loadsave(loadDataS, myArteon);
 % 方法：使用AVL数据和AVL时间。那所有的KP都要预处理, my_ 前缀表示
 
 %% load start(3.2) id 127
+load 'D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_25.04.18_dry\Syncdaten\127_sync.mat'
 
+%% id133.1
+load 'D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_16.01.18\Syncdaten\133-2_sync.mat'
+
+%% id133.2
+load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\25%  50%  mit startstop_sync.mat');
+
+%% id134
+load('D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\25%  50%  mit startstop_sync.mat');
+
+%% id135
+load D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_20.02.18_dry\Syncdaten\135-390-393-394-399_sync
+
+%% id136-137
+load D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.02.18_dry\Syncdaten\136-137-151_sync.mat
 
 %%
 myArteonArr = struct2array(myArteon);
