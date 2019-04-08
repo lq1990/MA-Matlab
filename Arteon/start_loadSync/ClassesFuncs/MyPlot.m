@@ -1,43 +1,43 @@
 classdef MyPlot
     % myArr中，每一列plot
-    % 即：将每一个kp对应的所有场景包含得分 plot
+    % 即：将每一个signal对应的所有场景包含得分 plot
     
     properties
         m_Arr;
-        m_kpTable;
+        m_signalTable;
         m_range_id; % 要plot的场景，格式为 [ m : n]
-        m_range_kp;
+        m_range_signal;
     end
     
     methods
-        function mp = MyPlot(myArr, kpTable, range_id, range_kp)
+        function mp = MyPlot(myArr, signalTable, range_id, range_signal)
             mp.m_Arr = myArr;
-            mp.m_kpTable = kpTable;
+            mp.m_signalTable = signalTable;
             mp.m_range_id = range_id;
-            mp.m_range_kp = range_kp;
+            mp.m_range_signal = range_signal;
         end
         
         function show(mp)
             [maxV, minV] = mp.findMM(); % dataSArr 所有score 中 max，min。留着为画图时线宽用。
             amp = 10; % 画图时线粗方法倍数
             
-%             for idx_kp = 1 : height(mp.m_kpTable) 
-            for idx_kp = mp.m_range_kp
-                figure; % 一个kp一个figure
+%             for idx_signal = 1 : height(mp.m_signalTable) 
+            for idx_signal = mp.m_range_signal
+                figure; % 一个signal一个figure
                 set(gcf, 'position', [50, -100, 1000, 800]);
-                kpname_cell = mp.m_kpTable.kpName(idx_kp); 
-                kpname = kpname_cell{1,1};
-                kpunit_cell = mp.m_kpTable.unit(idx_kp);
-                kpunit = kpunit_cell{1,1};
+                signalname_cell = mp.m_signalTable.signalName(idx_signal); 
+                signalname = signalname_cell{1,1};
+                signalunit_cell = mp.m_signalTable.unit(idx_signal);
+                signalunit = signalunit_cell{1,1};
 
                 legend_cell = {};
                 i = 1;
-                for item = mp.m_Arr % 一个kp对应所有场景的数据，plot
+                for item = mp.m_Arr % 一个signal对应所有场景的数据，plot
                     if ~ismember(i, mp.m_range_id)
                          i = i+1;
                         continue
                     end
-                    data = item.(kpname);
+                    data = item.(signalname);
                     details = item.details;
                     score = item.score;
                     legend_cell = [legend_cell, ['score: ', num2str(score),', ' ,details]];
@@ -46,8 +46,10 @@ classdef MyPlot
                     i = i+1;
                 end
 
-                title(kpname);
-                ylabel(kpunit);
+                title(signalname);
+                xlabel('time, [s*10]');
+                xlim([1 inf]);
+                ylabel(signalunit);
                 legend(legend_cell);
             end
         end
