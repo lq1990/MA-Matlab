@@ -1,2 +1,0 @@
-id	fieldname	score	t_begin	t_end	details	dir
-134	id134_start	6.6	22782	23331	Arteon-134start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\25%  50%  mit startstop_sync.mat

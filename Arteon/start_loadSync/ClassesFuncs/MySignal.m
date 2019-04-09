@@ -44,7 +44,8 @@ classdef MySignal
             lfeData = me.extend();
         end
         
-        function [idx_t_begin, idx_t_end] = findIdxTT(ms, t_begin, t_end, factor)
+        function [idx_t_begin, idx_t_end] = findIdxTT(ms, t_begin, t_end, factor, samplingFactor)
+            % samplingFactor：下采样后的频率值，为10hz.
             % 找到 t_begin ,t_end 对应的idx，用idx从 信号val中取值
             % load t
             tData = ms.m_ds.(ms.m_signal_time); 
@@ -55,7 +56,7 @@ classdef MySignal
             idx_t_begin = find( abs(texData-t_begin) <0.05, 1 );
             
             % 原始采样频率 100hz
-            dt = round((t_end - t_begin) * 10); % 下采样后，10hz
+            dt = round((t_end - t_begin) * samplingFactor); % 下采样后，10hz
             % 不求 idx_t_end，而是按照一个长度 ===============================
             % idx_t_end = find( abs(texData-t_end) <0.06, 1 ); 
             % 由于采样频率不同导致，如果按照上一行计算，各个signal长度略有不同。
