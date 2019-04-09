@@ -53,7 +53,7 @@ classdef MySignal
             me = MyExtend(tData, factor);
             texData = me.extend(); 
             % find t 对应的 idx
-            idx_t_begin = find( abs(texData-t_begin) <0.05, 1 );
+            idx_t_begin = find( abs(texData-t_begin) <0.09, 1); %   < val 的设置，会影响 t_begin时刻FP的值，希望FP起始为0
             
             % 原始采样频率 100hz
             dt = round((t_end - t_begin) * samplingFactor); % 下采样后，10hz

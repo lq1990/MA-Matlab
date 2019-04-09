@@ -14,7 +14,9 @@ classdef MyExtend
         function out = extend(me)
             newData = [];
             
-            if me.m_factor >= 1
+            if me.m_factor == 1
+                newData = me.m_data;
+            elseif me.m_factor > 1
                 % factor >= 1，意味着是 upsampling
                 % 上采样方法：重复前面最近的值
                 for i = 1:length(me.m_data)
@@ -26,22 +28,24 @@ classdef MyExtend
             else
                 % 否则是 downsampling
                 tmp_factor = round(1/me.m_factor); % 将小数factor转换
-                for i = 1:length(me.m_data)
-                    if mod(i, tmp_factor) == 1
-                        % 下采样方法：直接取一段间隔的一个数。没有算均值
-                        newData = [newData; me.m_data(i)];
-                    end
+                
+                % 下采样方法：直接取一段间隔的一个数。没有算均值
+                for i = 1: tmp_factor :length(me.m_data)
+                    newData = [newData; me.m_data(i)];
                 end
                 
+%                 for i = 1:length(me.m_data)
+%                     if mod(i, tmp_factor) == 1
+%                         % 下采样方法：直接取一段间隔的一个数。没有算均值
+%                         newData = [newData; me.m_data(i)];
+%                     end
+%                 end
+
             end
-              
-            
             
             out = newData;
         end
-        
  
     end
     
 end
-
