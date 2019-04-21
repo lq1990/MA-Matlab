@@ -1,8 +1,10 @@
 % 关于采样频率
 % 原始是 100hz，下采样后是10hz。下采样方法：直接每隔一小段取一个数值。
-% 不同采样频率，应微调 idx_t_begin idx_t_end 以确保 汽车启动时FP是0 且启动结束也是0.
+% 不同采样频率，t_end不同。应微调 idx_t_begin t_end 以确保 汽车启动时FP是0 且启动结束也是0.
+% 上采样时，一定要注意：sync_t 的extend，不能是重复前一个t。
 
 clc; close all; clear;
+
 addpath(genpath(pwd));
 
 %% 1. 先运行 dataStruct.m，从 mat -> table , Arr
@@ -23,9 +25,9 @@ save '.\DataFinalSave\dataSScaling' dataSScaling
 save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
 
 %% 4. plot
-plotscaling = 1 ;
-range_id = [10:15];
-range_signal = [5];
+plotscaling = 0;
+range_id = [1:10];
+range_signal = [1:10];
 
 if plotscaling==1
     load('.\DataFinalSave\dataSArrScaling.mat');

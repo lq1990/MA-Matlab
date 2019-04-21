@@ -92,7 +92,9 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
                 [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName);
             end
             
-            % 按照场景时间，找到val中 idx起止裁剪
+            % 按照场景时间，找到val中 idx起止裁剪.
+	    % 单个场景中虽然 t_begin t_end一样，但由于不同signal采样频率不同，使idx就略有不同。
+	    % 通过不同signal的sync_t找到 t_begin对应的idx_t_begin，往后延一些算出 idx_t_end。可保证signal数据准确
             [idx_t_begin, idx_t_end] = asignal.findIdxTT(t_begin, t_end, factor, sampling_factor);
             asignal_clip = asignal_alldata(idx_t_begin : idx_t_end);
             dataS.(fieldname).(signalName) = asignal_clip;

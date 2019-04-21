@@ -11,6 +11,7 @@ classdef MyPlot
     
     methods
         function mp = MyPlot(myArr, signalTable, range_id, range_signal)
+            disp('MyPlot...');
             mp.m_Arr = myArr;
             mp.m_signalTable = signalTable;
             mp.m_range_id = range_id;
