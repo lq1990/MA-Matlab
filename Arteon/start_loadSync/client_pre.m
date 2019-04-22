@@ -25,9 +25,9 @@ save '.\DataFinalSave\dataSScaling' dataSScaling
 save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
 
 %% 4. plot
-plotscaling = 0;
-range_id = [1:10];
-range_signal = [1:10];
+plotscaling = 1;
+range_id = [10:20];
+range_signal = [4,10];
 
 if plotscaling==1
     load('.\DataFinalSave\dataSArrScaling.mat');
