@@ -3,13 +3,15 @@
 
 function dataStruct()
 t0 = clock; % 统计运行时间
+
 %% txt to table
 scenarioTable = importfile_scenario('scenariosOfSync.txt');
 signalTable = importfile_signal('signalsOfSync.txt'); % txt中存储
 save '.\src\signalTable' signalTable
 save '.\src\scenarioTable' scenarioTable
 
-disp('----------- txt to table over 1/3 ----------------');
+disp('----------- txt to table over 1/4 ----------------');
+
 %% 将场景对应signal 数据存在 dataSArr.mat
 
 dataS = struct; % 存储所有kp数据
@@ -50,6 +52,9 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
         end
     end
     
+    % 每一个场景，都找 idx_v30，取min(idx_v30, idx_t_end) 作为真正的 idx_t_end
+    % 为了理解和操作方便，在本文件的后面操作
+    
     for j = 1: height(signalTable) % 在同一个id下，所有signal 使用一样的 时间起止
         % 对应 dataSArr 列，即对应每一个signal。每个signal由于采样不同，时间起止不同。需要计算出idx_t
         idx_signal = j;
@@ -82,7 +87,7 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
                     else
                         % 当前场景不同，需要重新计算，并更新tmp。
                         % 正因此处的重写 tmp，消耗时间。尤其是在 很多场景都不公用一个mat时。
-                        [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName);
+                        [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName); % 数据被extend，filter
                         tmp_asignal_val_factor.(signalName).data = asignal_alldata;
                         tmp_asignal_val_factor.(signalName).factor = factor;
                     end
@@ -96,6 +101,7 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
 	    % 单个场景中虽然 t_begin t_end一样，但由于不同signal采样频率不同，使idx就略有不同。
 	    % 通过不同signal的sync_t找到 t_begin对应的idx_t_begin，往后延一些算出 idx_t_end。可保证signal数据准确
             [idx_t_begin, idx_t_end] = asignal.findIdxTT(t_begin, t_end, factor, sampling_factor);
+            
             asignal_clip = asignal_alldata(idx_t_begin : idx_t_end);
             dataS.(fieldname).(signalName) = asignal_clip;
             
@@ -112,7 +118,49 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
     
 end
 
-disp('---------------- loop over 2/3 ----------------');
+disp('---------------- loop over 2/4 ----------------');
+
+%% 按照 v= 30 km/h 为限 对 dataS 进行裁剪，因为汽车起步 30km/h，再大的速度就不是起步过程了
+for i = 1 : height(scenarioTable)
+    % 遍历每一个场景，找到每个场景中 idx_v30
+     fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+     vs = dataS.(fieldname).VehicleSpeed;
+     
+     % 若某个场景的车速 不超过30，直接continue
+     if max(vs) <= 30
+         fprintf('===%s continue\n', fieldname);
+         continue
+     end
+    
+     % 此时必然存在 VehicleSpeed > 30, 寻找 idx_v30，逐步加大 阈值
+     % 或 考虑到汽车起步速度是不断增的，可倒过来遍历 vs，找到比30小的最近的idx
+     for i_vs = length(vs):-1:1
+         if vs(i_vs) > 30
+             continue
+         end
+         idx_v30 = i_vs;
+         break
+     end
+%      marg = 0.05;
+%      while isempty(find( (30-vs) <marg, 1))
+%          marg = marg+ 0.05;
+%      end
+%      idx_v30 = find( abs(vs-30) < marg, 1); 
+%      
+%      if vs(idx_v30) > 30
+%          idx_v30 = idx_v30 -1;
+%      end
+     fprintf('%s, idx_v30: %d\n', fieldname ,idx_v30);
+     
+     % 裁剪每个 signal
+     for j = 1: height(signalTable)
+         signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+         dataS.(fieldname).(signalName) =  dataS.(fieldname).(signalName)(1:idx_v30); % 以 idx_v30为界限
+     end
+    
+end
+
+disp('---------------- clip by idx_v30 over 3/4 ----------------');
 
 %%
 dataSArr = struct2array(dataS);
@@ -120,7 +168,8 @@ dataSArr = struct2array(dataS);
 save '.\DataFinalSave\dataS' dataS
 save '.\DataFinalSave\dataSArr' dataSArr
 
-disp('--------------- save over 3/3 -----------------');
+disp('--------------- save over 4/4 -----------------');
 
 fprintf('time needed: %d s\n', etime(clock, t0));
+
 end

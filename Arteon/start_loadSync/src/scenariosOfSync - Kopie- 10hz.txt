@@ -8,7 +8,6 @@ id	fieldname	score	t_begin	t_end	details	dir
 28	id28_start	6.4	6973	7290	Arteon-28start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
 29	id29_start	6.7	7791	8180	Arteon-29start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
 121	id121_start	8.9	43185	43385	Arteon-121start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
-122	id122_start	7.9	15446	16276	Arteon-122start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
 124	id124_start	6.7	27339	27635	Arteon-124start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
 125	id125_start	6.1	32299	32695	Arteon-125start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
 126	id126_start	6.6	46902	47258	Arteon-126start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat

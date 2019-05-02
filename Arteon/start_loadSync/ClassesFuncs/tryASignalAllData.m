@@ -37,7 +37,7 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName )
     elseif strcmp(signalName, 'TargetGear') % 3581
         factor = 1/2;
         asignal_alldata = asignal.load_extend(factor);
-    elseif strcmp(signalName, 'ShiftProgress') % 3581
+    elseif strcmp(signalName, 'ShiftProcess') % 3581
         factor = 1/2;
         asignal_alldata = asignal.load_extend(factor);
     elseif strcmp(signalName, 'BrakePressure') % 8952

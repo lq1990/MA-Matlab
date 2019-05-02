@@ -25,11 +25,11 @@ plot(lossall); grid on;
 title('loss all');
 
 subplot(223)
-plot(lossmeaneachepoch); grid on;
+plot(lossmeaneachepoch, 'LineWidth',2); grid on;
 title('loss mean each epoch');
 
 subplot(222)
-plot(accuracyeachepoch); grid on;
+plot(accuracyeachepoch, 'r','LineWidth',2); grid on;
 title('accuracy each epoch');
 
 %% visualization of Params RNN

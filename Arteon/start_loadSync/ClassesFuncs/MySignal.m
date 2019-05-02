@@ -1,7 +1,7 @@
 classdef MySignal
     % MySignal Class, load dir, read signal from workspace
     properties
-        m_ds; % dataStruct
+        m_ds; % load进来之后的 dataStruct
         m_signal; % signalSyncName, from signalTable, 
         m_signal_time; % signalTimeName
     end
@@ -51,7 +51,7 @@ classdef MySignal
             tData = ms.m_ds.(ms.m_signal_time); 
             % extend t
             me = MyExtend(tData, factor);
-            texData = me.extend(); 
+            texData = me.extend();
             % find t 对应的 idx
             idx_t_begin = find( abs(texData-t_begin) <0.09, 1); %   < val 的设置，会影响 t_begin时刻FP的值，希望FP起始为0
             
@@ -62,6 +62,10 @@ classdef MySignal
             % 由于采样频率不同导致，如果按照上一行计算，各个signal长度略有不同。
             % 使用下一行，可统一长度
             idx_t_end = dt + idx_t_begin;
+            
+            %% 找到 车速为30km/h时的 idx_v30，在 idx_v30, idx_t_end中选择 小的
+            % 在 idx_t_begin ~ idx_t_end 范围内 找到车速约等于 30的idx，作为新的 idx_t_end
+            % 为了理解方便，直接在dataStruct.m中操作
      
         end
     end
