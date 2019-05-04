@@ -9,7 +9,9 @@ addpath(genpath(pwd));
 
 %% 1. 先运行 dataStruct.m，从 mat -> table , Arr
 % 数据被过滤，下采样，按照场景时间做clip
-dataStruct(); 
+sampling_factor = 100 ; % 上采样 100hz
+dataStruct(sampling_factor); 
+
 % 会 save dataS, dataSArr。
 
 %% 2. 从dataSArr 中找到每一列(即每一个signal)的最大值、最小值
@@ -26,8 +28,8 @@ save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
 
 %% 4. plot
 plotscaling = 0;
-range_id = [1:10]; % total_id: 20 
-range_signal = [1:10]; % total_signal: 17
+range_id = [1:19]; % total_id: 19
+range_signal = [1:5]; % total_signal: 17
 
 if plotscaling==1
     load('.\DataFinalSave\dataSArrScaling.mat');
@@ -41,4 +43,4 @@ else
     mp.show();
 end
 
-clearvars mp plotscaling range_id range_signal;
+clearvars mp plotscaling range_id range_signal sampling_factor;

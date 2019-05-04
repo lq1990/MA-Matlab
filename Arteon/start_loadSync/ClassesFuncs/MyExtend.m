@@ -18,12 +18,15 @@ classdef MyExtend
                 newData = me.m_data;
             elseif me.m_factor > 1
                 % factor >= 1，意味着是 upsampling
+                % 方法：自己写的 线性插值
+                newData = myInterp(me.m_data, me.m_factor);
+                
                 % 上采样方法：重复前面最近的值
-                for i = 1:length(me.m_data)
-                    for j = 1:me.m_factor
-                        newData = [newData; me.m_data(i)];
-                    end
-                end
+%                 for i = 1:length(me.m_data)
+%                     for j = 1:me.m_factor
+%                         newData = [newData; me.m_data(i)];
+%                     end
+%                 end
                 
             else
                 % 否则是 downsampling

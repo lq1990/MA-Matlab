@@ -1,7 +1,9 @@
 % 根据 场景和signal 两个txt文件，对原生进行进行预处理。
 % 输出：存储所有场景（行）对应的所有signal（列）
 
-function dataStruct()
+function dataStruct(sampling_factor)
+%         sampling_factor = 100 ; % 原始采样频率是100，下采样后是10，上采样为100hz
+
 t0 = clock; % 统计运行时间
 
 %% txt to table
@@ -63,7 +65,7 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
         signalTimeName_cell = signalTable.signalTimeName(idx_signal); signalTimeName = signalTimeName_cell{1,1};
         
         asignal = MySignal(ds, signalSyncName, signalTimeName); % 构造实例
-        sampling_factor = 10; % 原始采样频率是100，下采样后是10。
+
         
         try
             % 有可能某一个file不存在，若存在
@@ -76,7 +78,7 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
                 % 使用tmp实现数据复用，会节约不到1s，效果不明显，因为使用tmp读写也消耗时间。
                  if idx_scenario == 1
                      % 第一个场景必须要计算，且初始化tmp数值。
-                    [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName);
+                    [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName, sampling_factor);
                     tmp_asignal_val_factor.(signalName).data = asignal_alldata;
                     tmp_asignal_val_factor.(signalName).factor = factor;
                  else
@@ -87,14 +89,14 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
                     else
                         % 当前场景不同，需要重新计算，并更新tmp。
                         % 正因此处的重写 tmp，消耗时间。尤其是在 很多场景都不公用一个mat时。
-                        [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName); % 数据被extend，filter
+                        [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName, sampling_factor); % 数据被extend，filter
                         tmp_asignal_val_factor.(signalName).data = asignal_alldata;
                         tmp_asignal_val_factor.(signalName).factor = factor;
                     end
                  end
             else
                 % 不用复用
-                [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName);
+                [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName, sampling_factor);
             end
             
             % 按照场景时间，找到val中 idx起止裁剪.
@@ -102,10 +104,16 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
 	    % 通过不同signal的sync_t找到 t_begin对应的idx_t_begin，往后延一些算出 idx_t_end。可保证signal数据准确
             [idx_t_begin, idx_t_end] = asignal.findIdxTT(t_begin, t_end, factor, sampling_factor);
             
+%             disp(signalName);
+%             fprintf('length(asignal_alldata): %d \n',length(asignal_alldata));
+%             fprintf('idx_t_begin: %d \n',idx_t_begin);
+%             fprintf('idx_t_end: %d \n',idx_t_end);
+            
             asignal_clip = asignal_alldata(idx_t_begin : idx_t_end);
             dataS.(fieldname).(signalName) = asignal_clip;
-            
+
         catch
+            % 若 出现了NaN，则把 try/catch注释，查看原因。
             % 如果某一个文件不存在，则令这一列数据 NaN
             asignal_alldata = linspace(NaN, NaN, round(t_end-t_begin) * sampling_factor); % 乘以10，因为下采样的采样频率是 10hz
             asignal_alldata = transpose(asignal_alldata);
@@ -119,6 +127,15 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
 end
 
 disp('---------------- loop over 2/4 ----------------');
+
+%% 按照 AccePedal = 0，对数据进行 微调
+% 按照 AccePedal 第一个点val为0，而第二个点要 >0
+% 目前有几个场景的FP，在时刻一二都是0.
+
+
+
+
+
 
 %% 按照 v= 30 km/h 为限 对 dataS 进行裁剪，因为汽车起步 30km/h，再大的速度就不是起步过程了
 for i = 1 : height(scenarioTable)
@@ -150,6 +167,7 @@ for i = 1 : height(scenarioTable)
 %      if vs(idx_v30) > 30
 %          idx_v30 = idx_v30 -1;
 %      end
+
      fprintf('%s, idx_v30: %d\n', fieldname ,idx_v30);
      
      % 裁剪每个 signal
