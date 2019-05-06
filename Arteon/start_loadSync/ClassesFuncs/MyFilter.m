@@ -2,7 +2,7 @@ classdef MyFilter
     properties
         m_srcdata;
         m_cut_off; % 13 ~ 15
-        m_order = 16;
+        m_order = 4; % may regulate with the cut_off
     end
     
     methods
@@ -25,7 +25,7 @@ classdef MyFilter
             xfft = Fs.*(0: nfft2/2 -1) / nfft2;
 
             % filer
-            cut_off = mf.m_cut_off / Fs/2;
+            cut_off = mf.m_cut_off / Fs/2; % cut_off frequency
             order = mf.m_order;
             h = fir1(order, cut_off);
 
@@ -33,27 +33,34 @@ classdef MyFilter
             fh = fh(1: nfft2/2);
 
             con = conv(srcdata, h);
-
             outdata = con(1+order/2: end-order/2);
+            
+            foutdata = fft(outdata, nfft2);
+            foutdata = foutdata(1:nfft2/2);
             
             if nargin==2 && ifplot==true
                 figure(101);
-                subplot(2, 3, [1, 2])
+                subplot(2, 3, 1)
                 plot(t, srcdata); grid on;
                 title('original time domain');
 
-                subplot(2, 3, 3);
+                subplot(2, 3, 2);
                 plot(xfft, abs(fy/max(fy))); grid on;
-                title('fft');
+                title('original frequency domain');
 
                 subplot(2, 3, 6)
                 plot(xfft, abs(fh/max(fh))); grid on;
                 xlabel('Hz');
                 title('filter');
 
-                subplot(2, 3, [4, 5]);
+                subplot(2, 3, 4);
                 plot(t, outdata); grid on;
-                title('after filtering');
+                title('after filtering, time domain');
+                
+                subplot(2,3,5)
+                plot(xfft, abs(foutdata/max(foutdata))); grid on;
+                title('after filtering, freq domain');
+                
             end
             
             

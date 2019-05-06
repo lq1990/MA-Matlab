@@ -12,7 +12,7 @@ signalTable = importfile_signal('signalsOfSync.txt'); % txt中存储
 save '.\src\signalTable' signalTable
 save '.\src\scenarioTable' scenarioTable
 
-disp('----------- txt to table over 1/4 ----------------');
+disp('----------- txt to table over 1/5 ----------------');
 
 %% 将场景对应signal 数据存在 dataSArr.mat
 
@@ -113,7 +113,7 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
             dataS.(fieldname).(signalName) = asignal_clip;
 
         catch
-            % 若 出现了NaN，则把 try/catch注释，查看原因。
+            % 若 出现了NaN，则把 try/catch注释，查看原因。应该先确定问题来源。只有当file确实不存在才能用NaN。
             % 如果某一个文件不存在，则令这一列数据 NaN
             asignal_alldata = linspace(NaN, NaN, round(t_end-t_begin) * sampling_factor); % 乘以10，因为下采样的采样频率是 10hz
             asignal_alldata = transpose(asignal_alldata);
@@ -126,33 +126,61 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
     
 end
 
-disp('---------------- loop over 2/4 ----------------');
+disp('---------------- get dataS over 2/5 ----------------');
 
-%% 按照 AccePedal = 0，对数据进行 微调
+%% 按照 AccePedal = 0，对数据的起始位置idx_ap0 进行 微调
 % 按照 AccePedal 第一个点val为0，而第二个点要 >0
 % 目前有几个场景的FP，在时刻一二都是0.
 
+for i = 1 : height(scenarioTable)
+    % 遍历每一个场景
+     fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+     ap = dataS.(fieldname).AccePedal; % 拿到 AccePedal 这个列向量
+     
+     if ap(1) > 0
+         fprintf('=== Attention! AccePedal(1)>0, please decrease "t_begin" of %s  in src/scenariosOfSync.txt', fieldname);
+         continue
+     end
+     
+     idx_ap0 = 1;
+     for j = 1:length(ap)
+         if ap(j) == 0 && ap(j+1) > 0
+             idx_ap0 = j;
+             break;
+         end
+     end
 
+     fprintf('%s, idx_ap0: %d\n', fieldname ,idx_ap0);
+     if idx_ap0 == 1
+         continue
+     end
+     
+     % 裁剪每个 signal
+     for j = 1: height(signalTable)
+         signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+         dataS.(fieldname).(signalName) =  dataS.(fieldname).(signalName)(idx_ap0 : end);
+     end
+    
+end
 
-
-
+disp('---------------- clip by AccePedal=0 at the begining of Start over 3/5 ----------------');
 
 %% 按照 v= 30 km/h 为限 对 dataS 进行裁剪，因为汽车起步 30km/h，再大的速度就不是起步过程了
 for i = 1 : height(scenarioTable)
     % 遍历每一个场景，找到每个场景中 idx_v30
      fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
-     vs = dataS.(fieldname).VehicleSpeed;
+     ap = dataS.(fieldname).VehicleSpeed;
      
      % 若某个场景的车速 不超过30，直接continue
-     if max(vs) <= 30
+     if max(ap) <= 30
          fprintf('===%s continue\n', fieldname);
          continue
      end
     
      % 此时必然存在 VehicleSpeed > 30, 寻找 idx_v30，逐步加大 阈值
      % 或 考虑到汽车起步速度是不断增的，可倒过来遍历 vs，找到比30小的最近的idx
-     for i_vs = length(vs):-1:1
-         if vs(i_vs) > 30
+     for i_vs = length(ap):-1:1
+         if ap(i_vs) > 30
              continue
          end
          idx_v30 = i_vs;
@@ -178,7 +206,7 @@ for i = 1 : height(scenarioTable)
     
 end
 
-disp('---------------- clip by idx_v30 over 3/4 ----------------');
+disp('---------------- clip by idx_v30 over 4/5 ----------------');
 
 %%
 dataSArr = struct2array(dataS);
@@ -186,7 +214,7 @@ dataSArr = struct2array(dataS);
 save '.\DataFinalSave\dataS' dataS
 save '.\DataFinalSave\dataSArr' dataSArr
 
-disp('--------------- save over 4/4 -----------------');
+disp('--------------- save over 5/5 -----------------');
 
 fprintf('time needed: %d s\n', etime(clock, t0));
 

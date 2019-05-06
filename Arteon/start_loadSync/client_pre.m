@@ -27,7 +27,7 @@ save '.\DataFinalSave\dataSScaling' dataSScaling
 save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
 
 %% 4. plot
-plotscaling = 0;
+plotscaling = 1;
 range_id = [1:19]; % total_id: 19
 range_signal = [1:5]; % total_signal: 17
 
@@ -44,3 +44,49 @@ else
 end
 
 clearvars mp plotscaling range_id range_signal sampling_factor;
+
+
+%% Correlation Coefficient , PCA
+% 将所有场景中所有信号的时序数据 放到一个matrix中
+load('dataSArr');
+load('signalTable.mat');
+
+allMatData = zeros(1, length(signalTable.signalName));
+
+for i = 1:length(dataSArr) % 遍历每个场景
+     aMatData= [];
+     for j = 1: height(signalTable) % 遍历每个signal
+         signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+         
+         a_scenario_signal_data = dataSArr(i).(signalName);
+         aMatData(:, j) = a_scenario_signal_data;
+     end
+     allMatData = vertcat(allMatData, aMatData);
+end
+allMatData = allMatData(2:end, :); % 把第一行去除
+clearvars i j aMatData signalName_cell signalName a_scenario_signal_data;
+
+% ========== normalization, (data-mean) ./ std, let mean=0 & var=1 ======================
+data_mean = repmat(mean(allMatData), length(allMatData),1 );
+data_std = repmat(std(allMatData), length(allMatData),1 );
+
+allMatData = (allMatData - data_mean) ./ (data_std+1e-8); % avoid num/0
+
+% covariance, over cols
+var_data = var(allMatData);
+cov_data = cov(allMatData); % equivalent to Correlation Coefficient because of normaliation
+
+% figure;
+% showMatrix('var', var_data, 0);
+figure;
+showMatrix('cov', cov_data, 0);
+
+% ================= PCA ===============================
+[ev, lambda] = eig(cov_data);
+
+figure;
+showMatrix('lambda', lambda, 0);
+
+figure;
+showMatrix('eigenvector', ev, 0);
+
