@@ -7,20 +7,23 @@ classdef MyPlot
         m_signalTable;
         m_range_id; % 要plot的场景，格式为 [ m : n]
         m_range_signal;
+        m_amp;
     end
     
     methods
-        function mp = MyPlot(myArr, signalTable, range_id, range_signal)
+        function mp = MyPlot(myArr, signalTable, range_id, range_signal, amp)
             disp('MyPlot...');
             mp.m_Arr = myArr;
             mp.m_signalTable = signalTable;
             mp.m_range_id = range_id;
             mp.m_range_signal = range_signal;
+            mp.m_amp = amp;
         end
         
         function show(mp)
             [maxV, minV] = mp.findMM(); % dataSArr 所有score 中 max，min。留着为画图时线宽用。
-            amp = 10; % 画图时线粗方法倍数
+%             amp = 10; % 画图时线粗方法倍数
+            amp = mp.m_amp;
             
 %             for idx_signal = 1 : height(mp.m_signalTable) 
             for idx_signal = mp.m_range_signal

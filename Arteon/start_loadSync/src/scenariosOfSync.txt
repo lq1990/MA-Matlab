@@ -1,20 +1,20 @@
 id	fieldname	score	t_begin	t_end	details	dir
-16	id16_start	6.8	6954	7244	Arteon-16start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat
-17	id17_start	6.7	9249	9635	Arteon-17start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat
-18	id18_start	6.9	10497	10895	Arteon-18start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat
-25	id25_start	7.9	3249	3780	Arteon-25start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
-26	id26_start	7.2	4805	5278	Arteon-26start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
-27	id27_start	7.6	5843	6331	Arteon-27start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
-28	id28_start	6.4	6973	7290	Arteon-28start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
-29	id29_start	6.7	7791	8180	Arteon-29start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
-121	id121_start	8.9	43185	43385	Arteon-121start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
-124	id124_start	6.7	27339	27635	Arteon-124start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
-125	id125_start	6.1	32299	32695	Arteon-125start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
-126	id126_start	6.6	46902	47258	Arteon-126start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
-127	id127_start	6.6	3928	4616	Arteon-127start-R-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_25.04.18_dry\Syncdaten\127_sync.mat
-133.1	id133_1_start	6.9	1437	2235	Arteon-133.1start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_16.01.18\Syncdaten\133-2_sync.mat
-133.2	id133_2_start	7.7	5664	6280	Arteon-133.2start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\25%  50%  mit startstop_sync.mat
-134	id134_start	6.6	22782	23340	Arteon-134start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\25%  50%  mit startstop_sync.mat
-135	id135_start	7.5	13620	14927	Arteon-135start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_20.02.18_dry\Syncdaten\135-390-393-394-399_sync.mat
-136	id136_start	7.2	6454	7601	Arteon-136start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.02.18_dry\Syncdaten\136-137-151_sync.mat
-137	id137_start	7.0	12817	14063	Arteon-137start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.02.18_dry\Syncdaten\136-137-151_sync.mat
+1016	id1016_start	6.8	6954	7244	Arteon-16start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat
+1017	id1017_start	6.7	9249	9635	Arteon-17start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat
+1018	id1018_start	6.9	10497	10895	Arteon-18start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\16-17-18_sync.mat
+1025	id1025_start	7.9	3249	3780	Arteon-25start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
+1026	id1026_start	7.2	4805	5278	Arteon-26start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
+1027	id1027_start	7.6	5843	6331	Arteon-27start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
+1028	id1028_start	6.4	6973	7290	Arteon-28start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
+1029	id1029_start	6.7	7791	8180	Arteon-29start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\25-26-27-28-29_sync.mat
+10121	id10121_start	8.9	43185	43385	Arteon-121start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
+10124	id10124_start	6.7	27339	27635	Arteon-124start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
+10125	id10125_start	6.1	32299	32695	Arteon-125start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
+10126	id10126_start	6.6	46902	47258	Arteon-126start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\ohne startstop all_sync.mat
+10127	id10127_start	6.6	3928	4616	Arteon-127start-R-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_25.04.18_dry\Syncdaten\127_sync.mat
+10133.1	id10133_1_start	6.9	1437	2235	Arteon-133.1start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_16.01.18\Syncdaten\133-2_sync.mat
+10133.2	id10133_2_start	7.7	5664	6280	Arteon-133.2start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\25%  50%  mit startstop_sync.mat
+10134	id10134_start	6.6	22782	23340	Arteon-134start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_07.02.18_Nachmittag_dry\Syncdaten\25%  50%  mit startstop_sync.mat
+10135	id10135_start	7.5	13620	14927	Arteon-135start-Fp75	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_20.02.18_dry\Syncdaten\135-390-393-394-399_sync.mat
+10136	id10136_start	7.2	6454	7601	Arteon-136start-Fp100	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.02.18_dry\Syncdaten\136-137-151_sync.mat
+10137	id10137_start	7.0	12817	14063	Arteon-137start-KD	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.02.18_dry\Syncdaten\136-137-151_sync.mat

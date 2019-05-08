@@ -1,4 +1,4 @@
-function showMatrix(param_str, data,  ifaxisequal)
+function showMatrix(param_str, data,  ifaxisequal, titleStr)
 %PLOTMATRIX Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -38,11 +38,12 @@ for r = 1:n_rows
         else
             facecolor = 'b';
         end
+        
 %         fprintf('row: %d, col: %d\n', r, c);
 %         fprintf('width_max: %d\n',width_max);
 %         fprintf('val_scaling: %d\n',val_scaling);
 %         fprintf('height_max: %d\n',height_max);
-%         
+
         rectangle('Position', [x - width_max*val_scaling/2,... 
                                         y - height_max*val_scaling/2, ...
                                         width_max*val_scaling, ... 
@@ -52,7 +53,7 @@ for r = 1:n_rows
     end
 end
 
-title([param_str, ', maxVal: ', num2str(val_max), ', minVal: ', num2str(val_min), ', red: positive, blue: negative']);
+title([titleStr, ' ', param_str, ', maxVal: ', num2str(val_max), ', minVal: ', num2str(val_min), ', red: positive, blue: negative']);
 grid on;
 axis ij
 if ifaxisequal == 1

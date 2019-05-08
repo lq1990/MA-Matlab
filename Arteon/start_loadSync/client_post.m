@@ -7,6 +7,10 @@ clear; close all; clc;
 
 addpath(genpath(pwd));
 
+% 选择参数
+rmpath([pwd, '/ModelParamsFromC++/DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
+% rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
+
 %% DIY 矩阵可视化
 showParams('Wxh', 0); % 第二个参数是 ifaxisequal
 showParams('Whh', 1);
@@ -31,6 +35,34 @@ title('loss mean each epoch');
 subplot(222)
 plot(accuracyeachepoch, 'r','LineWidth',2); grid on;
 title('accuracy each epoch');
+
+%% distribution of score of Arteon and Geely
+scenarioTable_Arteon = load('scenarioTable');
+scenario_Arteon = scenarioTable_Arteon.scenarioTable;
+scores_Arteon = scenario_Arteon.score;
+
+scenarioTableGeely = load('scenarioTable_Geely');
+scenarioGeely = scenarioTableGeely.scenarioTable_Geely;
+scoresGeely = scenarioGeely.score;
+
+% scores_all = horzcat(scores_Arteon, scores_Geely);
+% legend('Arteon','Geely');
+figure;
+subplot(121)
+bar(scores_Arteon); grid on;
+title('scores of Arteon');
+ylim([0,10]);
+
+subplot(122)
+bar(scoresGeely); grid on;
+title('scores  of Geely');
+ylim([0,10]);
+
+
+%% test Geely
+
+
+
 
 %% visualization of Params RNN
 % x = 1:2;

@@ -1,0 +1,18 @@
+signalName	signalTimeName	signalSyncName	unit	length_id13
+EngineSpeed	sync_t4	sync_EMS_EngineSpeedRPM_t4	1/min	172638
+VehicleSpeed	sync_t14	sync_ESP_VehicleSpeed_t14	km/h	86319
+LongAcce	sync_t38	sync_YRS_LongitAcce_t38	m/s2	172655
+LateralAcce	sync_t39	sync_YRS_LateralAcce_t39	m/s2	172654
+AccePedal	sync_t1	sync_EMS_AccelPedalPosition_t1	%	172638
+ThrottlePos	sync_t6	sync_EMS_ThrottlePosition_t6	%	172638
+KickDown	sync_t5	sync_EMS_Kickdown_t5	0/1	172638
+EngineTorque	sync_t2	sync_EMS_ActualEngineTorque_t2	Nm	172638
+TransmInpSpeed
+DrivingProgram	sync_t47	sync_TCU_TGSMode_t47	-	34527
+CurrentGear	sync_t10	sync_TCU_CurrentGearPosition_t10	-	86319
+TargetGear	sync_t13	sync_TCU_TargetGearReq_t13	-	86319
+ShiftProcess	
+BrakePressure	sync_t50	sync_ESP_Mcylinder_Pressure_t50	bar	86319
+SteerWheelAngle	sync_t51	sync_SAS_SteerWheelAngle_t51	Grad	172629
+SteerWheelSpeed	sync_t52	sync_SAS_SteerWheelRotSpd_t52	Grad/s	172629
+AccStatus	sync_t53	sync_EMS_CruiseControlSts_t53	-	172638

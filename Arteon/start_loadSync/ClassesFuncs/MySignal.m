@@ -4,13 +4,15 @@ classdef MySignal
         m_ds; % load进来之后的 dataStruct
         m_signal; % signalSyncName, from signalTable, 
         m_signal_time; % signalTimeName
+        m_car_type; % 'Arteon', 'Geely'
     end
     
     methods
-        function ms = MySignal(ds, signal, signal_time)
+        function ms = MySignal(ds, signal, signal_time, car_type)
             ms.m_ds = ds;
             ms.m_signal = signal;
             ms.m_signal_time = signal_time;
+            ms.m_car_type = car_type;
         end
         
         function loadData = load(ms)

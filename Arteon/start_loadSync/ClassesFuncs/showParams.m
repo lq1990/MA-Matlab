@@ -41,7 +41,7 @@ elseif strcmp(param_str, 'by')
     
 end
 
-showMatrix(param_str,data, ifaxisequal);
+showMatrix(param_str,data, ifaxisequal, '');
 % 
 % [n_rows, n_cols] = size(data);
 % 

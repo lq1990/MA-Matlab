@@ -1,16 +1,20 @@
+% Geely
 % 根据 场景和signal 两个txt文件，对原生进行进行预处理。
 % 输出：存储所有场景（行）对应的所有signal（列）
 
-function dataStruct(sampling_factor)
+function dataStructGeely(sampling_factor)
 %         sampling_factor = 100 ; % 原始采样频率是100，下采样后是10，上采样为100hz
 
 t0 = clock; % 统计运行时间
 
 %% txt to table
-scenarioTable = importfile_scenario('scenariosOfSync.txt');
-signalTable = importfile_signal('signalsOfSync.txt'); % txt中存储
-save '.\src\signalTable' signalTable
-save '.\src\scenarioTable' scenarioTable
+scenarioTable = importfile_scenario('scenariosOfSyncGeely.txt');
+signalTable = importfile_signal('signalsOfSyncGeely.txt'); % txt中存储
+
+scenarioTable_Geely = scenarioTable;
+signalTable_Geely = signalTable;
+save '.\test\scenarioTable_Geely' scenarioTable_Geely
+save '.\test\signalTable_Geely' signalTable_Geely
 
 disp('----------- txt to table over 1/5 ----------------');
 
@@ -64,7 +68,7 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
         signalSyncName_cell = signalTable.signalSyncName(idx_signal); signalSyncName = signalSyncName_cell{1,1};
         signalTimeName_cell = signalTable.signalTimeName(idx_signal); signalTimeName = signalTimeName_cell{1,1};
         
-        asignal = MySignal(ds, signalSyncName, signalTimeName, 'Arteon'); % 构造实例
+        asignal = MySignal(ds, signalSyncName, signalTimeName, 'Geely'); % 构造实例
 
         
         try
@@ -114,7 +118,7 @@ for i = 1 : height(scenarioTable) % loop over scenarioTable
 
         catch
             % 若 出现了NaN，则把 try/catch注释，查看原因。应该先确定问题来源。只有当file确实不存在才能用NaN。
-            % 如果某一个文件不存在，则令这一列数据 NaN
+            % 如果某一个文件不存在，则令这一列数据 NaN or 0
             asignal_alldata = linspace(NaN, NaN, round(t_end-t_begin) * sampling_factor); % 乘以10，因为下采样的采样频率是 10hz
             asignal_alldata = transpose(asignal_alldata);
             dataS.(fieldname).(signalName) = asignal_alldata;
@@ -138,7 +142,7 @@ for i = 1 : height(scenarioTable)
      ap = dataS.(fieldname).AccePedal; % 拿到 AccePedal 这个列向量
      
      if ap(1) > 0
-         fprintf('=== Attention! AccePedal(1)>0, please decrease "t_begin" of %s  in src/scenariosOfSync.txt', fieldname);
+         fprintf('=== Attention! AccePedal(1)>0, please decrease "t_begin" of %s  in test/scenariosOfSyncGeely.txt\n', fieldname);
          continue
      end
      
@@ -186,15 +190,6 @@ for i = 1 : height(scenarioTable)
          idx_v30 = i_vs;
          break
      end
-%      marg = 0.05;
-%      while isempty(find( (30-vs) <marg, 1))
-%          marg = marg+ 0.05;
-%      end
-%      idx_v30 = find( abs(vs-30) < marg, 1); 
-%      
-%      if vs(idx_v30) > 30
-%          idx_v30 = idx_v30 -1;
-%      end
 
      fprintf('%s, idx_v30: %d\n', fieldname ,idx_v30);
      
@@ -208,11 +203,38 @@ end
 
 disp('---------------- clip by idx_v30 over 4/5 ----------------');
 
+%% 保证 NaN 的signal数据长度 和其它signal一致
+
+for i = 1 : height(scenarioTable)
+     % get length_target
+     fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+     es = dataS.(fieldname).EngineSpeed;
+     length_target = length(es); % 目标长度
+    
+     % 遍历每个场景的每个signal，确保数据为NaN的场景signal长度和其它signal一致
+     for j = 1: height(signalTable)
+        signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+        signal_data = dataS.(fieldname).(signalName);
+        if ~isnan(signal_data(1))
+            continue
+        else
+            % 若是NaN，改造成 长度一致，数值为0
+            dataS.(fieldname).(signalName) = linspace(0, 0, length_target)';
+        end
+     end
+    
+end
+
+
+disp('---------------- ensure length and val=0 of signal of NaN, over ----------------');
+
 %%
 dataSArr = struct2array(dataS);
 
-save '.\DataFinalSave\dataS' dataS
-save '.\DataFinalSave\dataSArr' dataSArr
+dataS_Geely = dataS;
+dataSArr_Geely = dataSArr;
+save '.\DataFinalSave\dataS_Geely' dataS_Geely
+save '.\DataFinalSave\dataSArr_Geely' dataSArr_Geely
 
 disp('--------------- save over 5/5 -----------------');
 
