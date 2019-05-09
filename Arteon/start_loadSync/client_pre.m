@@ -12,27 +12,32 @@ addpath(genpath(pwd));
 
 %% 1. 先运行 dataStruct.m，从 mat -> table , Arr
 % 数据被过滤，下采样，按照场景时间做clip
+scenarioFile = 'scenariosOfSync.txt';
+signalFile = 'signalsOfSync.txt';
 sampling_factor = 100 ; % 上采样 100hz
-dataStruct(sampling_factor); 
-
-% 会 save dataS, dataSArr。
+car_type = 'Arteon';
+[dataS, dataSArr, scenarioTable, signalTable]  = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type); 
+save '.\src\signalTable' signalTable
+save '.\src\scenarioTable' scenarioTable
+save '.\DataFinalSave\dataS' dataS
+save '.\DataFinalSave\dataSArr' dataSArr
 
 %% 2. 从dataSArr 中找到每一列(即每一个signal)的最大值、最小值
 load('.\DataFinalSave\dataSArr.mat');
 load('.\src\signalTable.mat');
-[signalsMaxMinStruct] = findSignalsMaxMin(dataSArr, signalTable);
+[signalsMaxMinStruct] = MyNormalization.findSignalsMaxMin(dataSArr, signalTable);
 % 存储，为了test时也要用到
 save '.\DataFinalSave\signalsMaxMinStruct' signalsMaxMinStruct
 
 %% 3. scaling
-[dataSScaling, dataSArrScaling]=scaling( dataSArr, signalsMaxMinStruct, signalTable );
+[dataSScaling, dataSArrScaling]= MyNormalization.minMaxScaling( dataSArr, signalsMaxMinStruct, signalTable );
 save '.\DataFinalSave\dataSScaling' dataSScaling
 save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
 
 %% 4. plot
 plotscaling = 0;
 range_id = [1:19]; % total_id: 19
-range_signal = [1:5]; % total_signal: 17
+range_signal = [11]; % total_signal: 17
 
 if plotscaling==1
     load('.\DataFinalSave\dataSArrScaling.mat');

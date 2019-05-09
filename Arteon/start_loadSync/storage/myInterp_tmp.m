@@ -1,4 +1,4 @@
-function out = myInterp(data, factor )
+function out = myInterp_tmp(data, factor )
     % my Interpolation by LinearSpline
     % since function interp1() in matlab is too slow, I write this m-file.
     % factor 扩展几倍，factor要大于1。上采样

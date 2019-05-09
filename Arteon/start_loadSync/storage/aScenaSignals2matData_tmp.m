@@ -1,4 +1,4 @@
-function out = aScenaSignals2matData( aScenario, signalTable )
+function out = aScenaSignals2matData_tmp( aScenario, signalTable )
     % 把 dataSArr中 单个场景 一列列signal数据，转成matData格式。
     
     aMatData= [];
@@ -10,4 +10,3 @@ function out = aScenaSignals2matData( aScenario, signalTable )
      
     out = aMatData;
 end
-

@@ -1,4 +1,4 @@
-function [dataSScaling, dataSArrScaling]=scaling( dataSArr, signalsMaxMinStruct, signalTable )
+function [dataSScaling, dataSArrScaling]=scaling_tmp( dataSArr, signalsMaxMinStruct, signalTable )
     dataSScaling = struct;
     
     for si = 1: height(signalTable)
@@ -26,4 +26,3 @@ function [dataSScaling, dataSArrScaling]=scaling( dataSArr, signalsMaxMinStruct,
 
     dataSArrScaling = struct2array(dataSScaling);
 end
-

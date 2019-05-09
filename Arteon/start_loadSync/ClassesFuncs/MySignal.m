@@ -71,6 +71,13 @@ classdef MySignal
             % 为了理解方便，直接在dataStruct.m中操作
      
         end
+        
     end
+    
+    methods(Static)
+        % filter, extend
+        
+    end
+    
     
 end

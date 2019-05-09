@@ -6,6 +6,8 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName, sam
             factor = sampling_factor / 100 * 1; % factor < 1是下采样，factor > 1 上采样
         elseif strcmp(asignal.m_car_type, 'Geely')
             factor = sampling_factor / 100 * 1;
+        else
+            disp('car type is wrong. only ''Arteon'' or ''Geely'' is allowed! ');
         end
         asignal_alldata = asignal.load_extend(factor);
     elseif strcmp(signalName, 'VehicleSpeed') 

@@ -1,7 +1,4 @@
-function showMatrix(param_str, data,  ifaxisequal, titleStr)
-%PLOTMATRIX Summary of this function goes here
-%   Detailed explanation goes here
-
+function showMatrix_tmp(param_str, data,  ifaxisequal, titleStr)
 if strcmp(param_str, 'cov')
     signalT = importfile_signal('signalsOfSync.txt');
     offset = 1;
@@ -14,7 +11,6 @@ if strcmp(param_str, 'eigenvector')
     showYtickLabel(data, signalT, offset);
 end
 
-
 [n_rows, n_cols] = size(data);
 
 width_max = 1;
@@ -22,7 +18,6 @@ height_max = 1;
 val_max = max(data(:));
 val_min = min(data(:));
 val_abs_max = max(abs(data(:)));
-
 
 for r = 1:n_rows
     for c = 1:n_cols
@@ -38,7 +33,6 @@ for r = 1:n_rows
         else
             facecolor = 'b';
         end
-        
 %         fprintf('row: %d, col: %d\n', r, c);
 %         fprintf('width_max: %d\n',width_max);
 %         fprintf('val_scaling: %d\n',val_scaling);
@@ -61,4 +55,3 @@ if ifaxisequal == 1
 end
 
 end
-

@@ -11,12 +11,12 @@ addpath(genpath(pwd));
 rmpath([pwd, '/ModelParamsFromC++/DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
 % rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
 
-%% DIY 矩阵可视化
-showParams('Wxh', 0); % 第二个参数是 ifaxisequal
-showParams('Whh', 1);
-showParams('Why', 1);
-showParams('bh', 1);
-showParams('by', 1);
+%% 矩阵可视化
+MyPlot.showParams('Wxh', 0); % 第二个参数是 ifaxisequal
+MyPlot.showParams('Whh', 1);
+MyPlot.showParams('Why', 1);
+MyPlot.showParams('bh', 1);
+MyPlot.showParams('by', 1);
 
 %% plot loss accu
 lossall = importfile_lossall('loss_all.txt');
@@ -59,10 +59,34 @@ title('scores  of Geely');
 ylim([0,10]);
 
 
-%% test Geely
+%% re-test the trainingData and scores
+load('dataSArrScaling.mat');
+load('signalTable.mat');
 
+dataSArr = dataSArrScaling;
+list_data_Arteon = SceSigDataTrans.allSce2ListStruct(dataSArr, signalTable); 
 
+save '.\DataFinalSave\list_data_Arteon' list_data_Arteon
 
+% ===== use matData and parameters to predict score =====
+addpath(genpath(pwd));
+rmpath([pwd, '\ModelParamsFromC++\DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
+% rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
+
+% 场景进行 前传，计算score_class。使用到W b
+Wxh = importfile_Wxh('Wxh.txt');
+Whh = importfile_Whh('Whh.txt');
+Why = importfile_Why('Why.txt');
+bh = importfile_bh('bh.txt');
+by = importfile_by('by.txt');
+
+maxScore = 8.9;
+minScore = 6.0;
+numClasses = 10 ;
+
+fprintf('================================================\n');
+list_data = list_data_Arteon;
+MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
 
 %% visualization of Params RNN
 % x = 1:2;

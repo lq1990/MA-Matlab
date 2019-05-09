@@ -1,4 +1,4 @@
-function [ mmStruct ] = findSignalsMaxMin( dataSArr, signalTable)
+function [ mmStruct ] = findSignalsMaxMin_tmp( dataSArr, signalTable)
 % 找到每个signal在所有场景下的 max，min。为了后续 scaling
     mmS = struct;
     for i = 1:height(signalTable)
@@ -24,9 +24,7 @@ function [ mmStruct ] = findSignalsMaxMin( dataSArr, signalTable)
     end
 
     mmStruct = mmS;
+        % 注：应考虑到 max与min相等的情况，
+        % 比如在数据中  CurrentGear的max与min相等。使得计算结果为NaN
+        % 当然在这种情况下，说明 此signal没有必要使用了。
 end
-
-% 注：应考虑到 max与min相等的情况，
-% 比如在数据中  CurrentGear的max与min相等。使得计算结果为NaN
-% 当然在这种情况下，说明 此signal没有必要使用了。
-

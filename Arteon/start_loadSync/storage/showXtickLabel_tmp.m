@@ -1,7 +1,4 @@
-function showXtickLabel(data, signalT, offset)
-%SHOWXTICKLABEL Summary of this function goes here
-%   Detailed explanation goes here
-
+function showXtickLabel_tmp(data, signalT, offset)
     myxticklabel = {};
     for i = 1:height(signalT)
         signalName_cell = signalT.signalName(i);
@@ -18,6 +15,5 @@ function showXtickLabel(data, signalT, offset)
             'HorizontalAlignment', 'center', ...
             'rotation', 70,...
             'FontWeight', 'Bold'); % HorizontalAlignment ÉèÖÃÐý×ªÖá right left center
-
 end
 

@@ -2,6 +2,8 @@ classdef MyPlot
     % myArr中，每一列plot
     % 即：将每一个signal对应的所有场景包含得分 plot
     
+    % static fn: showMatrix
+    
     properties
         m_Arr;
         m_signalTable;
@@ -76,5 +78,128 @@ classdef MyPlot
 
     end
     
+    methods(Static)
+        function showParams( param_str, ifaxisequal )
+            figure;
+            file = [param_str, '.txt'];
+            if strcmp(param_str, 'Wxh')
+                data = importfile_Wxh(file);
+                signalT = importfile_signal('signalsOfSync.txt');
+                offset = 10;
+                MyPlot.showXtickLabel(data, signalT, offset);
+                ylabel('neurons in hidden layer');
+
+            elseif strcmp(param_str, 'Whh')
+                data = importfile_Whh(file);
+
+            elseif strcmp(param_str, 'Why')
+                data = importfile_Why(file);
+
+            elseif strcmp(param_str, 'bh')
+                data = importfile_bh(file);
+
+            elseif strcmp(param_str, 'by')
+                data = importfile_by(file);
+            end
+
+            MyPlot.showMatrix(param_str,data, ifaxisequal, '');
+        end
+        
+        function showMatrix(param_str, data,  ifaxisequal, titleStr)
+            if strcmp(param_str, 'cov')
+                signalT = importfile_signal('signalsOfSync.txt');
+                offset = 1;
+                MyPlot.showXtickLabel(data, signalT, offset);
+            end
+            if strcmp(param_str, 'eigenvector')
+                signalT = importfile_signal('signalsOfSync.txt');
+                offset = 1;
+                MyPlot.showYtickLabel(data, signalT, offset);
+            end
+
+            [n_rows, n_cols] = size(data);
+            width_max = 1;
+            height_max = 1;
+            val_max = max(data(:));
+            val_min = min(data(:));
+            val_abs_max = max(abs(data(:)));
+
+            for r = 1:n_rows
+                for c = 1:n_cols
+                    val = data(r, c);
+                    val_scaling = val / (val_abs_max+ 1e-8);
+                    val_scaling = abs(val_scaling);
+                    % 有矩阵index得到坐标x,y
+                    x = c;
+                    y = r;
+
+                    if val >= 0
+                        facecolor = 'r';
+                    else
+                        facecolor = 'b';
+                    end
+            %         fprintf('row: %d, col: %d\n', r, c);
+            %         fprintf('width_max: %d\n',width_max);
+            %         fprintf('val_scaling: %d\n',val_scaling);
+            %         fprintf('height_max: %d\n',height_max);
+
+                    rectangle('Position', [x - width_max*val_scaling/2,... 
+                                                    y - height_max*val_scaling/2, ...
+                                                    width_max*val_scaling, ... 
+                                                    height_max*val_scaling], ...
+                                                'FaceColor', facecolor);
+
+                end
+            end
+
+            title([titleStr, ' ', param_str, ' maxVal: ', num2str(val_max), ', minVal: ', num2str(val_min), ', red: positive, blue: negative']);
+            grid on;
+            axis ij
+            if ifaxisequal == 1
+                axis equal
+            end
+        end
+        
+        function showXtickLabel(data, signalT, offset)
+            myxticklabel = {};
+            for i = 1:height(signalT)
+                signalName_cell = signalT.signalName(i);
+                signalName = signalName_cell{1,1};
+                myxticklabel = [myxticklabel, [num2str(i), ' ', signalName]];
+            end
+
+            set(gca, 'xticklabel', []);
+            h = height(signalT);
+            xpos = 1:h;
+            ypos = ones(1, h)+ size(data, 1) + offset; % 设置显示text的 ypos
+            text(xpos, ypos,...
+                    myxticklabel, ...
+                    'HorizontalAlignment', 'center', ...
+                    'rotation', 70,...
+                    'FontWeight', 'Bold'); % HorizontalAlignment 设置旋转轴 right left center
+        
+        end
+        
+        function showYtickLabel(data, signalT, offset)
+            myyticklabel = {};
+            for i = 1:height(signalT)
+                signalName_cell = signalT.signalName(i);
+                signalName = signalName_cell{1,1};
+                myyticklabel = [myyticklabel, [num2str(i), ' ', signalName]];
+            end
+
+            set(gca, 'yticklabel', []);
+            h = height(signalT);
+            ypos = 1:h;
+            xpos = ones(h, 1)+ size(data, 1) + offset; % 设置显示text的 ypos
+            text(xpos, ypos,...
+                    myyticklabel, ...
+                    'HorizontalAlignment', 'center', ...
+                    'rotation', 0,...
+                    'FontWeight', 'Bold'); % HorizontalAlignment 设置旋转轴 right left center
+
+            end
+        
+    end
 end
 

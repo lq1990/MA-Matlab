@@ -1,6 +1,4 @@
-function showYtickLabel(data, signalT, offset)
-%SHOWXTICKLABEL Summary of this function goes here
-%   Detailed explanation goes here
+function showYtickLabel_tmp(data, signalT, offset)
 
     myyticklabel = {};
     for i = 1:height(signalT)
