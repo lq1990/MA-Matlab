@@ -37,7 +37,7 @@ save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
 %% 4. plot
 plotscaling = 0;
 range_id = [1:19]; % total_id: 19
-range_signal = [11]; % total_signal: 17
+range_signal = [1:5]; % total_signal: 17
 
 if plotscaling==1
     load('.\DataFinalSave\dataSArrScaling.mat');
@@ -52,3 +52,5 @@ else
 end
 
 clearvars mp plotscaling range_id range_signal sampling_factor;
+
+%% PCA

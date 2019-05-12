@@ -36,29 +36,6 @@ subplot(222)
 plot(accuracyeachepoch, 'r','LineWidth',2); grid on;
 title('accuracy each epoch');
 
-%% distribution of score of Arteon and Geely
-scenarioTable_Arteon = load('scenarioTable');
-scenario_Arteon = scenarioTable_Arteon.scenarioTable;
-scores_Arteon = scenario_Arteon.score;
-
-scenarioTableGeely = load('scenarioTable_Geely');
-scenarioGeely = scenarioTableGeely.scenarioTable_Geely;
-scoresGeely = scenarioGeely.score;
-
-% scores_all = horzcat(scores_Arteon, scores_Geely);
-% legend('Arteon','Geely');
-figure;
-subplot(121)
-bar(scores_Arteon); grid on;
-title('scores of Arteon');
-ylim([0,10]);
-
-subplot(122)
-bar(scoresGeely); grid on;
-title('scores  of Geely');
-ylim([0,10]);
-
-
 %% re-test the trainingData and scores
 load('dataSArrScaling.mat');
 load('signalTable.mat');
@@ -84,50 +61,36 @@ maxScore = 8.9;
 minScore = 6.0;
 numClasses = 10 ;
 
-fprintf('================================================\n');
 list_data = list_data_Arteon;
 MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
 
-%% visualization of Params RNN
-% x = 1:2;
-% y = 1:1;
-% data = randn(1, 2);
-% [X, Y] = meshgrid(x,y);
-% 
-% surf(X, Y, data);
-% colorbar
+%% test Geely
 
-% data = randn(1,2);
-% mesh(data, 'LineWidth',10);
-% colorbar
 
-%%
-% C = randn(1,4);
-% pcolor(C);
-% colormap summer
-% 
-% axis ij % reverse the coordinate system
-% axis equal % 使得xy轴显示scale一样
+%% concat data of Arteon and Geely, then show
+load dataS
+load dataS_Geely
+load scenarioTable_Geely
+load signalTable
 
-%%
-% clear;
-% figure;
-% plot(0:5, sin(0:5)); grid on;
-% set(gca, 'xticklabel', []); % 将原有隐去
-% xpos = 0:5;
-% ypos = -ones(1, 6)-0.1;
-% text(xpos, ypos, {'', 'aaaaa', 'bbbbb', 'ccccc', 'ddddd', 'eeeee'},...
-%         'HorizontalAlignment', 'center',...
-%         'rotation',70);
+dataStructAll = dataS;
 
-    % HorizontalAlignment 设置旋转轴，left right center
-    % rotation 逆时针旋转
-   
-%%
-% figure;
-% plot(1:10,5.2*sin(1:10)); grid on;
-% axis ij
-% ys = get(gca, 'ytick');
-% ys
+% traverse Geely
+scenarioTable = scenarioTable_Geely;
+for i = 1 : height(scenarioTable)
+        % 对应dataSArr 行
+        idx_scenario = i;
+        fieldname_cell = scenarioTable.fieldname(idx_scenario); fieldname = fieldname_cell{1,1};
+        
+        dataStructAll.(fieldname) = dataS_Geely.(fieldname);
+end
+dataStructArrAll = struct2array(dataStructAll);
+clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTable scenarioTable_Geely
 
+% plot data of Arteon and Geely
+range_id = [1:5, 21:23]; % total 25
+range_signal = [1:5]; % total_signal: 17
+amp = 10;
+mp = MyPlot(dataStructArrAll, signalTable, range_id , range_signal, amp ); 
+mp.show();
 

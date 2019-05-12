@@ -9,6 +9,7 @@ classdef MyPredict
     
     methods(Static)
         function printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses )
+            fprintf('===========================================================\n');
             % use FP to predict score_classes of all scenarios of list_data
             for i = 1 : length(list_data) % loop over each scenarios of Geely
                 id = list_data(i).id;
@@ -17,13 +18,15 @@ classdef MyPredict
                 matData = list_data(i).matData;
 
                 [prob, pred_class]=MyPredict.predictOneScenario(matData, Wxh, Whh, Why, bh, by);
+                pred_score = MyPredict.class2score(pred_class, maxScore, minScore, numClasses);
                 
                 if target_class == pred_class
                     true_false = 'true';
                 else
                     true_false = '---false---';
                 end
-                fprintf('id: %g, target class: %d, predicted class: %d, prob: %.3f, %s\n', id, target_class, pred_class, prob, true_false);
+                
+                fprintf('id: %g,\t target | prediction, class: %d | %d, score: %.1f | %.1f, prob: %.2f, %s\n', id, target_class, pred_class, score, pred_score, prob, true_false);
             end
         end
        
@@ -54,8 +57,19 @@ classdef MyPredict
         % 	zs(pos_idx, 0) = 1;
         % 	return zs;
             class = pos_idx + 1;
-          end
+         end
 
+         function out = class2score(curClass, score_max, score_min, n_output_classes)
+             % predicted class to score
+             portion = (score_max - score_min) / n_output_classes;
+             score_left = (curClass-1) * portion + score_min;
+             score_right = (curClass) * portion + score_min;
+             score = (score_left + score_right)/2;
+%              fprintf('%d, %d, %d\n',score_left, score_right, score);
+             score = vpa(score, 2);
+             out = eval(score);
+         end
+          
      end
 end
 

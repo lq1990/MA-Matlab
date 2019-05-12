@@ -165,18 +165,18 @@ function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFi
     for i = 1 : height(scenarioTable)
         % 遍历每一个场景，找到每个场景中 idx_v30
          fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
-         ap = dataS.(fieldname).VehicleSpeed;
+         vs = dataS.(fieldname).VehicleSpeed;
 
          % 若某个场景的车速 不超过30，直接continue
-         if max(ap) <= 30
+         if max(vs) <= 30
              fprintf('===%s continue\n', fieldname);
              continue
          end
 
          % 此时必然存在 VehicleSpeed > 30, 寻找 idx_v30，逐步加大 阈值
          % 或 考虑到汽车起步速度是不断增的，可倒过来遍历 vs，找到比30小的最近的idx
-         for i_vs = length(ap):-1:1
-             if ap(i_vs) > 30
+         for i_vs = length(vs):-1:1
+             if vs(i_vs) > 30
                  continue
              end
              idx_v30 = i_vs;

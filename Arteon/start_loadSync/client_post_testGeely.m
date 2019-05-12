@@ -10,6 +10,7 @@ signalFile = 'signalsOfSyncGeely.txt';
 sampling_factor = 100;
 car_type = 'Geely';
 [dataS_Geely, dataSArr_Geely, scenarioTable_Geely, signalTable_Geely] = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type);
+
 save '.\test\scenarioTable_Geely' scenarioTable_Geely
 save '.\test\signalTable_Geely' signalTable_Geely
 save '.\DataFinalSave\dataS_Geely' dataS_Geely
@@ -32,7 +33,7 @@ dataSArr = dataSArrScaling_Geely;
 signalTable = signalTable_Geely;
 list_data_Geely = SceSigDataTrans.allSce2ListStruct(dataSArr, signalTable); % [struct{id, score, matData}, struct, ...]
 
-% ====== list 中 currentGear (11. col) 太大，因为Arteon起步数据中 此项为0. =====
+%% ====== list 中 currentGear (11. col) 太大，因为Arteon起步数据中 此项为0. =====
 % 需要修正
 for r = 1 : length(list_data_Geely)
     curGear = list_data_Geely(r).matData(:, 11);
@@ -60,17 +61,16 @@ maxScore = 8.9;
 minScore = 6.0;
 numClasses = 10 ;
 
-fprintf('================================================\n');
 list_data = list_data_Geely;
 MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
 
 
-%% plot
+%% plot Geely
 plotscaling = 0 ;
-range_id = [ 1:6 ]; % total_id: 6
-range_signal = [ 1:5 ]; % total_signal: 17
+range_id = [ 11:17 ]; % total_id: 17
+range_signal = [ 5 ]; % total_signal: 17
 
-amp = 5; % for plot
+amp = 7; % for plot
 if plotscaling==1
     load('.\DataFinalSave\dataSArrScaling_Geely.mat');
     load('.\test\signalTable_Geely.mat');

@@ -5,3 +5,14 @@ id	fieldname	score	t_begin	t_end	details	dir
 2016	id2016_start	7.8	116461	117685	Geely-16start-Fp75-ramp5	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
 2017	id2017_start	7.5	132509	133377	Geely-17start-Fp100-ramp5	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
 2018	id2018_start	7.1	168164	169103	Geely-18start-FpKD-ramp5	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
+2025	id2025_start	7.8	65488	67238	Geely-25start-Fp25-ramp10	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
+2026	id2026_start	7.8	79672	80663	Geely-26start-Fp50-ramp10	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
+2027	id2027_start	7.5	97928	98768	Geely-27start-Fp75-ramp10	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
+2028	id2028_start	8.0	123217	124252	Geely-28start-Fp100-ramp10	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
+2029	id2029_start	7.2	161249	162243	Geely-29start-FpKD-ramp10	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_26.06.18_dry\Syncdaten\13-14-15-16-17-18-25-26-27-28-29_sync.mat
+20121	id20121_start	7.4	874	1374	Geely-121start-Fp10-ramp0	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\121_sync.mat
+20122	id20122_start	7.4	750	1400	Geely-122start-Fp25-ramp0	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\122_sync.mat
+20123	id20123_start	7.5	881	1431	Geely-123start-Fp50-ramp0	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\123_sync.mat
+20124	id20124_start	7.1	1910	2300	Geely-124start-Fp75-ramp0	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\124_sync.mat
+20125	id20125_start	6.2	2550	2950	Geely-125start-Fp100-ramp0	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\125-126_sync.mat
+20126	id20126_start	6.5	3400	3900	Geely-126start-FpKD-ramp0	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\125-126_sync.mat
