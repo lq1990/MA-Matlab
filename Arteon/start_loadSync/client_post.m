@@ -67,30 +67,3 @@ MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numCla
 %% test Geely
 
 
-%% concat data of Arteon and Geely, then show
-load dataS
-load dataS_Geely
-load scenarioTable_Geely
-load signalTable
-
-dataStructAll = dataS;
-
-% traverse Geely
-scenarioTable = scenarioTable_Geely;
-for i = 1 : height(scenarioTable)
-        % ∂‘”¶dataSArr ––
-        idx_scenario = i;
-        fieldname_cell = scenarioTable.fieldname(idx_scenario); fieldname = fieldname_cell{1,1};
-        
-        dataStructAll.(fieldname) = dataS_Geely.(fieldname);
-end
-dataStructArrAll = struct2array(dataStructAll);
-clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTable scenarioTable_Geely
-
-% plot data of Arteon and Geely
-range_id = [1:5, 21:23]; % total 25
-range_signal = [1:5]; % total_signal: 17
-amp = 10;
-mp = MyPlot(dataStructArrAll, signalTable, range_id , range_signal, amp ); 
-mp.show();
-

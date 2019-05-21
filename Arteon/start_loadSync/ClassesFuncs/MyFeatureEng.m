@@ -1,7 +1,12 @@
-classdef MyNormalization
-    % my normalization
-        % min-max scaling
-        % Z-score standardization
+classdef MyFeatureEng
+    % Feature Engineering
+    % contains:
+    %     1. normalization
+    %           min-max scaling
+    %           Z-score standardization
+    %     2. PCA
+    %     3. Upsampling/Downsampling  -> MyExtend
+    %     4. Filtering                                -> MyFilter
     
     properties
     end
@@ -73,7 +78,30 @@ classdef MyNormalization
                 % 比如在数据中  CurrentGear的max与min相等。使得计算结果为NaN
                 % 当然在这种情况下，说明 此signal没有必要使用了。
         end
+        
+        function  PCA_Show(allMatData, carStr)
+            data_mean = repmat(mean(allMatData), length(allMatData),1 );
+            data_std = repmat(std(allMatData), length(allMatData),1 );
 
+            % Z-score Standardization
+            allMatDataNorm = (allMatData - data_mean) ./ (data_std+1e-8); % avoid num/0
+
+            % covariance, over cols
+            cov_data = cov(allMatDataNorm); % equivalent to Correlation Coefficient because of normaliation
+
+            % figure;
+            % showMatrix('var', var_data, 0);
+            figure;
+            MyPlot.showMatrix('cov', cov_data, 0, carStr);
+
+            [ev, lambda] = eig(cov_data); % ev是正交矩阵, ev*ev'=E。 ev 每列都是单位向量，且两两之间正交
+
+            figure;
+            MyPlot.showMatrix('lambda', lambda, 0, carStr);
+
+            figure;
+            MyPlot.showMatrix('eigenvector', ev, 0, carStr);
+        end
     end
     
 end

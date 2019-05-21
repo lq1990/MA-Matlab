@@ -1,6 +1,6 @@
 % Goal: 
 %   use C++ to train & validate RNN model and get parameters.
-%   Parameters are used in Matlab
+%   Parameters are going to be used in Matlab
 
 % More details:
 %   Dataset is divided into 3 parts: Training / Cross Validation / Test

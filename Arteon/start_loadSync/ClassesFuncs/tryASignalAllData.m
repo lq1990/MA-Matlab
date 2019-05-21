@@ -66,6 +66,21 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName, sam
             factor = sampling_factor / 100 * 1;
         end
         asignal_alldata = asignal.load_extend(factor);
+    elseif strcmp(signalName, 'TransmInpSpeedOdd') % 8954
+        if strcmp(asignal.m_car_type, 'Arteon')
+            factor = sampling_factor / 100 * 1;
+        elseif strcmp(asignal.m_car_type, 'Geely')
+            factor = sampling_factor / 100 * 2;
+        end
+        asignal_alldata = asignal.load_extend(factor);
+    elseif strcmp(signalName, 'TransmInpSpeedEven') % 8954
+        if strcmp(asignal.m_car_type, 'Arteon')
+            factor = sampling_factor / 100 * 1;
+        elseif strcmp(asignal.m_car_type, 'Geely')
+            factor = sampling_factor / 100 * 2;
+        end
+        asignal_alldata = asignal.load_extend(factor);
+        
     elseif strcmp(signalName, 'DrivingProgram') % 1790
         if strcmp(asignal.m_car_type, 'Arteon')
             factor = sampling_factor / 100 * 10;
@@ -87,11 +102,11 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName, sam
             factor = sampling_factor / 100 * 2;
         end
         asignal_alldata = asignal.load_extend(factor);
-    elseif strcmp(signalName, 'ShiftProcess') % 3581
+    elseif strcmp(signalName, 'ShiftInProgress') % 3581
         if strcmp(asignal.m_car_type, 'Arteon')
             factor = sampling_factor / 100 * 5;
         elseif strcmp(asignal.m_car_type, 'Geely')
-            factor = sampling_factor / 100 * 1;
+            factor = sampling_factor / 100 * 2;
         end
         asignal_alldata = asignal.load_extend(factor);
     elseif strcmp(signalName, 'BrakePressure') % 8952
@@ -122,6 +137,8 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName, sam
             factor = sampling_factor / 100 * 1;
         end
         asignal_alldata = asignal.load_extend(factor);
+    else
+        disp('                      --- invalid signalName ---');
     end    
 
 

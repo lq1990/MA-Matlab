@@ -5,23 +5,12 @@ addpath(genpath(pwd));
 %% txt 2 dataStruct
 % 注意Geely采样频率的不同 于Arteon, 在 tryASignalAllData 中修改
 
-scenarioFile = 'scenariosOfSyncGeely.txt';
-signalFile = 'signalsOfSyncGeely.txt';
-sampling_factor = 100;
-car_type = 'Geely';
-[dataS_Geely, dataSArr_Geely, scenarioTable_Geely, signalTable_Geely] = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type);
-
-save '.\test\scenarioTable_Geely' scenarioTable_Geely
-save '.\test\signalTable_Geely' signalTable_Geely
-save '.\DataFinalSave\dataS_Geely' dataS_Geely
-save '.\DataFinalSave\dataSArr_Geely' dataSArr_Geely
-
 %% scaling, use min-max val of training data
 load('signalsMaxMinStruct.mat');
 load('signalTable_Geely');
 load dataSArr_Geely
 
-[dataSScaling_Geely, dataSArrScaling_Geely] = MyNormalization.minMaxScaling(dataSArr_Geely, signalsMaxMinStruct, signalTable_Geely);
+[dataSScaling_Geely, dataSArrScaling_Geely] = MyFeatureEng.minMaxScaling(dataSArr_Geely, signalsMaxMinStruct, signalTable_Geely);
 save '.\DataFinalSave\dataSScaling_Geely' dataSScaling_Geely
 save '.\DataFinalSave\dataSArrScaling_Geely' dataSArrScaling_Geely
 
@@ -67,8 +56,8 @@ MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numCla
 
 %% plot Geely
 plotscaling = 0 ;
-range_id = [ 11:17 ]; % total_id: 17
-range_signal = [ 5 ]; % total_signal: 17
+range_id = [ 1:5 ]; % total_id: 17
+range_signal = [13 ]; % total_signal: 17
 
 amp = 7; % for plot
 if plotscaling==1

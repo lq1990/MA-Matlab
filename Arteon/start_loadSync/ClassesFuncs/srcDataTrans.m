@@ -1,5 +1,5 @@
 % src data (txt files) transform into struct/arr/list ...
-function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type)
+function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type)
     % 根据 场景和signal 两个txt文件，对原生进行进行预处理。
     % 输出：存储所有场景（行）对应的所有signal（列）
     % sampling_factor = 100 ; % 原始采样频率是100，下采样后是10，上采样为100hz
@@ -20,15 +20,15 @@ function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFi
 
     for i = 1 : height(scenarioTable) % loop over scenarioTable
         % 对应dataSArr 行
-        idx_scenario = i;
-        id = scenarioTable.id(idx_scenario);
+        i = i;
+        id = scenarioTable.id(i);
         fprintf('======================\nid: %d\n', id);
-        score = scenarioTable.score(idx_scenario);
-        details_cell = scenarioTable.details(idx_scenario); details= details_cell{1,1};
-        t_begin = scenarioTable.t_begin(idx_scenario); t_begin = t_begin/100; % 一个场景下的，同一个，时间开始
-        t_end = scenarioTable.t_end(idx_scenario); t_end = t_end/100; % 一个场景下的，同一个，时间截止
-        dir_cell = scenarioTable.dir(idx_scenario); dir = dir_cell{1,1};
-        fieldname_cell = scenarioTable.fieldname(idx_scenario); fieldname = fieldname_cell{1,1};
+        score = scenarioTable.score(i);
+        details_cell = scenarioTable.details(i); details= details_cell{1,1};
+        t_begin = scenarioTable.t_begin(i); t_begin = t_begin/100; % 一个场景下的，同一个，时间开始
+        t_end = scenarioTable.t_end(i); t_end = t_end/100; % 一个场景下的，同一个，时间截止
+        dir_cell = scenarioTable.dir(i); dir = dir_cell{1,1}; % dir包含了 绝对路径下的mat文件
+        fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
 
         dataS.(fieldname).id = id;
         dataS.(fieldname).fieldname = fieldname;
@@ -37,11 +37,11 @@ function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFi
 
         % 读取某一个 signal，每一行是一个场景，共用一个 mat 数据
         % 对比当前行的dir 是否和上一行一样，一样的话，就不必再重新load
-        if idx_scenario == 1
+        if i == 1
             ds = load(dir);
         else
-            dir_cell_cur = scenarioTable.dir(idx_scenario); dir_cur = dir_cell_cur{1,1};
-            dir_cell_pre = scenarioTable.dir(idx_scenario-1); dir_pre = dir_cell_pre{1,1};
+            dir_cell_cur = scenarioTable.dir(i); dir_cur = dir_cell_cur{1,1};
+            dir_cell_pre = scenarioTable.dir(i-1); dir_pre = dir_cell_pre{1,1};
             if strcmp(dir_cur, dir_pre) == 0
                 dir_flag = 0;
                 % 只有当 当前dir和上一个dir不同时，才load。% 若dir相同，则没必要再load浪费时间。
@@ -62,6 +62,7 @@ function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFi
             signalTimeName_cell = signalTable.signalTimeName(idx_signal); signalTimeName = signalTimeName_cell{1,1};
 
             asignal = MySignal(ds, signalSyncName, signalTimeName, car_type); % 构造实例
+            % 需要 signalTimeName，因为需要借助time找到idx
 
             try
                 % 有可能某一个file不存在，若存在
@@ -72,7 +73,7 @@ function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFi
                 reuse_flag = 1 ;
                 if reuse_flag == 1
                     % 使用tmp实现数据复用，会节约不到1s，效果不明显，因为使用tmp读写也消耗时间。
-                     if idx_scenario == 1
+                     if i == 1
                          % 第一个场景必须要计算，且初始化tmp数值。
                         [asignal_alldata, factor ] = tryASignalAllData(asignal, signalName, sampling_factor);
                         tmp_asignal_val_factor.(signalName).data = asignal_alldata;
@@ -110,12 +111,12 @@ function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFi
 
             catch
                 % 若 出现了NaN，则把 try/catch注释，查看原因。应该先确定问题来源。只有当file确实不存在才能用NaN。
-                % 如果某一个文件不存在，则令这一列数据 NaN or 0
-                asignal_alldata = linspace(NaN, NaN, round(t_end-t_begin) * sampling_factor); % 乘以10，因为下采样的采样频率是 10hz
+                % 如果某一个文件不存在，则令这一列数据 NaN
+                asignal_alldata = linspace(NaN, NaN, round(t_end-t_begin) * sampling_factor); % 乘以100，因为Up采样的采样频率是100hz
                 asignal_alldata = transpose(asignal_alldata);
                 dataS.(fieldname).(signalName) = asignal_alldata;
 
-                fprintf('NaN, fieldname: %s, kpname: %s\n', fieldname, signalName);
+                fprintf('NaN, fieldname: %s, signalname: %s\n', fieldname, signalName);
             end
 
         end
@@ -218,9 +219,90 @@ function [dataS, dataSArr, scenarioTable, signalTable] = srcDataTrans(scenarioFi
 
     disp('---------------- ensure length and val=0 of signal of NaN, over ----------------');
 
-    %%
-    dataSArr = struct2array(dataS);
-    disp('--------------- save over 5/5 -----------------');
-    fprintf('time needed: %d s\n', etime(clock, t0));
+    %% composite TransmInpSpeed for Geely
+    % using TransmInpSpeedOdd & TransmInpSpeedEven and CurrentGear
+    if strcmp(car_type, 'Geely')
+         for i = 1 : height(scenarioTable) % 外层for遍历每一个场景
+             fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+             
+             for j = 1 : length(dataS.(fieldname).TransmInpSpeed) % 内层for遍历 TransmInpSpeed的每个元素
+                 TransmInpSpeedOdd = dataS.(fieldname).TransmInpSpeedOdd(j);
+                 TransmInpSpeedEven = dataS.(fieldname).TransmInpSpeedEven(j);
+                 CurrentGear = dataS.(fieldname).CurrentGear(j); % 使用 CurrentGear对Odd/Even辨别，来合成
+                 
+                 is0 = mod(round(CurrentGear), 2); 
+                 if is0 == 0 
+                     % is even
+                    dataS.(fieldname).TransmInpSpeed(j) = TransmInpSpeedEven;
+                 else
+                     % is odd
+                     dataS.(fieldname).TransmInpSpeed(j) = TransmInpSpeedOdd;
+                 end  
+             end
+             
+         end
+    end
+    
+    disp('--------------- composite TransmInpSpeed over -----------------');
+    
+    %% 两种车，都把 TransmInpSpeedOdd/Even 去掉，同时把 signalTable.mat中 Odd/Even去掉
+    out_dataS = struct;
+    out_scenarioTable = scenarioTable;
+    
+    % out_dataS
+    for i = 1 : height(scenarioTable)
+        fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+
+        out_dataS.(fieldname).id = dataS.(fieldname).id;
+        out_dataS.(fieldname).fieldname = dataS.(fieldname).fieldname;
+        out_dataS.(fieldname).score = dataS.(fieldname).score;
+        out_dataS.(fieldname).details = dataS.(fieldname).details;
+         
+        for j = 1: height(signalTable)
+            signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+
+            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven')
+                continue
+            end
+            
+            out_dataS.(fieldname).(signalName) = dataS.(fieldname).(signalName);
+            
+         end
+    end
+    
+    % out_signalTable
+    tmp = []; % 存储要保留的行
+    for j = 1: height(signalTable)
+            signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven')
+                continue
+            end
+            tmp = [tmp, j];
+    end
+    out_signalTable = signalTable(tmp, :);
+
+    disp('--------------- remove Odd/Even of dataS & signalTable   over -----------------');
+    
+    %% ShiftProcess of Arteon -> ShiftInProgress
+    if strcmp(car_type, 'Arteon')
+        
+        for i = 1 : height(scenarioTable)
+             fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+             old = out_dataS.(fieldname).ShiftInProgress;
+             
+             for j = 1 : length(old)
+                 if old(j) > 0
+                     out_dataS.(fieldname).ShiftInProgress(j) = 1;
+                 else
+                     out_dataS.(fieldname).ShiftInProgress(j) = 0;
+                 end
+             end
+             
+        end
+        
+    end
+    
+    disp('--------------- ShiftProcess -> ShiftInProgress   over -----------------');
+    fprintf('time needed: %.1f s\n', etime(clock, t0));
 
 end

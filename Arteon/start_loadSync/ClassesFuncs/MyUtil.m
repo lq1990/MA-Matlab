@@ -1,5 +1,5 @@
 classdef MyUtil
-    % shuffle rows of arr
+    % utils that defined by myself
     
     properties
     end

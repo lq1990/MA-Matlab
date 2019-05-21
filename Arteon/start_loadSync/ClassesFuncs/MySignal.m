@@ -35,15 +35,17 @@ classdef MySignal
             leData = me.extend();
         end
         
-        function lfeData = load_filter_extend(ms, cut_off, factor)
+        function out = load_filter_extend(ms, cut_off, factor)
             loadData = ms.load();
             
-            mf = MyFilter(loadData, cut_off); % cut_off: 13 ~15 Hz
-            lfData = mf.filter();
+            % extend firstly, then filter
+            me = MyExtend(loadData, factor);
+            exData = me.extend();
+            
+            mf = MyFilter(exData, cut_off); % cut_off: 13 ~15 Hz
             fprintf('filtering > signalSyncName: %s\n', ms.m_signal);
             
-            me = MyExtend(lfData, factor);
-            lfeData = me.extend();
+            out = mf.filter();
         end
         
         function [idx_t_begin, idx_t_end] = findIdxTT(ms, t_begin, t_end, factor, samplingFactor)

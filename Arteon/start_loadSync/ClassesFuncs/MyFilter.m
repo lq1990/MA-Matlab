@@ -2,7 +2,7 @@ classdef MyFilter
     properties
         m_srcdata;
         m_cut_off; % 13 ~ 15
-        m_order = 4; % may regulate with the cut_off
+        m_order = 8; % may regulate with the cut_off
     end
     
     methods

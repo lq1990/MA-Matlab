@@ -31,14 +31,16 @@ plot(xfft, abs(fy/max(fy))); grid on;
 title('frequency domain, original');
 
 %% filter
-cut_off = 30 / Fs/2;
-order = 4;
+cut_off = 15 / Fs/2;
+order = 8;
 h = fir1(order, cut_off);
 fh = fft(h, nfft2);
 fh = fh(1: nfft2/2);
+
 subplot(236)
 plot(xfft, abs(fh/max(fh))); grid on;
 title(['filter, order: ', num2str(order), ', cut off:', num2str(cut_off*Fs*2)]);
+xlabel('hz')
 
 
 % freqz(h); % ÂË²¨Æ÷µÄ ·ùÆµÌØÐÔ

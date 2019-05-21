@@ -3,6 +3,10 @@
 
 % label (score) distribute not identically
 
+% 训练：
+%   不应只用 一辆车的数据，取test所有其他的数据。必然 异分布
+%   
+
 %% distribution of score of Arteon and Geely
 scenarioTable_Arteon = load('scenarioTable');
 scenario_Arteon = scenarioTable_Arteon.scenarioTable;

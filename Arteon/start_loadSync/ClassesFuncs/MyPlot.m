@@ -84,7 +84,10 @@ classdef MyPlot
             file = [param_str, '.txt'];
             if strcmp(param_str, 'Wxh')
                 data = importfile_Wxh(file);
-                signalT = importfile_signal('signalsOfSync.txt');
+                
+                signalTable = load('signalTable.mat');
+                signalT = signalTable.signalTable;
+                
                 offset = 10;
                 MyPlot.showXtickLabel(data, signalT, offset);
                 ylabel('neurons in hidden layer');
@@ -107,12 +110,14 @@ classdef MyPlot
         
         function showMatrix(param_str, data,  ifaxisequal, titleStr)
             if strcmp(param_str, 'cov')
-                signalT = importfile_signal('signalsOfSync.txt');
+                signalTable = load('signalTable.mat');
+                signalT = signalTable.signalTable;
                 offset = 1;
                 MyPlot.showXtickLabel(data, signalT, offset);
             end
             if strcmp(param_str, 'eigenvector')
-                signalT = importfile_signal('signalsOfSync.txt');
+                signalTable = load('signalTable.mat');
+                signalT = signalTable.signalTable;
                 offset = 1;
                 MyPlot.showYtickLabel(data, signalT, offset);
             end
