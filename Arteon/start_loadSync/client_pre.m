@@ -66,16 +66,32 @@ for i = 1 : height(scenarioTable)
         dataStructAll.(fieldname) = dataS_Geely.(fieldname);
 end
 dataStructArrAll = struct2array(dataStructAll);
+save '.\DataFinalSave\dataStructArrAll' dataStructArrAll
 clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTable scenarioTable_Geely
 
-%  plot data of Arteon and Geely
-% range_id = [1:5, 21:23]; % total 36
-% range_signal = [1:7]; % total_signal: 17
-% amp = 10;
-% mp = MyPlot(dataStructArrAll, signalTable, range_id , range_signal, amp ); 
-% mp.show();
+% struct 2 listStruct [{id, score, matData},{},...]
+% list比struct更方便操作。matData每一列对应于 signalTable 而非txt文件。
+
+listStructAll = SceSigDataTrans.allSce2ListStruct(dataStructArrAll, signalTable);
+save '.\DataFinalSave\listStructAll' listStructAll
+
+%% hist
+load listStructAll
+score_list = [];
+for i = 1 : length(listStructAll)
+    item = listStructAll(i);
+    score_list = [score_list; item.score];
+end
+figure;
+edges = [6:0.3:9.0];
+histogram(score_list, edges);
+grid on;
+xlim([5,10]);
+title('Arteon and Geely');
 
 %% train/test dataset split
+
+%% scale train-dataset
 
 
 %% 2. 从dataSArr 中找到每一列(即每一个signal)的最大值、最小值
@@ -92,10 +108,10 @@ save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
 
 
 
-%% 4. plot
+%% 4. plot Arteon
 plotscaling = 0;
-range_id = [1:5]; % total_id: 19
-range_signal = [11:13]; % total_signal: 17
+range_id = [1:19]; % total_id: 19
+range_signal = [ 17 ]; % total_signal: 17
 
 if plotscaling==1
     load('.\DataFinalSave\dataSArrScaling.mat');
@@ -110,5 +126,13 @@ else
 end
 
 clearvars mp plotscaling range_id range_signal sampling_factor;
+
+%%  plot data of Arteon and Geely
+range_id = [1:36]; % total 36
+range_signal = [1:17]; % total_signal: 17
+amp = 10;
+mp = MyPlot(dataStructArrAll, signalTable, range_id , range_signal, amp ); 
+mp.show();
+
 
 %% PCA

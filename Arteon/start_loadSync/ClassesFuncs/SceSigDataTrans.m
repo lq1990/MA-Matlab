@@ -18,6 +18,7 @@ classdef SceSigDataTrans
 
                 s.id = dataSArr(i).id;
                 s.score = dataSArr(i).score;
+                s.details = dataSArr(i).details;
                 s.matData = SceSigDataTrans.aScenaSignals2matData(dataSArr(i), signalTable);
 
                 list = [list, s];
@@ -26,6 +27,17 @@ classdef SceSigDataTrans
             outList = list;
         end
         
+        function matData = structArrAll2matData( dataSArr, signalTable )
+            % 把 dataSArr中 所有场景 一列列signal数据，转成 整个matData格式。
+            matData = zeros(1, length(signalTable.signalName));
+
+            for i = 1:length(dataSArr) % 遍历每个场景
+                 aMatData = SceSigDataTrans.aScenaSignals2matData(dataSArr(i), signalTable);
+                 matData = vertcat(matData, aMatData);
+            end
+            matData = matData(2:end, :); % 把第一行去除
+        end
+
         function out = aScenaSignals2matData( aScenario, signalTable )
             % 把 dataSArr中 单个场景 一列列signal数据，转成matData格式。
 
@@ -38,19 +50,6 @@ classdef SceSigDataTrans
 
             out = aMatData;
         end
-
-        function matData = structArrAll2matData( dataSArr, signalTable )
-            % 把 dataSArr中 所有场景 一列列signal数据，转成 整个matData格式。
-            matData = zeros(1, length(signalTable.signalName));
-
-            for i = 1:length(dataSArr) % 遍历每个场景
-                 aMatData = SceSigDataTrans.aScenaSignals2matData(dataSArr(i), signalTable);
-                 matData = vertcat(matData, aMatData);
-            end
-            matData = matData(2:end, :); % 把第一行去除
-        end
-
-        
 
     end
     

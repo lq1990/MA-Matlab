@@ -79,12 +79,14 @@ classdef MyFeatureEng
                 % 当然在这种情况下，说明 此signal没有必要使用了。
         end
         
-        function  PCA_Show(allMatData, carStr)
-            data_mean = repmat(mean(allMatData), length(allMatData),1 );
-            data_std = repmat(std(allMatData), length(allMatData),1 );
+        function  [ev, lambda, data_mean, data_std]=PCA_Show(allMatData, carStr)
+            data_mean = mean(allMatData);
+            data_std = std(allMatData);
+            data_mean_rep = repmat(mean(allMatData), length(allMatData),1 );
+            data_std_rep = repmat(std(allMatData), length(allMatData),1 );
 
             % Z-score Standardization
-            allMatDataNorm = (allMatData - data_mean) ./ (data_std+1e-8); % avoid num/0
+            allMatDataNorm = (allMatData - data_mean_rep) ./ (data_std_rep+1e-8); % avoid num/0
 
             % covariance, over cols
             cov_data = cov(allMatDataNorm); % equivalent to Correlation Coefficient because of normaliation
