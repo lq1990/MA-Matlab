@@ -51,6 +51,8 @@ classdef SceSigDataTrans
             out = aMatData;
         end
 
+
+        
     end
     
 end

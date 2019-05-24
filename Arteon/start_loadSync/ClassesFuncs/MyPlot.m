@@ -79,6 +79,126 @@ classdef MyPlot
     end
     
     methods(Static)
+        
+        function plotMatDataPcEachSce( listStructAll, range_id, pcs, amp)
+            score_list = [];
+            for i = 1 : length(listStructAll)
+                if ~ismember(i, range_id)
+                    continue
+                end
+
+                item = listStructAll(i);
+                score_list = [score_list; item.score];
+            end
+            score_max = max(score_list);
+            score_min = min(score_list);
+
+            for pc = pcs
+                % 一个pc一个图
+                figure;
+                set(gcf, 'position', [50, -100, 1000, 800]);
+                legend_cell = {};
+                for i = 1:length(listStructAll)
+                    if ~ismember(i, range_id)
+                        continue
+                    end
+
+                    item = listStructAll(i);
+                    id = item.id;
+                    score = item.score;
+                    details = item.details;
+                    matDataPc = item.matDataPcAll(:, pc);
+
+                    idstr = num2str(id);
+                    if idstr(1) == '1' % Arteon
+                        linetyp = '-';
+                    else % Geely
+                        linetyp = '-.';
+                    end
+
+                    legend_cell = [legend_cell, ['score: ', num2str(score),', ' ,details]];
+                    plot(matDataPc, linetyp, 'LineWidth', (score - score_min)/(score_max-score_min + 1e-8)*amp +0.5 );
+                    grid on; hold on;
+                end
+
+                title(['PC', num2str(pc)]);
+                legend(legend_cell);
+                xlabel('time. sampling freq: 100hz'); 
+             end
+        end
+
+        function plot3DMatDataPcTime( listStructAll, range_id, pcs, amp )
+            score_list = [];
+            for i = 1 : length(listStructAll)
+                if ~ismember(i, range_id)
+                    continue
+                end
+
+                item = listStructAll(i);
+                score_list = [score_list; item.score];
+            end
+            score_max = max(score_list);
+            score_min = min(score_list);
+
+            for i = 1 : 2 : length(pcs)
+                pc = [i, i+1];
+               MyPlot.plot3DFor2(listStructAll, range_id, pc, score_max, score_min, amp );
+            end
+        end
+        
+        function plot3DFor2(listStructAll, range_id, pcs, score_max, score_min, amp )
+            % pcs: [pc1, pc2] or [pc3, pc4] or ...
+            figure;
+            legend_cell = {};
+            for i = 1 : length(listStructAll)
+                 if ~ismember(i, range_id)
+                    continue
+                 end
+
+                item = listStructAll(i);
+                id = item.id;
+                score = item.score;
+                details = item.details;
+
+                % line type
+                idstr = num2str(id);
+                if idstr(1) == '1' % Arteon
+                    linetyp = '-';
+                else % Geely
+                    linetyp = '-.';
+                end
+
+                pc1 = item.matDataPcAll(:, pcs(1));
+                pc2 = item.matDataPcAll(:, pcs(2));
+                time = (1:length(pc1))';
+
+                legend_cell = [legend_cell, ['score: ', num2str(score),', ' ,details]];
+                plot3(time, pc1, pc2, linetyp, 'LineWidth', (score - score_min)/(score_max-score_min + 1e-8)*amp +0.5); 
+                grid on; hold on;
+
+            end
+
+            xlabel('time');
+            ylabel(['PC', num2str(pcs(1))]);
+            zlabel(['PC', num2str(pcs(2))]);
+            legend(legend_cell);
+        end
+        
+        function plotHistogram(listStruct, edges, xlimit, titleStr)
+            score_list = [];
+            for i = 1 : length(listStruct)
+                item = listStruct(i);
+                score_list = [score_list; item.score];
+            end
+            figure;
+%             edges = [6:0.3:9.0];
+            histogram(score_list, edges);
+            grid on;
+%             xlim([5,10]);
+            xlim(xlimit);
+            title(titleStr);
+        end
+        
         function showParams( param_str, ifaxisequal )
             figure;
             file = [param_str, '.txt'];

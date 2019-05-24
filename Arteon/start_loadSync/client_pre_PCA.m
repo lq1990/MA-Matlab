@@ -2,7 +2,8 @@ clear;
 % close all;
 clc;
 
-% 注：matDataPc是norm的
+% 注：matDataPcAll是norm的 (data-mean)/std
+% PC 已经正确排序了
 
 %% PCA of all matData
 load signalTable
@@ -33,34 +34,37 @@ ylabel('%');
 % 但为了可视化整体，求方便，选用前两个PC。
 
 %% get pc1, pc2, then plot them over time 此处对matDataPc norm
-ev_pc12 = ev(:, [end, end-1]); % (17,2)
+ev_pc = ev(:, [end:-1:1]); % 正确的顺序
 % 对所有场景的matData进行降维到2维
 load listStructAll
 for i = 1:length(listStructAll)
     itemMatData = listStructAll(i).matData;
     
-    % norm
+    % norm，使用的mean和std是所有场景matData的数据求得的
     data_mean_rep = repmat(data_mean , length(itemMatData) , 1);
     data_std_rep = repmat(data_std , length(itemMatData) , 1);
     itemMatData = (itemMatData - data_mean_rep) ./ (data_std_rep + 1e-8);
     
-    itemMatDataPc = itemMatData * ev_pc12; % (m, 17)(17,2) = (m,2)
+    itemMatDataPcAll = itemMatData * ev_pc; % (m, 17)(17,2) = (m,2)
     % create a new field matDataPc in listStructAll
-    listStructAll(i).matDataPc = itemMatDataPc;
+    listStructAll(i).matDataPcAll = itemMatDataPcAll;
 end
 
+save '.\DataFinalSave\listStructAll' listStructAll
 
 %% 2D. use matDataPc and score to plot
-range_id = [1:5, 20:25]; % total 36
+range_id = [10:12, 23:25]; % total 36
+pcs = [1:8];
 amp = 5;
-plotMatData( listStructAll,  [1,2], {'PC1', 'PC2'}, range_id, amp );
-
+MyPlot.plotMatDataPcEachSce( listStructAll, range_id, pcs, amp );
 
 
 %% 3D plot, pc1-pc2-time
-range_id = [1:5, 20:25]; % total 36
-amp = 5;
-plot3DMatDataPcTime(listStructAll, range_id, amp);
+close all;
 
+range_id = [1:36]; % total 36
+pcs = [1:2]; % 12, 34, 56, 78
+amp = 7;
+MyPlot.plot3DMatDataPcTime( listStructAll, range_id, pcs, amp )
 
 

@@ -14,6 +14,8 @@
 % Arteon: id 10xxx
 % Geely  : id 20xxx
 
+% 注意： matDataPcAll是由listStruct得到的，matDataPcAll不能单独在train中用。
+
 clc; close all; clear;
 
 addpath(genpath(pwd));
@@ -75,64 +77,47 @@ clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTabl
 listStructAll = SceSigDataTrans.allSce2ListStruct(dataStructArrAll, signalTable);
 save '.\DataFinalSave\listStructAll' listStructAll
 
-%% hist
+%% 3. train/test dataset split, listStructAll split
 load listStructAll
-score_list = [];
-for i = 1 : length(listStructAll)
-    item = listStructAll(i);
-    score_list = [score_list; item.score];
-end
-figure;
-edges = [6:0.3:9.0];
-histogram(score_list, edges);
-grid on;
-xlim([5,10]);
-title('Arteon and Geely');
+listStructAll_shuffle = MyUtil.shuffleListStruct(listStructAll); % rand('seed', 1);
 
-%% train/test dataset split
+% 36/4*3 = 27 #Train
+listStructTrain = listStructAll_shuffle(1 : 27);
+listStructTest = listStructAll_shuffle(28 : 36);
 
-%% scale train-dataset
+% norm Train-dataset, using Z-score Standardization
+matDataTrainAll = MyListStruct.listStruct2OneMatData(listStructTrain);
+mean_train = mean(matDataTrainAll); std_train = std(matDataTrainAll);
 
+listStructTrain = MyListStruct.addMatDataZScore( listStructTrain, mean_train, std_train );
+listStructTest = MyListStruct.addMatDataZScore( listStructTest, mean_train, std_train ); % test dataset 也是按照 mean_train std_train 来norm
 
-%% 2. 从dataSArr 中找到每一列(即每一个signal)的最大值、最小值
-load('.\DataFinalSave\dataSArr.mat');
-load('.\src\signalTable.mat');
-[signalsMaxMinStruct] = MyFeatureEng.findSignalsMaxMin(dataSArr, signalTable);
-% 存储，为了test时也要用到
-save '.\DataFinalSave\signalsMaxMinStruct' signalsMaxMinStruct
+save '.\DataFinalSave\listStructTrain' listStructTrain
+save '.\DataFinalSave\listStructTest' listStructTest
+save '.\DataFinalSave\mean_train' mean_train % 保存之后的train-mean和train-std，在以后的test数据的norm中用到。
+save '.\DataFinalSave\std_train' std_train
 
-%% 3. scaling
-[dataSScaling, dataSArrScaling]= MyFeatureEng.minMaxScaling( dataSArr, signalsMaxMinStruct, signalTable );
-save '.\DataFinalSave\dataSScaling' dataSScaling
-save '.\DataFinalSave\dataSArrScaling' dataSArrScaling
+%% 使用 listStructTrain.matDataZScore 对RNN训练
 
 
+% 有了RNN的模型参数后，predict listStructTest.matDataZScore
 
-%% 4. plot Arteon
-plotscaling = 0;
-range_id = [1:19]; % total_id: 19
-range_signal = [ 17 ]; % total_signal: 17
-
-if plotscaling==1
-    load('.\DataFinalSave\dataSArrScaling.mat');
-    load('.\src\signalTable.mat');
-    mp = MyPlot(dataSArrScaling, signalTable, range_id , range_signal, 10 ); 
-    mp.show();
-else
-    load('.\DataFinalSave\dataSArr.mat');
-    load('.\src\signalTable.mat');
-    mp = MyPlot(dataSArr, signalTable, range_id , range_signal, 10 ); 
-    mp.show();
-end
-
-clearvars mp plotscaling range_id range_signal sampling_factor;
 
 %%  plot data of Arteon and Geely
-range_id = [1:36]; % total 36
-range_signal = [1:17]; % total_signal: 17
+load dataStructArrAll
+load signalTable
+range_id = [1:5]; % total 36
+range_signal = [1:5]; % total_signal: 17
 amp = 10;
 mp = MyPlot(dataStructArrAll, signalTable, range_id , range_signal, amp ); 
 mp.show();
 
+%% hist
+edges = [6:0.3:9.0];
+xlimit = [5,10];
+titleStr = 'Arteon and Geely';
+MyPlot.plotHistogram(listStructAll, edges, xlimit, titleStr);
 
-%% PCA
+% MyPlot.plotHistogram(listStructTrain, [6:0.3:9.0], [5,10], 'Train dataset');
+% MyPlot.plotHistogram(listStructTest, [6:0.3:9.0], [5,10], 'Test dataset');
+

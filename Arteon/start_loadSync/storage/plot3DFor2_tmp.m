@@ -1,18 +1,7 @@
-function plot3DMatDataPcTime( listStructAll, range_id, amp )
-    score_list = [];
-    for i = 1 : length(listStructAll)
-        if ~ismember(i, range_id)
-            continue
-        end
-
-        item = listStructAll(i);
-        score_list = [score_list; item.score];
-    end
-    score_max = max(score_list);
-    score_min = min(score_list);
-
-    legend_cell = {};
+function plot3DFor2(listStructAll, range_id, pcs, score_max, score_min, amp )
+    % pcs: [pc1, pc2] or [pc3, pc4] or ...
     figure;
+    legend_cell = {};
     for i = 1 : length(listStructAll)
          if ~ismember(i, range_id)
             continue
@@ -22,7 +11,7 @@ function plot3DMatDataPcTime( listStructAll, range_id, amp )
         id = item.id;
         score = item.score;
         details = item.details;
-        
+
         % line type
         idstr = num2str(id);
         if idstr(1) == '1' % Arteon
@@ -31,8 +20,8 @@ function plot3DMatDataPcTime( listStructAll, range_id, amp )
             linetyp = '-.';
         end
 
-        pc1 = item.matDataPc(:, 1);
-        pc2 = item.matDataPc(:, 2);
+        pc1 = item.matDataPcAll(:, pcs(1));
+        pc2 = item.matDataPcAll(:, pcs(2));
         time = (1:length(pc1))';
 
         legend_cell = [legend_cell, ['score: ', num2str(score),', ' ,details]];
@@ -42,10 +31,8 @@ function plot3DMatDataPcTime( listStructAll, range_id, amp )
     end
 
     xlabel('time');
-    ylabel('pc1');
-    zlabel('pc2');
+    ylabel(['PC', num2str(pcs(1))]);
+    zlabel(['PC', num2str(pcs(2))]);
     legend(legend_cell);
-
-
 end
 
