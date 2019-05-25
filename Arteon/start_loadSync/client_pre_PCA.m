@@ -53,6 +53,7 @@ end
 save '.\DataFinalSave\listStructAll' listStructAll
 
 %% 2D. use matDataPc and score to plot
+load listStructAll
 range_id = [10:12, 23:25]; % total 36
 pcs = [1:8];
 amp = 5;
@@ -61,9 +62,10 @@ MyPlot.plotMatDataPcEachSce( listStructAll, range_id, pcs, amp );
 
 %% 3D plot, pc1-pc2-time
 close all;
+load listStructAll
 
-range_id = [1:36]; % total 36
-pcs = [1:2]; % 12, 34, 56, 78
+range_id = [1:3, 30:32]; % total 36
+pcs = [1:4]; % 12, 34, 56, 78
 amp = 7;
 MyPlot.plot3DMatDataPcTime( listStructAll, range_id, pcs, amp )
 

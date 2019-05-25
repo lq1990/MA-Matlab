@@ -22,9 +22,9 @@ classdef MyUtil
             out = s(randIdx);
         end
         
-        function out = shuffleListStruct(in)
+        function out = shuffleListStruct(in, seed)
             % shuffle rows of listStruct
-            rand('seed',1);
+            rand('seed', seed);
             randIdx = randperm(length(in));
             out = in(randIdx);
         end

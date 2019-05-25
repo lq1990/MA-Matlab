@@ -80,6 +80,55 @@ classdef MyPlot
     
     methods(Static)
         
+        function plotSignalsOfListStruct(listStruct, signalTable, range_id, range_signal, plotZScore, lineTyp, amp)
+            % plot matData or matDataZScore of listStruct, 
+            % each col representes a signal
+            [ score_min, score_max ] = MyPlot.findScoreMinMaxOfListStruct(listStruct, range_id);
+            
+            for i = 1 : height(signalTable)
+                if ~ismember(i, range_signal)
+                    continue
+                end
+                
+                figure; % 一个signal一个figure，对应listStruct.matData的一列
+                legend_cell = {};
+                set(gcf, 'position', [50, -100, 1000, 800]);
+                signalname_cell = signalTable.signalName(i); signalname = signalname_cell{1,1};
+                for j = 1 : length(listStruct)
+                     if ~ismember(j, range_id)
+                        continue
+                    end
+                    
+                    itemSce = listStruct(j);
+                    id = itemSce.id;
+                    score = itemSce.score;
+                    details = itemSce.details;
+                    
+                    if plotZScore == 0
+                        matData = itemSce.matData(: , i); % 一个signal对应一列
+                    else
+                        matData = itemSce.matDataZScore(: , i);
+                    end
+                    
+                    idstr = num2str(id);
+                    if idstr(1) == '1' % Arteon
+                        linetyp = lineTyp{1};
+                    else % Geely
+                        linetyp = lineTyp{2};
+                    end
+                    
+                    legend_cell = [legend_cell, ['score: ', num2str(score),', ' ,details]];
+                    plot(matData, linetyp, 'LineWidth', (score-score_min)/(score_max-score_min+1e-8) * amp+0.5); 
+                    grid on; hold on;
+                    
+                end
+                title(signalname);
+                legend(legend_cell);
+                
+            end
+            
+        end
+        
         function plotMatDataPcEachSce( listStructAll, range_id, pcs, amp)
             score_list = [];
             for i = 1 : length(listStructAll)
@@ -182,6 +231,20 @@ classdef MyPlot
             ylabel(['PC', num2str(pcs(1))]);
             zlabel(['PC', num2str(pcs(2))]);
             legend(legend_cell);
+        end
+        
+        function [ score_min, score_max ] = findScoreMinMaxOfListStruct(listStruct, range_id)
+             score_list = [];
+            for i = 1 : length(listStruct)
+                if ~ismember(i, range_id)
+                    continue
+                end
+
+                item = listStruct(i);
+                score_list = [score_list; item.score];
+            end
+            score_max = max(score_list);
+            score_min = min(score_list);
         end
         
         function plotHistogram(listStruct, edges, xlimit, titleStr)

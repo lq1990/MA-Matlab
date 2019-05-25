@@ -79,7 +79,7 @@ save '.\DataFinalSave\listStructAll' listStructAll
 
 %% 3. train/test dataset split, listStructAll split
 load listStructAll
-listStructAll_shuffle = MyUtil.shuffleListStruct(listStructAll); % rand('seed', 1);
+listStructAll_shuffle = MyUtil.shuffleListStruct(listStructAll, 1); % rand('seed', seed); 打乱顺序
 
 % 36/4*3 = 27 #Train
 listStructTrain = listStructAll_shuffle(1 : 27);
@@ -101,16 +101,20 @@ save '.\DataFinalSave\std_train' std_train
 
 
 % 有了RNN的模型参数后，predict listStructTest.matDataZScore
+% 另找10个起步场景，做预测
 
+% post阶段，可视化 采样数据-模型-分类 过程
 
 %%  plot data of Arteon and Geely
-load dataStructArrAll
+load listStructTest
 load signalTable
-range_id = [1:5]; % total 36
-range_signal = [1:5]; % total_signal: 17
+range_id = [4:8]; % 
+range_signal = [10:17]; % total_signal: 17
+plotZScore = 1;
 amp = 10;
-mp = MyPlot(dataStructArrAll, signalTable, range_id , range_signal, amp ); 
-mp.show();
+MyPlot.plotSignalsOfListStruct(listStructTest, signalTable, range_id, range_signal, plotZScore, {'-', '-'}, amp);
+
+clearvars range_id range_signal plotZScore amp;
 
 %% hist
 edges = [6:0.3:9.0];
@@ -118,6 +122,6 @@ xlimit = [5,10];
 titleStr = 'Arteon and Geely';
 MyPlot.plotHistogram(listStructAll, edges, xlimit, titleStr);
 
-% MyPlot.plotHistogram(listStructTrain, [6:0.3:9.0], [5,10], 'Train dataset');
-% MyPlot.plotHistogram(listStructTest, [6:0.3:9.0], [5,10], 'Test dataset');
+MyPlot.plotHistogram(listStructTrain, [6:0.3:9.0], [5,10], 'Train dataset');
+MyPlot.plotHistogram(listStructTest, [6:0.3:9.0], [5,10], 'Test dataset');
 

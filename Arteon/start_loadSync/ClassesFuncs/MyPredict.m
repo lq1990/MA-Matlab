@@ -15,7 +15,7 @@ classdef MyPredict
                 id = list_data(i).id;
                 score = list_data(i).score;
                 target_class =MyPredict.score2class(score, maxScore, minScore, numClasses);
-                matData = list_data(i).matData;
+                matData = list_data(i).matDataZScore; % use matDataZScore
 
                 [prob, pred_class]=MyPredict.predictOneScenario(matData, Wxh, Whh, Why, bh, by);
                 pred_score = MyPredict.class2score(pred_class, maxScore, minScore, numClasses);

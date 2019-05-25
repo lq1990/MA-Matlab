@@ -9,7 +9,10 @@ addpath(genpath(pwd));
 
 % 选择参数
 rmpath([pwd, '/ModelParamsFromC++/DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
-% rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
+rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
+rmpath([pwd, '/ModelParamsFromC++/100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.0073, accu 1, matDataZScore, listStructTrain']);
+% rmpath([pwd, '/ModelParamsFromC++/100hz, n_h 50, classes 10, alpha 0.1, epoches 201, Adagrad, loss 0.03, accu 1, matDataZScore, listStructTrain, seed1']);
+
 
 %% 矩阵可视化
 MyPlot.showParams('Wxh', 0); % 第二个参数是 ifaxisequal
@@ -37,18 +40,6 @@ plot(accuracyeachepoch, 'r','LineWidth',2); grid on;
 title('accuracy each epoch');
 
 %% re-test the trainingData and scores
-load('dataSArrScaling.mat');
-load('signalTable.mat');
-
-dataSArr = dataSArrScaling;
-list_data_Arteon = SceSigDataTrans.allSce2ListStruct(dataSArr, signalTable); 
-
-save '.\DataFinalSave\list_data_Arteon' list_data_Arteon
-
-% ===== use matData and parameters to predict score =====
-addpath(genpath(pwd));
-rmpath([pwd, '\ModelParamsFromC++\DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
-% rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
 
 % 场景进行 前传，计算score_class。使用到W b
 Wxh = importfile_Wxh('Wxh.txt');
@@ -61,9 +52,14 @@ maxScore = 8.9;
 minScore = 6.0;
 numClasses = 10 ;
 
-list_data = list_data_Arteon;
+load listStructTrain
+list_data = listStructTrain;
 MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
 
-%% test Geely
+%% test listStructTest
+load listStructTest
+list_data = listStructTest;
+MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+
 
 
