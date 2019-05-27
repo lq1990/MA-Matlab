@@ -1,0 +1,6 @@
+id	fieldname	score	t_begin	t_end	details	dir
+2001	id2001_start	7.3	1782	2022	Geely-start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\121_sync.mat
+2002	id2002_start	7.3	2483	3154	Geely-start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\121_sync.mat
+2003	id2003_start	7.3	168	357	Geely-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\124_sync.mat
+2004	id2004_start	7.3	757	925	Geely-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\124_sync.mat
+2005	id2005_start	7.3	1330	1541	Geely-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\124_sync.mat

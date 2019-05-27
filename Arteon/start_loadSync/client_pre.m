@@ -77,22 +77,25 @@ clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTabl
 listStructAll = SceSigDataTrans.allSce2ListStruct(dataStructArrAll, signalTable);
 save '.\DataFinalSave\listStructAll' listStructAll
 
-%% 3. train/test dataset split, listStructAll split
+%% 3. train/CV/test dataset split, listStructAll split. 0.6/0.2/0.2
 load listStructAll
 listStructAll_shuffle = MyUtil.shuffleListStruct(listStructAll, 1); % rand('seed', seed); 打乱顺序
 
-% 36/4*3 = 27 #Train
-listStructTrain = listStructAll_shuffle(1 : 27);
-listStructTest = listStructAll_shuffle(28 : 36);
+% 22/7/7
+listStructTrain = listStructAll_shuffle(1 : 22);
+listStructCV = listStructAll_shuffle(23 : 29);
+listStructTest = listStructAll_shuffle(30 : 36);
 
 % norm Train-dataset, using Z-score Standardization
 matDataTrainAll = MyListStruct.listStruct2OneMatData(listStructTrain);
 mean_train = mean(matDataTrainAll); std_train = std(matDataTrainAll);
 
 listStructTrain = MyListStruct.addMatDataZScore( listStructTrain, mean_train, std_train );
-listStructTest = MyListStruct.addMatDataZScore( listStructTest, mean_train, std_train ); % test dataset 也是按照 mean_train std_train 来norm
+listStructCV = MyListStruct.addMatDataZScore( listStructCV, mean_train, std_train );
+listStructTest = MyListStruct.addMatDataZScore( listStructTest, mean_train, std_train ); % CV/test dataset 也是按照 mean_train std_train 来norm
 
 save '.\DataFinalSave\listStructTrain' listStructTrain
+save '.\DataFinalSave\listStructCV' listStructCV
 save '.\DataFinalSave\listStructTest' listStructTest
 save '.\DataFinalSave\mean_train' mean_train % 保存之后的train-mean和train-std，在以后的test数据的norm中用到。
 save '.\DataFinalSave\std_train' std_train

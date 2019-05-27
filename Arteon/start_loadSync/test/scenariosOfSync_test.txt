@@ -1,0 +1,6 @@
+id	fieldname	score	t_begin	t_end	details	dir
+1001	id1001_start	7.9	11393	12493	Arteon-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.03.18_dry\Syncdaten\13-14-15_sync.mat
+1002	id1002_start	7.9	8439	9433	Arteon-start-Fp25	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.03.18_dry\Syncdaten\13-14-15_sync.mat
+1003	id1003_start	7.9	5743	6977	Arteon-start-Fp10	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.03.18_dry\Syncdaten\13-14-15_sync.mat
+1004	id1004_start	7.3	14223	14990	Arteon-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.03.18_dry\Syncdaten\13-14-15_sync.mat
+1005	id1005_start	6.7	1245	2195	Arteon-start-Fp50	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_21.03.18_dry\Syncdaten\13-14-15_sync.mat

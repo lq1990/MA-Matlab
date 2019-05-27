@@ -1,0 +1,20 @@
+signalName	signalTimeName	signalSyncName	unit	length_id16
+EngineSpeed	sync_t5	sync_CAN2_Motor_12_MO_Drehzahl_01_t5	1/min	17901
+VehicleSpeed	sync_t1	sync_CAN2_ESP_21_ESP_v_Signal_t1	km/h	8951
+LongAcce	sync_t20	sync_CAN2_ESP_02_ESP_Laengsbeschl_t20	m/s2	8952
+LateralAcce	sync_t32	sync_CAN2_ESP_02_ESP_Querbeschleunigung_t32	m/s2	8952
+AccePedal	sync_t6	sync_CAN2_Motor_20_MO_Fahrpedalrohwert_01_t6	%	8951
+ThrottlePos	sync_t7	sync_CAN2_OBD_01_OBD_Abs_Throttle_Pos_t7	%	1791
+KickDown	sync_t19	sync_CAN2_Motor_14_MO_Kickdown_t19	0/1	1855
+EngineTorque	sync_t4	sync_CAN2_Motor_11_MO_Mom_Ist_Summe_t4	Nm	17901
+TransmInpSpeed	sync_t8	sync_CAN2_Getriebe_13_GE_Eingangsdrehz_t8	1/min	8954
+TransmInpSpeedOdd
+TransmInpSpeedEven
+DrivingProgram	sync_t45	sync_CAN2_Getriebe_17_GE_Fahrprogramm_t45	-	1790
+CurrentGear	sync_t46	sync_CAN2_Motor_04_MO_Istgang_t46	-	8953
+TargetGear	sync_t3	sync_CAN2_Getriebe_11_GE_Zielgang_t3	-	3581
+ShiftInProgress	sync_t2	sync_CAN2_Getriebe_11_GE_Schaltablauf_t2	0/1	3581
+BrakePressure	sync_t9	sync_CAN2_ESP_05_ESP_Bremsdruck_t9	bar	8952
+SteerWheelAngle	sync_t53	sync_CAN6_LWI_01_LWI_Lenkradwinkel_t53	Grad	17903
+SteerWheelSpeed	sync_t55	sync_CAN6_LWI_01_LWI_Lenkradw_Geschw_t55	Grad/s	17903
+AccStatus	sync_t57	sync_CAN2_ACC_06_ACC_Status_ACC_t57	-	8952

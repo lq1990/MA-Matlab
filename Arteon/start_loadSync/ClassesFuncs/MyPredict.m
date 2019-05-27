@@ -17,23 +17,28 @@ classdef MyPredict
                 target_class =MyPredict.score2class(score, maxScore, minScore, numClasses);
                 matData = list_data(i).matDataZScore; % use matDataZScore
 
-                [prob, pred_class]=MyPredict.predictOneScenario(matData, Wxh, Whh, Why, bh, by);
-                pred_score = MyPredict.class2score(pred_class, maxScore, minScore, numClasses);
+                [prob_list, pred_class_list]=MyPredict.predictOneScenario(matData, Wxh, Whh, Why, bh, by);
+                pred_score_list = MyPredict.class2score(pred_class_list, maxScore, minScore, numClasses);
                 
-                if target_class == pred_class
+                if target_class == pred_class_list(1) % 和最大的prob比较
                     true_false = 'true';
                 else
                     true_false = '---false---';
                 end
                 
-                fprintf('id: %g,\t target | prediction, class: %d | %d, score: %.1f | %.1f, prob: %.2f, %s\n', id, target_class, pred_class, score, pred_score, prob, true_false);
+                fprintf('id: %g,\t target | [pred1, pred2, pred3], class: %d | [%d, %d, %d], score: %.1f | [%.1f, %.1f, %.1f], prob: [%.2f, %.2f, %.2f], pred1: %s\n',...
+                            id,  target_class, [pred_class_list(1),pred_class_list(2),pred_class_list(3)],...
+                                            score, [pred_score_list(1), pred_score_list(2), pred_score_list(3)],...
+                                                        [prob_list(1), prob_list(2), prob_list(3)],...
+                                                        true_false);
             end
         end
        
-        function [ prob, pred_class ] = predictOneScenario(matData, Wxh, Whh, Why, bh, by)
+        function [ prob_list, pred_class_list ] = predictOneScenario(matData, Wxh, Whh, Why, bh, by)
+            % return the first three high prob and index
+            % use FP and W b to predict scores
             H_ = zeros(length(Whh) ,1); % init H_
             for r = 1 : length(matData)
-                % use FP and W b to predict scores
                 curRow = matData(r, :)';
 
                 Hraw = Wxh * curRow + Whh * H_ + bh;
@@ -42,8 +47,9 @@ classdef MyPredict
 
                 if r == length(matData)
                     YModel = Why * H + by;
-                    Prob = softmax(YModel);
-                    [prob, pred_class] = max(Prob);
+                    Prob = softmax(YModel); % column vector
+                    [prob_list, pred_class_list] = MyUtil.findFirstThreeHighValAndIdx(Prob);
+                    
                 end
             end
         end

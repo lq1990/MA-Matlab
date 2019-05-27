@@ -4,6 +4,20 @@
 
 clc;
 
+%% 寻找softmax list中前三个较大的 val 和idx
+list = [0.2; 1; 0.5; 2; 0.2; 0.01];
+soft = softmax(list);
+
+prob_list = [];
+idx_list = [];
+
+for i = 1:3
+    [prob, idx] = max(soft);
+    prob_list = [prob_list, prob];
+    idx_list = [idx_list, idx];
+    soft(idx) = 0;
+end
+
 %% 试验 (data-mean)/std
 
 x = 1:0.1:10;

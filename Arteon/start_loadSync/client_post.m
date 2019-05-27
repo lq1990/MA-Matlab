@@ -11,8 +11,8 @@ addpath(genpath(pwd));
 rmpath([pwd, '/ModelParamsFromC++/DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
 rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
 rmpath([pwd, '/ModelParamsFromC++/100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.0073, accu 1, matDataZScore, listStructTrain']);
-% rmpath([pwd, '/ModelParamsFromC++/100hz, n_h 50, classes 10, alpha 0.1, epoches 201, Adagrad, loss 0.03, accu 1, matDataZScore, listStructTrain, seed1']);
-
+rmpath([pwd, '/ModelParamsFromC++/100hz, n_h 50, classes 10, alpha 0.1, epoches 201, Adagrad, loss 0.03, accu 1, matDataZScore, listStructTrain, seed1']);
+% rmpath([pwd, '/ModelParamsFromC++/lambda 0.19, train_cv_concat']);
 
 %% 矩阵可视化
 MyPlot.showParams('Wxh', 0); % 第二个参数是 ifaxisequal
@@ -56,10 +56,17 @@ load listStructTrain
 list_data = listStructTrain;
 MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
 
+% re-test listStructCV
+load listStructCV
+list_data = listStructCV;
+MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+
 %% test listStructTest
 load listStructTest
 list_data = listStructTest;
 MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+
+%% 另外找 10 个start场景，预测
 
 
 
