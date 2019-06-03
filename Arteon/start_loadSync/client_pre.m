@@ -109,22 +109,28 @@ save '.\DataFinalSave\std_train' std_train
 % post阶段，可视化 采样数据-模型-分类 过程
 
 %%  plot data of Arteon and Geely
-load listStructTest
+load listStructTrain
 load signalTable
-range_id = [4:8]; % 
-range_signal = [10:17]; % total_signal: 17
+
+listStruct = listStructTrain;
+range_id = [1, 3:5]; % 
+range_signal = [1:5]; % total_signal: 17
 plotZScore = 1;
 amp = 10;
-MyPlot.plotSignalsOfListStruct(listStructTest, signalTable, range_id, range_signal, plotZScore, {'-', '-'}, amp);
+MyPlot.plotSignalsOfListStruct(listStruct, signalTable, range_id, range_signal, plotZScore, {'-', '-'}, amp);
 
 clearvars range_id range_signal plotZScore amp;
 
 %% hist
+load listStructAll
+
 edges = [6:0.3:9.0];
 xlimit = [5,10];
 titleStr = 'Arteon and Geely';
 MyPlot.plotHistogram(listStructAll, edges, xlimit, titleStr);
 
-MyPlot.plotHistogram(listStructTrain, [6:0.3:9.0], [5,10], 'Train dataset');
-MyPlot.plotHistogram(listStructTest, [6:0.3:9.0], [5,10], 'Test dataset');
+% load listStructTrain
+% load listStructTest
+% MyPlot.plotHistogram(listStructTrain, [6:0.3:9.0], [5,10], 'Train dataset');
+% MyPlot.plotHistogram(listStructTest, [6:0.3:9.0], [5,10], 'Test dataset');
 

@@ -81,7 +81,7 @@ MyPlot.plotSignalsOfListStruct(listStructAll_test, signalTable_test, range_id, r
 
 clearvars range_id range_signal plotZScore amp;
 
-%% predict
+%% predict another 10 scenarios
 % 场景进行 前传，计算score_class。使用到W b
 
 % 选择参数

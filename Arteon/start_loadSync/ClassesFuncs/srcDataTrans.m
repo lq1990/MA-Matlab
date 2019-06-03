@@ -125,7 +125,7 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
 
     disp('---------------- get dataS over 2/5 ----------------');
 
-    %% 按照 AccePedal = 0，对数据的起始位置idx_ap0 进行 微调
+    %% Only For Start, 按照 AccePedal = 0，对数据的起始位置idx_ap0 进行 微调
     % 按照 AccePedal 第一个点val为0，而第二个点要 >0
     % 目前有几个场景的FP，在时刻一二都是0.
 
@@ -162,7 +162,7 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
 
     disp('---------------- clip by AccePedal=0 at the begining of Start over 3/5 ----------------');
 
-    %% 按照 v= 30 km/h 为限 对 dataS 进行裁剪，因为汽车起步 30km/h，再大的速度就不是起步过程了
+    %% Only For Start, 按照 v= 30 km/h 为限 对 dataS 进行裁剪，因为汽车起步 30km/h，再大的速度就不是起步过程了
     for i = 1 : height(scenarioTable)
         % 遍历每一个场景，找到每个场景中 idx_v30
          fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
@@ -196,7 +196,8 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
 
     disp('---------------- clip by idx_v30 over 4/5 ----------------');
 
-    %% 保证 NaN 的signal数据长度 和其它signal一致
+    %% For All Scenarios (as default), 保证 NaN 的signal数据长度 和其它signal一致
+    
     for i = 1 : height(scenarioTable)
          % get length_target
          fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};

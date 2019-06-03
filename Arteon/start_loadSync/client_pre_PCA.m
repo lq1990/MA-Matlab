@@ -3,6 +3,7 @@ clear;
 clc;
 
 % 注：matDataPcAll是norm的 (data-mean)/std
+% matDataPcAll 的mean和std是 all data的，注意区分不是trainData的。
 % PC 已经正确排序了
 
 %% PCA of all matData
@@ -33,7 +34,7 @@ ylabel('%');
 % 结论：若只选 PC1 PC2 不足以代表整体。
 % 但为了可视化整体，求方便，选用前两个PC。
 
-%% get pc1, pc2, then plot them over time 此处对matDataPc norm
+%% matDataPc norm, add matDataPcAll
 ev_pc = ev(:, [end:-1:1]); % 正确的顺序
 % 对所有场景的matData进行降维到2维
 load listStructAll
@@ -53,11 +54,12 @@ end
 save '.\DataFinalSave\listStructAll' listStructAll
 
 %% 2D. use matDataPc and score to plot
-load listStructAll
-range_id = [10:12, 23:25]; % total 36
-pcs = [1:8];
+load listStructTrain
+
+range_id = [1:10]; % total
+pcs = [1:2];
 amp = 5;
-MyPlot.plotMatDataPcEachSce( listStructAll, range_id, pcs, amp );
+MyPlot.plotMatDataPcEachSce( listStructTrain, range_id, pcs, amp, {'-','-'} );
 
 
 %% 3D plot, pc1-pc2-time

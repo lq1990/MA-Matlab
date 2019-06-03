@@ -129,7 +129,7 @@ classdef MyPlot
             
         end
         
-        function plotMatDataPcEachSce( listStructAll, range_id, pcs, amp)
+        function plotMatDataPcEachSce( listStructAll, range_id, pcs, amp, lineType)
             score_list = [];
             for i = 1 : length(listStructAll)
                 if ~ismember(i, range_id)
@@ -160,13 +160,13 @@ classdef MyPlot
 
                     idstr = num2str(id);
                     if idstr(1) == '1' % Arteon
-                        linetyp = '-';
+                        linetyp = lineType{1};
                     else % Geely
-                        linetyp = '-.';
+                        linetyp = lineType{2};
                     end
 
                     legend_cell = [legend_cell, ['score: ', num2str(score),', ' ,details]];
-                    plot(matDataPc, linetyp, 'LineWidth', (score - score_min)/(score_max-score_min + 1e-8)*amp +0.5 );
+                    plot(matDataPc, linetyp, 'LineWidth', (score - score_min)/(score_max-score_min + 1e-8)*amp +1 );
                     grid on; hold on;
                 end
 
@@ -340,8 +340,9 @@ classdef MyPlot
                 end
             end
 
-            title([titleStr, ' ', param_str, ' maxVal: ', num2str(val_max), ', minVal: ', num2str(val_min), ', red: positive, blue: negative']);
+            title([titleStr, ' ', param_str, ' maxVal: ', num2str(val_max), ', minVal: ', num2str(val_min), ', red: +, blue: - ']);
             grid on;
+            set(gca, 'YTick', 1:1:n_rows);
             axis ij
             if ifaxisequal == 1
                 axis equal
