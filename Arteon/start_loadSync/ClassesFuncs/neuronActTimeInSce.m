@@ -1,7 +1,7 @@
 function [out_positive, out_negative ] = neuronActTimeInSce( listStructTrain, Wxh, Whh, bh, margin)
 
     % 记录，每个neuron将被何种pattern激活。
-    % 用struct存储，每个neuron在不同场景，当value值 >=0.9时，记录时间
+    % 用struct存储，每个neuron在不同场景，当value值 >=margin时，记录时间
     n_neurons = size(Whh, 1);
     mystruct_positive = struct;
     mystruct_negative = struct;
@@ -80,4 +80,4 @@ function [out_positive, out_negative ] = neuronActTimeInSce( listStructTrain, Wx
 
 end
 
-% 一个神经元：对应多个场景，记录每个场景中使得这个神经元激活90%以上的 时刻。（这些时刻往往是连续一段一段的）
+% 一个神经元：对应多个场景，记录每个场景中使得这个神经元激活margin(eg. 90%)以上的 时刻。（这些时刻往往是连续一段一段的）

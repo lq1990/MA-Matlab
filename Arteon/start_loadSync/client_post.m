@@ -8,17 +8,28 @@ clear; close all; clc;
 addpath(genpath(pwd));
 
 % select params
-rmpath([pwd, '/ModelParamsFromC++/DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
-rmpath([pwd, '/ModelParamsFromC++/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
-rmpath([pwd, '/ModelParamsFromC++/100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.0073, accu 1, matDataZScore, listStructTrain']);
-rmpath([pwd, '/ModelParamsFromC++/100hz, n_h 50, classes 10, alpha 0.1, epoches 201, Adagrad, loss 0.03, accu 1, matDataZScore, listStructTrain, seed1']);
-% rmpath([pwd, '/ModelParamsFromC++/lambda 0.19, train_cv_concat']);
+rmpath([pwd, '/ModelParamsFromC++/oneHidden/DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
+rmpath([pwd, '/ModelParamsFromC++/oneHidden/Upsampling100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.126, accu 0.895']);
+rmpath([pwd, '/ModelParamsFromC++/oneHidden/100hz, n_h 50, classes 10, alpha 0.1, epoches 501, Adagrad, loss 0.0073, accu 1, matDataZScore, listStructTrain']);
+rmpath([pwd, '/ModelParamsFromC++/oneHidden/100hz, n_h 50, classes 10, alpha 0.1, epoches 201, Adagrad, loss 0.03, accu 1, matDataZScore, listStructTrain, seed1']);
+rmpath([pwd, '/ModelParamsFromC++/oneHidden/lambda 0.19, train_cv_concat']);
+
+% rmpath([pwd, '/ModelParamsFromC++/twoHidden/epoches 501, h_hidden 50 50, listStructTrainCV/']);
 
 %% Visulization of Matrix
-MyPlot.showParams('Wxh', 0); % 第二个参数是 ifaxisequal
-MyPlot.showParams('Whh', 1);
-MyPlot.showParams('Why', 1);
-MyPlot.showParams('bh', 1);
+% MyPlot.showParams('Wxh', 0); % 第二个参数是 ifaxisequal
+% MyPlot.showParams('Whh', 1);
+% MyPlot.showParams('Why', 1);
+% MyPlot.showParams('bh', 1);
+% MyPlot.showParams('by', 1);
+
+MyPlot.showParams('Wxh1', 0);
+MyPlot.showParams('Wh1h1', 1);
+MyPlot.showParams('Wh1h2', 1);
+MyPlot.showParams('Wh2h2', 1);
+MyPlot.showParams('Wh2y', 1);
+MyPlot.showParams('bh1', 1);
+MyPlot.showParams('bh2', 1);
 MyPlot.showParams('by', 1);
 
 %% plot loss accu
@@ -42,10 +53,19 @@ title('accuracy each epoch');
 %% re-test the trainingData and scores
 
 % 场景进行 前传，计算score_class。使用到W b
-Wxh = importfile_Wxh('Wxh.txt');
-Whh = importfile_Whh('Whh.txt');
-Why = importfile_Why('Why.txt');
-bh = importfile_bh('bh.txt');
+% Wxh = importfile_Wxh('Wxh.txt');
+% Whh = importfile_Whh('Whh.txt');
+% Why = importfile_Why('Why.txt');
+% bh = importfile_bh('bh.txt');
+% by = importfile_by('by.txt');
+
+Wxh1 = importfile_Wxh1('Wxh1.txt');
+Wh1h1 = importfile_Wh1h1('Wh1h1.txt');
+Wh1h2 = importfile_Wh1h2('Wh1h2.txt');
+Wh2h2 = importfile_Wh2h2('Wh2h2.txt');
+Wh2y = importfile_Why('Wh2y.txt');
+bh1 = importfile_bh('bh1.txt');
+bh2 = importfile_bh('bh2.txt');
 by = importfile_by('by.txt');
 
 maxScore = 8.9;
@@ -54,33 +74,51 @@ numClasses = 10 ;
 
 load listStructTrain
 list_data = listStructTrain;
-MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+% MyPredict.printAllOneHidden( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+MyPredict.printAllTwoHidden( list_data, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by, maxScore, minScore, numClasses );
 
 % re-test listStructCV
 load listStructCV
 list_data = listStructCV;
-MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+% MyPredict.printAllOneHidden( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+MyPredict.printAllTwoHidden( list_data, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by, maxScore, minScore, numClasses );
 
 % test listStructTest
 load listStructTest
 list_data = listStructTest;
-MyPredict.printAll( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+% MyPredict.printAllOneHidden( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses );
+MyPredict.printAllTwoHidden( list_data, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by, maxScore, minScore, numClasses );
 
 %% 另外找 10 个start场景，预测
 % client_post_test
 
 
-%% Anim, Visulization of computing process
+%% Anim, one hidden layer, Visualization of computing process
 load listStructTest
 
-matData = listStructTest(1).matDataZScore; % idx_id
+matData = listStructTest(2).matDataZScore; % idx_id
 Wxh = importfile_Wxh('Wxh.txt');
 Whh = importfile_Whh('Whh.txt');
 Why = importfile_Why('Why.txt');
 bh = importfile_bh('bh.txt');
 by = importfile_by('by.txt');
 
-showComputeProcessHY(matData, Wxh, Whh, Why, bh, by);
+showComputeProcessHY1Hidden(matData, Wxh, Whh, Why, bh, by);
+
+%% Anim, two hidden layers, Visualiazation
+load listStructTrain
+
+matData = listStructTrain(1).matDataZScore; % idx_id
+Wxh1 = importfile_Wxh1('Wxh1.txt');
+Wh1h1 = importfile_Wh1h1('Wh1h1.txt');
+Wh1h2 = importfile_Wh1h2('Wh1h2.txt');
+Wh2h2 = importfile_Wh2h2('Wh2h2.txt');
+Wh2y = importfile_Why('Wh2y.txt');
+bh1 = importfile_bh('bh1.txt');
+bh2 = importfile_bh('bh2.txt');
+by = importfile_by('by.txt');
+
+showComputeProcessHY2Hidden(matData, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by);
 
 
 %% figure out what RNN really learnt.
@@ -128,7 +166,7 @@ load neuronPatternSArr_positive
 % 一个neuron对应22个场景，把场景激活区域高亮，其它区域正常
 
 listStruct = listStructTrain;
-range_neurons = [ 41 ]; % 17-, 28-, 36+, 41+
+range_neurons = [ 17, 28, 36, 41 ]; % 17-, 28-, 36+, 41+
 range_id = [1 : 22];
 plotNeuronPattern( listStruct, neuronPatternSArr_positive, range_neurons, range_id );
 

@@ -1,4 +1,4 @@
-function showComputeProcessHY( matData, Wxh, Whh, Why, bh, by )
+function showComputeProcessHY1Hidden( matData, Wxh, Whh, Why, bh, by )
     % show computing process of RNN,
     %     especially computing of hidden and output neurons
     figure;

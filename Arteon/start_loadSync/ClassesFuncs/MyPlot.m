@@ -264,6 +264,8 @@ classdef MyPlot
         
         function showParams( param_str, ifaxisequal )
             figure;
+            set(gcf, 'position', [50, -100, 1000, 800]);
+            
             file = [param_str, '.txt'];
             if strcmp(param_str, 'Wxh')
                 data = importfile_Wxh(file);
@@ -272,7 +274,7 @@ classdef MyPlot
                 signalT = signalTable.signalTable;
                 
                 offset = 10;
-                MyPlot.showXtickLabel(data, signalT, offset);
+                MyPlot.showXtickLabel(data, signalT, offset); % x tick label shows names of different signals
                 ylabel('neurons in hidden layer');
 
             elseif strcmp(param_str, 'Whh')
@@ -286,6 +288,38 @@ classdef MyPlot
 
             elseif strcmp(param_str, 'by')
                 data = importfile_by(file);
+            
+            % two hidden layers
+            elseif strcmp(param_str, 'Wxh1')
+                data = importfile_Wxh1(file);
+                
+                signalTable = load('signalTable.mat');
+                signalT = signalTable.signalTable;
+                
+                offset = 10;
+                MyPlot.showXtickLabel(data, signalT, offset); % x tick label shows names of different signals
+                ylabel('neurons in hidden layer');
+                
+            elseif strcmp(param_str, 'Wh1h1')
+                data = importfile_Wh1h1(file);
+                
+            elseif strcmp(param_str, 'Wh1h2')
+                data = importfile_Wh1h2(file);
+                
+            elseif strcmp(param_str, 'Wh2h2')
+                data = importfile_Wh2h2(file);
+                
+            elseif strcmp(param_str, 'Wh2y')
+                data = importfile_Wh2y(file);
+                
+            elseif strcmp(param_str, 'bh1')
+                data = importfile_bh1(file); 
+            
+            elseif strcmp(param_str, 'bh2')
+                data = importfile_bh2(file); 
+                
+            elseif strcmp(param_str, 'by')
+                data = importfile_by(file); 
             end
 
             MyPlot.showMatrix(param_str,data, ifaxisequal, '');
