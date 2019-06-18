@@ -1,4 +1,4 @@
-function [out_positive, out_negative ] = neuronActTimeInSce( listStructTrain, Wxh, Whh, bh, margin)
+function [out_positive, out_negative ] = neuronActTimeInSce1hidden( listStructTrain, Wxh, Whh, bh, margin)
 
     % 记录，每个neuron将被何种pattern激活。
     % 用struct存储，每个neuron在不同场景，当value值 >=margin时，记录时间
@@ -61,9 +61,9 @@ function [out_positive, out_negative ] = neuronActTimeInSce( listStructTrain, Wx
                     else
                         % negative activate
                         if length(id_split_str)==1
-                            mystruct_negative.(['neuron', num2str(i)]).(['id', num2str(id)]) = [ mystruct_positive.(['neuron', num2str(i)]).(['id', num2str(id)]), t ];
+                            mystruct_negative.(['neuron', num2str(i)]).(['id', num2str(id)]) = [ mystruct_negative.(['neuron', num2str(i)]).(['id', num2str(id)]), t ];
                         else
-                            mystruct_negative.(['neuron', num2str(i)]).(['id', id_split_str{1}, '_',  id_split_str{2}]) = [mystruct_positive.(['neuron', num2str(i)]).(['id', id_split_str{1}, '_',  id_split_str{2}]), t];
+                            mystruct_negative.(['neuron', num2str(i)]).(['id', id_split_str{1}, '_',  id_split_str{2}]) = [mystruct_negative.(['neuron', num2str(i)]).(['id', id_split_str{1}, '_',  id_split_str{2}]), t];
                         end
                     end
                end

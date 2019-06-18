@@ -121,7 +121,7 @@ by = importfile_by('by.txt');
 showComputeProcessHY2Hidden(matData, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by);
 
 
-%% figure out what RNN really learnt.
+%% figure out what RNN really learnt. 1 hidden layer
 % what has each neuron learnt, 
 % each neuron is a detector,
 % each neuron has its own scope, it only focuses on particular patterns.
@@ -138,7 +138,7 @@ Whh = importfile_Whh('Whh.txt');
 bh = importfile_bh('bh.txt');
 margin = 0.8 ; % 'max.' excite the neuron
 
-[neuronPatternS_positive, neuronPatternS_negative ]= neuronActTimeInSce( listStructTrain, Wxh, Whh, bh, margin);
+[neuronPatternS_positive, neuronPatternS_negative ]= neuronActTimeInSce1hidden( listStructTrain, Wxh, Whh, bh, margin);
 neuronPatternSArr_positive = struct2array(neuronPatternS_positive);
 neuronPatternSArr_negative = struct2array(neuronPatternS_negative);
 save '.\DataFinalSave\neuronPatternS_positive' neuronPatternS_positive
@@ -148,7 +148,7 @@ save '.\DataFinalSave\neuronPatternSArr_negative' neuronPatternSArr_negative
 
 % listStructTest
 load listStructTest
-[neuronPatternS_positive_listSTest, neuronPatternS_negative_listSTest] = neuronActTimeInSce( listStructTest, Wxh, Whh, bh, margin);
+[neuronPatternS_positive_listSTest, neuronPatternS_negative_listSTest] = neuronActTimeInSce1hidden( listStructTest, Wxh, Whh, bh, margin);
 neuronPatternSArr_positive_listSTest  = struct2array(neuronPatternS_positive_listSTest);
 neuronPatternSArr_negative_listSTest  = struct2array(neuronPatternS_negative_listSTest);
 save '.\DataFinalSave\neuronPatternS_positive_listSTest' neuronPatternS_positive_listSTest
@@ -156,10 +156,40 @@ save '.\DataFinalSave\neuronPatternSArr_positive_listSTest' neuronPatternSArr_po
 save '.\DataFinalSave\neuronPatternS_negative_listSTest' neuronPatternS_negative_listSTest
 save '.\DataFinalSave\neuronPatternSArr_negative_listSTest' neuronPatternSArr_negative_listSTest
 
+%% neuronPattern of 2 hidden layers
+% train dataset
+load listStructTrain
+Wxh1 = importfile_Wxh1('Wxh1.txt');
+Wh1h1 = importfile_Wh1h1('Wh1h1.txt');
+Wh1h2 = importfile_Wh1h2('Wh1h2.txt');
+Wh2h2 = importfile_Wh2h2('Wh2h2.txt');
+bh1 = importfile_bh('bh1.txt');
+bh2 = importfile_bh('bh2.txt');
+margin = 0.85 ; % 'max.' excite the neuron
+
+[neuronPatternS_twoHidden_positive, neuronPatternS_twoHidden_negative ]= neuronActTimeInSce2hidden( listStructTrain, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin);
+neuronPatternSArr_twoHidden_positive = struct2array(neuronPatternS_twoHidden_positive);
+neuronPatternSArr_twoHidden_negative = struct2array(neuronPatternS_twoHidden_negative);
+save '.\DataFinalSave\neuronPatternS_twoHidden_positive' neuronPatternS_twoHidden_positive
+save '.\DataFinalSave\neuronPatternSArr_twoHidden_positive' neuronPatternSArr_twoHidden_positive
+save '.\DataFinalSave\neuronPatternS_twoHidden_negative' neuronPatternS_twoHidden_negative
+save '.\DataFinalSave\neuronPatternSArr_twoHidden_negative' neuronPatternSArr_twoHidden_negative
+
+% test dataset
+load listStructTest
+[neuronPatternS_twoHidden_positive_test, neuronPatternS_twoHidden_negative_test ]= neuronActTimeInSce2hidden( listStructTest, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin);
+neuronPatternSArr_twoHidden_positive_test = struct2array(neuronPatternS_twoHidden_positive_test);
+neuronPatternSArr_twoHidden_negative_test = struct2array(neuronPatternS_twoHidden_negative_test);
+save '.\DataFinalSave\neuronPatternS_twoHidden_positive_test' neuronPatternS_twoHidden_positive_test
+save '.\DataFinalSave\neuronPatternSArr_twoHidden_positive_test' neuronPatternSArr_twoHidden_positive_test
+save '.\DataFinalSave\neuronPatternS_twoHidden_negative_test' neuronPatternS_twoHidden_negative_test
+save '.\DataFinalSave\neuronPatternSArr_twoHidden_negative_test' neuronPatternSArr_twoHidden_negative_test
+
 %% plot neuron : pattern (part of scenarios), listStructTrain
 % 类比于：按signal，把所有场景plot。
 % 此处：按照每个neuron，把场景激活时间段的 PC12 数据高亮，激活事件对应的信号即pattern
-% 使用PC12，而非原始17个信号，为了可视化方便
+% 使用PC12，而非原始17个信号，为了可视化方便。
+% 改为：对raw signals plot，易于对原始数据理解
 
 load listStructTrain % 借助listStruct取得 id
 load neuronPatternSArr_positive
