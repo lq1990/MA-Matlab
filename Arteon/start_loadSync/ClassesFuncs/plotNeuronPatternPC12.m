@@ -1,9 +1,9 @@
-function plotNeuronPattern( listStructTrain, neuronPatternSArr, range_neurons, range_id )
+function plotNeuronPatternPC12( listStructTrain, neuronPatternSArr, range_neurons, range_id )
     % plot the part of scenarios that activate a neuron
     % this part of scenario is called pattern.
     % labels depends on  recombination of different patterns 
-amp = 5;
-[ score_min, score_max ] = MyPlot.findScoreMinMaxOfListStruct(listStructTrain, range_id);
+    amp = 5;
+    [ score_min, score_max ] = MyPlot.findScoreMinMaxOfListStruct(listStructTrain, range_id);
 
 for i = 1 : length(neuronPatternSArr)
     if ~ismember(i, range_neurons)
@@ -27,10 +27,10 @@ for i = 1 : length(neuronPatternSArr)
         item_id_str = strrep(item_id_str, '.', '_'); % replace
         item_details = listStructTrain(j).details;
         item_score = listStructTrain(j).score;
-%         item_matDataPC1 = listStructTrain(j).matDataPcAll(:, 1); % ```注意```：此处的PC1是按照 mean_all std_all 而非trainDataset，不过当train/test 同分布时，没有问题
-%         item_matDataPC2 = listStructTrain(j).matDataPcAll(:, 2); 
+        item_matDataPC1 = listStructTrain(j).matDataPcAll(:, 1); % ```注意```：此处的PC1是按照 mean_all std_all 而非trainDataset，不过当train/test 同分布时，没有问题
+        item_matDataPC2 = listStructTrain(j).matDataPcAll(:, 2); 
         
-        %% plot each column of matData to know the raw signals better
+        % plot each column of matData to know the raw signals better
         
         cur_neuron_id = cur_neuron.(item_id_str); % 当前neuron对应的一个场景要高亮显示的index
         

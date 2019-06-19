@@ -165,7 +165,7 @@ Wh1h2 = importfile_Wh1h2('Wh1h2.txt');
 Wh2h2 = importfile_Wh2h2('Wh2h2.txt');
 bh1 = importfile_bh('bh1.txt');
 bh2 = importfile_bh('bh2.txt');
-margin = 0.85 ; % 'max.' excite the neuron
+margin = 0.8 ; % 'max.' excite the neuron
 
 [neuronPatternS_twoHidden_positive, neuronPatternS_twoHidden_negative ]= neuronActTimeInSce2hidden( listStructTrain, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin);
 neuronPatternSArr_twoHidden_positive = struct2array(neuronPatternS_twoHidden_positive);
@@ -185,7 +185,7 @@ save '.\DataFinalSave\neuronPatternSArr_twoHidden_positive_test' neuronPatternSA
 save '.\DataFinalSave\neuronPatternS_twoHidden_negative_test' neuronPatternS_twoHidden_negative_test
 save '.\DataFinalSave\neuronPatternSArr_twoHidden_negative_test' neuronPatternSArr_twoHidden_negative_test
 
-%% plot neuron : pattern (part of scenarios), listStructTrain
+%% plot neuron : pattern (part of scenarios), listStructTrain. 1 hidden layer
 % 类比于：按signal，把所有场景plot。
 % 此处：按照每个neuron，把场景激活时间段的 PC12 数据高亮，激活事件对应的信号即pattern
 % 使用PC12，而非原始17个信号，为了可视化方便。
@@ -198,15 +198,28 @@ load neuronPatternSArr_positive
 listStruct = listStructTrain;
 range_neurons = [ 17, 28, 36, 41 ]; % 17-, 28-, 36+, 41+
 range_id = [1 : 22];
-plotNeuronPattern( listStruct, neuronPatternSArr_positive, range_neurons, range_id );
+plotNeuronPatternPC12( listStruct, neuronPatternSArr_positive, range_neurons, range_id );
 
-%% plot neuron : pattern (part of scenarios), listStructTest
+%% plot neuron : pattern (part of scenarios), listStructTest. 1 hidden layer, PC
 load listStructTest % 借助listStruct取得 id
 load neuronPatternSArr_positive_listSTest
 
 listStruct = listStructTest;
 range_neurons = [ 1:10 ]; % 28-, 36+
 range_id = [1:7];
-plotNeuronPattern( listStruct, neuronPatternSArr_positive_listSTest, range_neurons, range_id );
+plotNeuronPatternPC12( listStruct, neuronPatternSArr_positive_listSTest, range_neurons, range_id );
+
+%% plot neuron : pattern (part of scenarios), listStructTest. 2 hidden layer, raw signals
+load listStructTrain
+load signalTable
+load neuronPatternSArr_twoHidden_positive
+
+listStruct = listStructTrain;
+range_neurons = 50 + [ 1, 19 ]; % 51, 69
+range_id = [1:22]; % total trian 22 
+
+plotNeuronPatternRawSignals( listStruct, neuronPatternSArr_twoHidden_positive, signalTable, range_neurons, range_id );
+
+
 
 
