@@ -1,4 +1,4 @@
-function out_legend_cell = plotOneColOfmatData( figureID, subplotID,  item_matData, item_score, score_min, score_max, amp, legend_cell, item_details, cur_neuron_id,  i, signalName, ifShowLegend )
+function out_legend_cell = plotOneColOfmatData_tmp( figureID, subplotID,  item_matData, item_score, score_min, score_max, amp, legend_cell, item_details, cur_neuron_id,  i, signalName, ifShowLegend )
     figure(figureID);
     subplot(subplotID);
     
@@ -9,7 +9,7 @@ function out_legend_cell = plotOneColOfmatData( figureID, subplotID,  item_matDa
     end
     % 再高亮使neuron激活的部分
     if ~isempty(cur_neuron_id)
-        plot(cur_neuron_id, item_matData(cur_neuron_id), 'k+', 'LineWidth', 1.5);
+        plot(cur_neuron_id, item_matData(cur_neuron_id), 'k*', 'LineWidth', 2);
         
         if ifShowLegend==1
             legend_cell = [legend_cell, 'pattern'];
@@ -17,7 +17,5 @@ function out_legend_cell = plotOneColOfmatData( figureID, subplotID,  item_matDa
     end
     title(['neuron ', num2str(i), ', ', signalName]);
     
-
     out_legend_cell = legend_cell;
 end
-

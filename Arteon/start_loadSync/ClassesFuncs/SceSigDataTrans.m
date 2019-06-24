@@ -12,6 +12,8 @@ classdef SceSigDataTrans
     methods(Static)
         function outList = allSce2ListStruct( dataSArr, signalTable )
             % struct {id, score, matData} => [struct1, struct2, ...]
+            % listStruct stores info of all scenarios.
+            % each element i.e. struct in listStruct represents one scenario
             list = [];
             for i = 1:length(dataSArr) % 遍历每个场景
                 s = struct; % 每个场景都有一个struct存储id score matData

@@ -103,7 +103,7 @@ Why = importfile_Why('Why.txt');
 bh = importfile_bh('bh.txt');
 by = importfile_by('by.txt');
 
-showComputeProcessHY1Hidden(matData, Wxh, Whh, Why, bh, by);
+AnimComputeProcess.showComputeProcessHY1Hidden(matData, Wxh, Whh, Why, bh, by);
 
 %% Anim, two hidden layers, Visualiazation
 load listStructTrain
@@ -118,10 +118,10 @@ bh1 = importfile_bh('bh1.txt');
 bh2 = importfile_bh('bh2.txt');
 by = importfile_by('by.txt');
 
-showComputeProcessHY2Hidden(matData, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by);
-
+AnimComputeProcess.showComputeProcessHY2Hidden(matData, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by);
 
 %% figure out what RNN really learnt. 1 hidden layer
+% generate struct
 % what has each neuron learnt, 
 % each neuron is a detector,
 % each neuron has its own scope, it only focuses on particular patterns.
@@ -138,7 +138,7 @@ Whh = importfile_Whh('Whh.txt');
 bh = importfile_bh('bh.txt');
 margin = 0.8 ; % 'max.' excite the neuron
 
-[neuronPatternS_positive, neuronPatternS_negative ]= neuronActTimeInSce1hidden( listStructTrain, Wxh, Whh, bh, margin);
+[neuronPatternS_positive, neuronPatternS_negative ]= NeuronPattern.neuronActTimeInSce1hidden( listStructTrain, Wxh, Whh, bh, margin);
 neuronPatternSArr_positive = struct2array(neuronPatternS_positive);
 neuronPatternSArr_negative = struct2array(neuronPatternS_negative);
 save '.\DataFinalSave\neuronPatternS_positive' neuronPatternS_positive
@@ -148,7 +148,7 @@ save '.\DataFinalSave\neuronPatternSArr_negative' neuronPatternSArr_negative
 
 % listStructTest
 load listStructTest
-[neuronPatternS_positive_listSTest, neuronPatternS_negative_listSTest] = neuronActTimeInSce1hidden( listStructTest, Wxh, Whh, bh, margin);
+[neuronPatternS_positive_listSTest, neuronPatternS_negative_listSTest] = NeuronPattern.neuronActTimeInSce1hidden( listStructTest, Wxh, Whh, bh, margin);
 neuronPatternSArr_positive_listSTest  = struct2array(neuronPatternS_positive_listSTest);
 neuronPatternSArr_negative_listSTest  = struct2array(neuronPatternS_negative_listSTest);
 save '.\DataFinalSave\neuronPatternS_positive_listSTest' neuronPatternS_positive_listSTest
@@ -156,7 +156,7 @@ save '.\DataFinalSave\neuronPatternSArr_positive_listSTest' neuronPatternSArr_po
 save '.\DataFinalSave\neuronPatternS_negative_listSTest' neuronPatternS_negative_listSTest
 save '.\DataFinalSave\neuronPatternSArr_negative_listSTest' neuronPatternSArr_negative_listSTest
 
-%% neuronPattern of 2 hidden layers
+%% generate neuronPattern of 2 hidden layers
 % train dataset
 load listStructTrain
 Wxh1 = importfile_Wxh1('Wxh1.txt');
@@ -167,7 +167,7 @@ bh1 = importfile_bh('bh1.txt');
 bh2 = importfile_bh('bh2.txt');
 margin = 0.8 ; % 'max.' excite the neuron
 
-[neuronPatternS_twoHidden_positive, neuronPatternS_twoHidden_negative ]= neuronActTimeInSce2hidden( listStructTrain, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin);
+[neuronPatternS_twoHidden_positive, neuronPatternS_twoHidden_negative ]= NeuronPattern.neuronActTimeInSce2hidden( listStructTrain, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin);
 neuronPatternSArr_twoHidden_positive = struct2array(neuronPatternS_twoHidden_positive);
 neuronPatternSArr_twoHidden_negative = struct2array(neuronPatternS_twoHidden_negative);
 save '.\DataFinalSave\neuronPatternS_twoHidden_positive' neuronPatternS_twoHidden_positive
@@ -177,7 +177,7 @@ save '.\DataFinalSave\neuronPatternSArr_twoHidden_negative' neuronPatternSArr_tw
 
 % test dataset
 load listStructTest
-[neuronPatternS_twoHidden_positive_test, neuronPatternS_twoHidden_negative_test ]= neuronActTimeInSce2hidden( listStructTest, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin);
+[neuronPatternS_twoHidden_positive_test, neuronPatternS_twoHidden_negative_test ]= NeuronPattern.neuronActTimeInSce2hidden( listStructTest, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin);
 neuronPatternSArr_twoHidden_positive_test = struct2array(neuronPatternS_twoHidden_positive_test);
 neuronPatternSArr_twoHidden_negative_test = struct2array(neuronPatternS_twoHidden_negative_test);
 save '.\DataFinalSave\neuronPatternS_twoHidden_positive_test' neuronPatternS_twoHidden_positive_test
@@ -198,7 +198,7 @@ load neuronPatternSArr_positive
 listStruct = listStructTrain;
 range_neurons = [ 17, 28, 36, 41 ]; % 17-, 28-, 36+, 41+
 range_id = [1 : 22];
-plotNeuronPatternPC12( listStruct, neuronPatternSArr_positive, range_neurons, range_id );
+NeuronPattern.plotNeuronPatternPC12( listStruct, neuronPatternSArr_positive, range_neurons, range_id );
 
 %% plot neuron : pattern (part of scenarios), listStructTest. 1 hidden layer, PC
 load listStructTest % ΩË÷˙listStruct»°µ√ id
@@ -207,18 +207,33 @@ load neuronPatternSArr_positive_listSTest
 listStruct = listStructTest;
 range_neurons = [ 1:10 ]; % 28-, 36+
 range_id = [1:7];
-plotNeuronPatternPC12( listStruct, neuronPatternSArr_positive_listSTest, range_neurons, range_id );
+NeuronPattern.plotNeuronPatternPC12( listStruct, neuronPatternSArr_positive_listSTest, range_neurons, range_id );
 
-%% plot neuron : pattern (part of scenarios), listStructTest. 2 hidden layer, raw signals
+%% plot neuron : pattern (part of scenarios), listStruct. 2 hidden layer, raw signals, positive
 load listStructTrain
 load signalTable
 load neuronPatternSArr_twoHidden_positive
 
 listStruct = listStructTrain;
-range_neurons = 50 + [ 1, 19 ]; % 51, 69
+range_neurons = 50 + [ 1 ]; % 50+(1, 19, 24, 33, 43, 46, 48?)
 range_id = [1:22]; % total trian 22 
+subplotRows = 2;
+subplotCols = 2;
 
-plotNeuronPatternRawSignals( listStruct, neuronPatternSArr_twoHidden_positive, signalTable, range_neurons, range_id );
+NeuronPattern.plotNeuronPatternRawSignals( listStruct, neuronPatternSArr_twoHidden_positive, signalTable, range_neurons, range_id, subplotRows, subplotCols );
+
+%% plot neuron : pattern (part of scenarios), listStruct. 2 hidden layer, raw signals, negative
+load listStructTrain
+load signalTable
+load neuronPatternSArr_twoHidden_negative
+
+listStruct = listStructTrain;
+range_neurons = 50 + [ 48 ]; % 50+(1, 24, 33, 48)
+range_id = [1:22]; % total trian 22 
+subplotRows = 2; % subplot(subplotRows, subplotCols, ?)
+subplotCols = 2;
+
+NeuronPattern.plotNeuronPatternRawSignals( listStruct, neuronPatternSArr_twoHidden_negative, signalTable, range_neurons, range_id, subplotRows, subplotCols );
 
 
 

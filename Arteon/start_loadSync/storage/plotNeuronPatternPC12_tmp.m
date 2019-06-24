@@ -1,4 +1,4 @@
-function plotNeuronPatternPC12( listStructTrain, neuronPatternSArr, range_neurons, range_id )
+function plotNeuronPatternPC12_tmp( listStructTrain, neuronPatternSArr, range_neurons, range_id )
     % plot the part of scenarios that activate a neuron
     % this part of scenario is called pattern.
     % labels depends on  recombination of different patterns 

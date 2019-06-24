@@ -1,4 +1,4 @@
-function [out_positive, out_negative ] = neuronActTimeInSce2hidden(listStructTrain, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin)
+function [out_positive, out_negative ] = neuronActTimeInSce2hidden_tmp(listStructTrain, Wxh1, Wh1h1, Wh1h2, Wh2h2, bh1,  bh2, margin)
     % 记录，每个neuron将被何种pattern激活。这个pattern会在不同的场景中出现。
     % 有两个隐层，分别记录
     % 用struct存储，每个neuron在不同场景，当value值 >=margin时，记录时间

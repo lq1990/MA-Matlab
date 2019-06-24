@@ -1,4 +1,4 @@
-function [out_positive, out_negative ] = neuronActTimeInSce1hidden( listStructTrain, Wxh, Whh, bh, margin)
+function [out_positive, out_negative ] = neuronActTimeInSce1hidden_tmp( listStructTrain, Wxh, Whh, bh, margin)
 
     % 记录，每个neuron将被何种pattern激活。
     % 用struct存储，每个neuron在不同场景，当value值 >=margin时，记录时间
@@ -77,7 +77,8 @@ function [out_positive, out_negative ] = neuronActTimeInSce1hidden( listStructTr
    fprintf('--- over --- \n');
    out_positive = mystruct_positive;
    out_negative = mystruct_negative;
+% 一个神经元：对应多个场景，记录每个场景中使得这个神经元激活margin(eg. 90%)以上的 时刻。（这些时刻往往是连续一段一段的）
 
 end
 
-% 一个神经元：对应多个场景，记录每个场景中使得这个神经元激活margin(eg. 90%)以上的 时刻。（这些时刻往往是连续一段一段的）
+

@@ -1,4 +1,4 @@
-function plotNeuronPatternRawSignals( listStructTrain, neuronPatternSArr, signalTable, range_neurons, range_id )
+function plotNeuronPatternRawSignals_tmp( listStructTrain, neuronPatternSArr, signalTable, range_neurons, range_id, subplotRows, subplotCols )
     % plot the part of scenarios that activate a neuron
     % this part of scenario is called pattern.
     % labels depends on  recombination of different patterns 
@@ -12,18 +12,31 @@ for i = 1 : length(neuronPatternSArr)
         continue
     end
     
-    % 外层循环取得每个neuron，一个neuron一个figure
-    figureid1 = i + 0*length(neuronPatternSArr);
-    figureid2 = i + 1*length(neuronPatternSArr);
-    figureid3 = i + 2*length(neuronPatternSArr);
-    figureid_list = [figureid1, figureid2, figureid3];
+    % 外层循环取得每个neuron，一个neuron 对应所有的signals，由多个figure的subplot展示
     
-    figure(figureid_list(1));
-    set(gcf, 'position', [200, -150, 1400, 900]);
-    figure(figureid_list(2));
-    set(gcf, 'position', [300, -200, 1400, 900]);
-    figure(figureid_list(3));
-    set(gcf, 'position', [400, -250, 1400, 900]);
+    numSignals = 17;
+    numFig = ceil(numSignals / (subplotRows * subplotCols)); % num of fig needed
+    
+    % generate figureid_list, it saves figure id
+    figureid_list = [];
+    for f = 1:numFig
+        figureid_list = [figureid_list, i + (f-1)*100]; %  i：neuron index
+        
+        figure(figureid_list(f));
+        set(gcf, 'position', [500+(-f+1)*60, -(150+(f-1)*30), 1400, 900]);
+    end
+    
+%     figureid1 = i + 0*100;
+%     figureid2 = i + 1*100;
+%     figureid3 = i + 2*100;
+%     figureid_list = [figureid1, figureid2, figureid3];
+    
+%     figure(figureid_list(1));
+%     set(gcf, 'position', [200, -150, 1400, 900]);
+%     figure(figureid_list(2));
+%     set(gcf, 'position', [300, -200, 1400, 900]);
+%     figure(figureid_list(3));
+%     set(gcf, 'position', [400, -250, 1400, 900]);
     
     cur_neuron = neuronPatternSArr(i);
     
@@ -50,8 +63,9 @@ for i = 1 : length(neuronPatternSArr)
         
         % plot each column of matData to know the raw signals better
         for i_signal = 1 : height(signalTable)
-            figureID = figureid_list( ceil(i_signal/6) );
-            subplotID = 230+mod(i_signal - 1, 6)+1;
+            % loop over each signal
+            figureID = figureid_list( ceil(i_signal/(subplotRows * subplotCols)) );
+            subplotID = str2num( [num2str(subplotRows), num2str(subplotCols), '0'] ) + mod(i_signal - 1, (subplotRows*subplotCols))+1;
             item_matData = listStructTrain(j).matData(:, i_signal);
             signalName = signalTable.signalName(i_signal);
             if i_signal==1
