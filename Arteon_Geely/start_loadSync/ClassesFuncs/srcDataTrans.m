@@ -246,7 +246,7 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
     
     disp('--------------- composite TransmInpSpeed over -----------------');
     
-    %% 两种车，都把 TransmInpSpeedOdd/Even 去掉，同时把 signalTable.mat中 Odd/Even去掉
+    %% 两种车，都把 TransmInpSpeedOdd/Even and CurrentGear 去掉，同时把 signalTable.mat中 Odd/Even and CurrentGear去掉
     out_dataS = struct;
     out_scenarioTable = scenarioTable;
     
@@ -262,7 +262,7 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
         for j = 1: height(signalTable)
             signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
 
-            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven')
+            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear' )
                 continue
             end
             
@@ -275,14 +275,14 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
     tmp = []; % 存储要保留的行
     for j = 1: height(signalTable)
             signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
-            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven')
+            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear')
                 continue
             end
             tmp = [tmp, j];
     end
     out_signalTable = signalTable(tmp, :);
 
-    disp('--------------- remove Odd/Even of dataS & signalTable   over -----------------');
+    disp('--------------- remove Odd/Even and CurrentGear of dataS & signalTable   over -----------------');
     
     %% ShiftProcess of Arteon -> ShiftInProgress
     if strcmp(car_type, 'Arteon')

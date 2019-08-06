@@ -14,6 +14,7 @@ classdef NeuronPattern
                 % this part of scenario is called pattern.
                 % labels depends on  recombination of different patterns 
                 % many figures and subplot to show raw signals.
+                
                 amp = 5;
                 [ score_min, score_max ] = MyPlot.findScoreMinMaxOfListStruct(listStructTrain, range_id);
 
@@ -63,7 +64,7 @@ classdef NeuronPattern
                     for i_signal = 1 : height(signalTable)
                         % loop over each signal
                         figureID = figureid_list( ceil(i_signal/(subplotRows * subplotCols)) );
-                        subplotID = str2num( [num2str(subplotRows), num2str(subplotCols), '0'] ) + mod(i_signal - 1, (subplotRows*subplotCols))+1;
+                        subplotID = [subplotRows, subplotCols, mod(i_signal - 1, (subplotRows*subplotCols))+1];
                         item_matData = listStructTrain(j).matData(:, i_signal);
                         signalName = signalTable.signalName(i_signal);
                         if i_signal==1
@@ -88,8 +89,10 @@ classdef NeuronPattern
         end
 
         function out_legend_cell = plotOneColOfmatData( figureID, subplotID,  item_matData, item_score, score_min, score_max, amp, legend_cell, item_details, cur_neuron_id,  i, signalName, ifShowLegend )
+            % one col of matData represents one signal
+            % so plot one col of matData means only plot one signal
             figure(figureID);
-            subplot(subplotID);
+            subplot(subplotID(1), subplotID(2), subplotID(3));
 
             plot(item_matData,'-', 'LineWidth', (item_score-score_min)/(score_max-score_min+1e-8) * amp+0.5); 
             grid on; hold on;
@@ -104,7 +107,7 @@ classdef NeuronPattern
                     legend_cell = [legend_cell, 'pattern'];
                 end
             end
-            title(['neuron ', num2str(i), ', ', signalName]);
+            title(['neuron', num2str(i), signalName]);
 
             out_legend_cell = legend_cell;
         end

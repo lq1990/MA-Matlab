@@ -93,7 +93,7 @@ MyPredict.printAllTwoHidden( list_data, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh
 % client_post_test
 
 
-%% Anim, one hidden layer, Visualization of computing process
+%% Anim, 1 hidden layer, Visualization of computing process
 load listStructTest
 
 matData = listStructTest(2).matDataZScore; % idx_id
@@ -105,7 +105,7 @@ by = importfile_by('by.txt');
 
 AnimComputeProcess.showComputeProcessHY1Hidden(matData, Wxh, Whh, Why, bh, by);
 
-%% Anim, two hidden layers, Visualiazation
+%% Anim, 2 hidden layers, Visualiazation of computing process
 load listStructTrain
 
 matData = listStructTrain(1).matDataZScore; % idx_id

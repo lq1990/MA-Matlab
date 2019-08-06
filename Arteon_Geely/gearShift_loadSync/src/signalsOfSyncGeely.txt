@@ -13,6 +13,7 @@ TransmInpSpeedEven	sync_t11	sync_TCU_InputShaftEvenSpeed_t11	1/min	86319
 DrivingProgram	sync_t47	sync_TCU_TGSMode_t47	-	34527
 CurrentGear	sync_t10	sync_TCU_CurrentGearPosition_t10	-	86319
 TargetGear	sync_t13	sync_TCU_TargetGearReq_t13	-	86319
+EngineIntervention	sync_t48	sync_TCU_FastTorqueReductionReq_t48	Nm	172637
 ShiftInProgress	sync_t24	sync_TCU_GearShiftInProgress_t24	0/1	86319
 BrakePressure	sync_t50	sync_ESP_Mcylinder_Pressure_t50	bar	86319
 SteerWheelAngle	sync_t51	sync_SAS_SteerWheelAngle_t51	Grad	172629

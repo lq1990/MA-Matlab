@@ -2,7 +2,7 @@
 % client_pre -> client_core -> client_post
 
 % author: Qiang Liu
-% from Apr, 2019
+% begin: Apr, 2019
 
 %%
 % 关于采样频率
@@ -32,8 +32,8 @@ car_type = 'Arteon';
 dataSArr = struct2array(dataS);
 save '.\src\signalTable' signalTable
 save '.\src\scenarioTable' scenarioTable
-save '.\DataFinalSave\dataS' dataS
-save '.\DataFinalSave\dataSArr' dataSArr
+save '.\DataFinalSave\dataS_SArr\dataS' dataS
+save '.\DataFinalSave\dataS_SArr\dataSArr' dataSArr
 
 %% 1.2 Geely, txt 2 struct
 % 注意Geely采样频率的不同 于Arteon, 在 tryASignalAllData 中修改
@@ -47,8 +47,8 @@ car_type = 'Geely';
 dataSArr_Geely = struct2array(dataS_Geely);
 save '.\test\scenarioTable_Geely' scenarioTable_Geely
 save '.\test\signalTable_Geely' signalTable_Geely
-save '.\DataFinalSave\dataS_Geely' dataS_Geely
-save '.\DataFinalSave\dataSArr_Geely' dataSArr_Geely
+save '.\DataFinalSave\dataS_SArr\dataS_Geely' dataS_Geely
+save '.\DataFinalSave\dataS_SArr\dataSArr_Geely' dataSArr_Geely
 
 %% 2. concat data of Arteon and Geely
 load dataS
@@ -68,14 +68,14 @@ for i = 1 : height(scenarioTable)
         dataStructAll.(fieldname) = dataS_Geely.(fieldname);
 end
 dataStructArrAll = struct2array(dataStructAll);
-save '.\DataFinalSave\dataStructArrAll' dataStructArrAll
+save '.\DataFinalSave\dataS_SArr\dataStructArrAll' dataStructArrAll
 clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTable scenarioTable_Geely
 
 % struct 2 listStruct [{id, score, matData},{},...]
 % list比struct更方便操作。matData每一列对应于 signalTable 而非txt文件。
 
 listStructAll = SceSigDataTrans.allSce2ListStruct(dataStructArrAll, signalTable);
-save '.\DataFinalSave\listStructAll' listStructAll
+save '.\DataFinalSave\list_data\listStructAll' listStructAll
 
 %% 3. train/CV/test dataset split, listStructAll split. 0.6/0.2/0.2
 load listStructAll
@@ -94,11 +94,11 @@ listStructTrain = MyListStruct.addMatDataZScore( listStructTrain, mean_train, st
 listStructCV = MyListStruct.addMatDataZScore( listStructCV, mean_train, std_train );
 listStructTest = MyListStruct.addMatDataZScore( listStructTest, mean_train, std_train ); % CV/test dataset 也是按照 mean_train std_train 来norm
 
-save '.\DataFinalSave\listStructTrain' listStructTrain
-save '.\DataFinalSave\listStructCV' listStructCV
-save '.\DataFinalSave\listStructTest' listStructTest
-save '.\DataFinalSave\mean_train' mean_train % 保存之后的train-mean和train-std，在以后的test数据的norm中用到。
-save '.\DataFinalSave\std_train' std_train
+save '.\DataFinalSave\list_data\listStructTrain' listStructTrain
+save '.\DataFinalSave\list_data\listStructCV' listStructCV
+save '.\DataFinalSave\list_data\listStructTest' listStructTest
+save '.\DataFinalSave\list_data\mean_train' mean_train % 保存之后的train-mean和train-std，在以后的test数据的norm中用到。
+save '.\DataFinalSave\list_data\std_train' std_train
 
 %% 使用 listStructTrain.matDataZScore 对RNN训练
 
@@ -113,8 +113,8 @@ load listStructTrain
 load signalTable
 
 listStruct = listStructTrain;
-range_id = [1, 3:5]; % 
-range_signal = [1:5]; % total_signal: 17
+range_id = [1 : 22]; % 
+range_signal = [1:17]; % total_signal: 17
 plotZScore = 1;
 amp = 10;
 MyPlot.plotSignalsOfListStruct(listStruct, signalTable, range_id, range_signal, plotZScore, {'-', '-'}, amp);

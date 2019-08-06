@@ -80,14 +80,6 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName, sam
             factor = sampling_factor / 100 * 2;
         end
         asignal_alldata = asignal.load_extend(factor);
-        
-    elseif strcmp(signalName, 'DrivingProgram') % 1790
-        if strcmp(asignal.m_car_type, 'Arteon')
-            factor = sampling_factor / 100 * 10;
-        elseif strcmp(asignal.m_car_type, 'Geely')
-            factor = sampling_factor / 100 * 5;
-        end
-        asignal_alldata = asignal.load_extend(factor);
     elseif strcmp(signalName, 'CurrentGear') % 8953
         if strcmp(asignal.m_car_type, 'Arteon')
             factor = sampling_factor / 100 * 2;
@@ -95,6 +87,14 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName, sam
             factor = sampling_factor / 100 * 2;
         end
         asignal_alldata = asignal.load_extend(factor);
+    elseif strcmp(signalName, 'DrivingProgram') % 1790
+        if strcmp(asignal.m_car_type, 'Arteon')
+            factor = sampling_factor / 100 * 10;
+        elseif strcmp(asignal.m_car_type, 'Geely')
+            factor = sampling_factor / 100 * 5;
+        end
+        asignal_alldata = asignal.load_extend(factor);
+    
     elseif strcmp(signalName, 'TargetGear') % 3581
         if strcmp(asignal.m_car_type, 'Arteon')
             factor = sampling_factor / 100 * 5;
@@ -102,6 +102,13 @@ function [ asignal_alldata, factor ]= tryASignalAllData(asignal, signalName, sam
             factor = sampling_factor / 100 * 2;
         end
         asignal_alldata = asignal.load_extend(factor);
+    elseif strcmp(signalName, 'EngineIntervention')
+        if strcmp(asignal.m_car_type, 'Arteon') % 3581
+            factor = sampling_factor / 100 * 5;
+        elseif strcmp(asignal.m_car_type, 'Geely') % 
+            factor = sampling_factor / 100 * 1;
+        end
+        asignal_alldata = asignal.load_filter_extend(15, factor); % filter
     elseif strcmp(signalName, 'ShiftInProgress') % 3581
         if strcmp(asignal.m_car_type, 'Arteon')
             factor = sampling_factor / 100 * 5;
