@@ -1,0 +1,6 @@
+id	fieldname	score	t_begin	t_end	details	dir
+2035.12	id2035_gearS12	7.8	4620	4780	Geely-id35-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
+2035.23	id2035_gearS23	7.9	4780	4990	Geely-id35-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
+2035.34	id2035_gearS34	8.8	5086	5294	Geely-id35-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
+2035.45	id2035_gearS45	8.5	5594	5806	Geely-id35-gearS45	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
+2036.12	id2036_gearS12	7.9	1297	1441	Geely-id36-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\46-36_sync.mat

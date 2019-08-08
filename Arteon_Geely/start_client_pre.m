@@ -1,3 +1,5 @@
+%% scenarios: start
+
 % run files in sequence:
 % client_pre -> client_core -> client_post
 
@@ -19,42 +21,43 @@
 clc; close all; clear;
 
 addpath(genpath(pwd));
+rmpath(genpath(strcat(pwd, '\script\')));
 
 %% 1.1 Arteon, txt 2 struct
 % 数据被过滤，下采样，按照场景时间做clip
-scenarioFile = 'scenariosOfSync.txt';
+scenarioFile = 'scenariosOfSync_start.txt';
 signalFile = 'signalsOfSync.txt';
 sampling_factor = 100 ; % 上采样 100hz
 car_type = 'Arteon';
-[dataS, scenarioTable, signalTable]  = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type); 
+[dataS, scenarioTable, signalTable]  = srcDataTrans_start(scenarioFile, signalFile, sampling_factor, car_type); 
 
 % save
 dataSArr = struct2array(dataS);
-save '.\src\signalTable' signalTable
-save '.\src\scenarioTable' scenarioTable
-save '.\DataFinalSave\dataS_SArr\dataS' dataS
-save '.\DataFinalSave\dataS_SArr\dataSArr' dataSArr
+save '.\common\src\signalTable' signalTable
+save '.\start_loadSync\src\scenarioTable' scenarioTable
+save '.\start_loadSync\DataFinalSave\dataS_SArr\dataS' dataS
+save '.\start_loadSync\DataFinalSave\dataS_SArr\dataSArr' dataSArr
 
 %% 1.2 Geely, txt 2 struct
 % 注意Geely采样频率的不同 于Arteon, 在 tryASignalAllData 中修改
-scenarioFile = 'scenariosOfSyncGeely.txt';
+scenarioFile = 'scenariosOfSyncGeely_start.txt';
 signalFile = 'signalsOfSyncGeely.txt';
 sampling_factor = 100;
 car_type = 'Geely';
-[dataS_Geely, scenarioTable_Geely, signalTable_Geely] = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type);
+[dataS_Geely, scenarioTable_Geely, signalTable_Geely] = srcDataTrans_start(scenarioFile, signalFile, sampling_factor, car_type);
 
 % save
 dataSArr_Geely = struct2array(dataS_Geely);
-save '.\test\scenarioTable_Geely' scenarioTable_Geely
-save '.\test\signalTable_Geely' signalTable_Geely
-save '.\DataFinalSave\dataS_SArr\dataS_Geely' dataS_Geely
-save '.\DataFinalSave\dataS_SArr\dataSArr_Geely' dataSArr_Geely
+save '.\common\src\signalTable_Geely' signalTable_Geely
+save '.\start_loadSync\src\scenarioTable_Geely' scenarioTable_Geely
+save '.\start_loadSync\DataFinalSave\dataS_SArr\dataS_Geely' dataS_Geely
+save '.\start_loadSync\DataFinalSave\dataS_SArr\dataSArr_Geely' dataSArr_Geely
 
 %% 2. concat data of Arteon and Geely
-load dataS
-load dataS_Geely
-load scenarioTable_Geely
-load signalTable
+load('.\start_loadSync\DataFinalSave\dataS_SArr\dataS.mat');
+load('.\start_loadSync\DataFinalSave\dataS_SArr\dataS_Geely.mat');
+load('.\start_loadSync\src\scenarioTable_Geely');
+load '.\common\src\signalTable.mat'
 
 dataStructAll = dataS;
 
@@ -68,17 +71,17 @@ for i = 1 : height(scenarioTable)
         dataStructAll.(fieldname) = dataS_Geely.(fieldname);
 end
 dataStructArrAll = struct2array(dataStructAll);
-save '.\DataFinalSave\dataS_SArr\dataStructArrAll' dataStructArrAll
+save '.\start_loadSync\DataFinalSave\dataS_SArr\dataStructArrAll' dataStructArrAll
 clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTable scenarioTable_Geely
 
 % struct 2 listStruct [{id, score, matData},{},...]
 % list比struct更方便操作。matData每一列对应于 signalTable 而非txt文件。
 
-listStructAll = SceSigDataTrans.allSce2ListStruct(dataStructArrAll, signalTable);
-save '.\DataFinalSave\list_data\listStructAll' listStructAll
+listStructAll = SceSigDataTrans.allSce2ListStruct(dataStructArrAll, signalTable); % use signalName of signalTable
+save '.\start_loadSync\DataFinalSave\list_data\listStructAll' listStructAll
 
 %% 3. train/CV/test dataset split, listStructAll split. 0.6/0.2/0.2
-load listStructAll
+load '.\start_loadSync\DataFinalSave\list_data\listStructAll'
 listStructAll_shuffle = MyUtil.shuffleListStruct(listStructAll, 1); % rand('seed', seed); 打乱顺序
 
 % 22/7/7
@@ -94,11 +97,11 @@ listStructTrain = MyListStruct.addMatDataZScore( listStructTrain, mean_train, st
 listStructCV = MyListStruct.addMatDataZScore( listStructCV, mean_train, std_train );
 listStructTest = MyListStruct.addMatDataZScore( listStructTest, mean_train, std_train ); % CV/test dataset 也是按照 mean_train std_train 来norm
 
-save '.\DataFinalSave\list_data\listStructTrain' listStructTrain
-save '.\DataFinalSave\list_data\listStructCV' listStructCV
-save '.\DataFinalSave\list_data\listStructTest' listStructTest
-save '.\DataFinalSave\list_data\mean_train' mean_train % 保存之后的train-mean和train-std，在以后的test数据的norm中用到。
-save '.\DataFinalSave\list_data\std_train' std_train
+save '.\start_loadSync\DataFinalSave\list_data\listStructTrain' listStructTrain
+save '.\start_loadSync\DataFinalSave\list_data\listStructCV' listStructCV
+save '.\start_loadSync\DataFinalSave\list_data\listStructTest' listStructTest
+save '.\start_loadSync\DataFinalSave\list_data\mean_train' mean_train % 保存之后的train-mean和train-std，在以后的test数据的norm中用到。
+save '.\start_loadSync\DataFinalSave\list_data\std_train' std_train
 
 %% 使用 listStructTrain.matDataZScore 对RNN训练
 
@@ -109,7 +112,7 @@ save '.\DataFinalSave\list_data\std_train' std_train
 % post阶段，可视化 采样数据-模型-分类 过程
 
 %%  plot data of Arteon and Geely
-load listStructTrain
+load '.\start_loadSync\DataFinalSave\list_data\listStructTrain'
 load signalTable
 
 listStruct = listStructTrain;
@@ -122,7 +125,7 @@ MyPlot.plotSignalsOfListStruct(listStruct, signalTable, range_id, range_signal, 
 clearvars range_id range_signal plotZScore amp;
 
 %% hist
-load listStructAll
+load '.\start_loadSync\DataFinalSave\list_data\listStructAll'
 
 edges = [6:0.3:9.0];
 xlimit = [5,10];

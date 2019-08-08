@@ -1,5 +1,5 @@
 % src data (txt files) transform into struct/arr/list ...
-function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenarioFile, signalFile, sampling_factor, car_type)
+function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans_start(scenarioFile, signalFile, sampling_factor, car_type)
     % 根据 场景和signal 两个txt文件，对原生进行进行预处理。
     % 输出：存储所有场景（行）对应的所有signal（列）
     % sampling_factor = 100 ; % 原始采样频率是100，下采样后是10，上采样为100hz
@@ -20,9 +20,8 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
 
     for i = 1 : height(scenarioTable) % loop over scenarioTable
         % 对应dataSArr 行
-        i = i;
         id = scenarioTable.id(i);
-        fprintf('======================\nid: %d\n', id);
+        fprintf('======================\nid: %.2f\n', id);
         score = scenarioTable.score(i);
         details_cell = scenarioTable.details(i); details= details_cell{1,1};
         t_begin = scenarioTable.t_begin(i); t_begin = t_begin/100; % 一个场景下的，同一个，时间开始
@@ -208,11 +207,13 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans(scenario
          for j = 1: height(signalTable)
             signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
             signal_data = dataS.(fieldname).(signalName);
-            if ~isnan(signal_data(1))
-                continue
-            else
+            
+            if numel(signal_data)==0 || isnan(signal_data(1))
                 % 若是NaN，改造成 长度一致，数值为0
                 dataS.(fieldname).(signalName) = linspace(0, 0, length_target)';
+                
+            else
+                continue
             end
          end
 

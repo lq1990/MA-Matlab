@@ -1,9 +1,9 @@
 id	fieldname	score	t_begin	t_end	details	dir
 1035.12	id1035_gearS12	8.1	1600	1770	Arteon-id35-gearS12	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\35_sync.mat
 1035.23	id1035_gearS23	8.6	2150	2350	Arteon-id35-gearS23	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\35_sync.mat
-1036.12	id1035_gearS12	7.9	575	750	Arteon-id36-gearS12	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\36_sync.mat
-1036.23	id1035_gearS23	8.4	910	1120	Arteon-id36-gearS23	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\36_sync.mat
-1036.34	id1035_gearS34	8.5	1405	1620	Arteon-id36-gearS34	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\36_sync.mat
+1036.12	id1036_gearS12	7.9	575	750	Arteon-id36-gearS12	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\36_sync.mat
+1036.23	id1036_gearS23	8.4	910	1120	Arteon-id36-gearS23	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\36_sync.mat
+1036.34	id1036_gearS34	8.5	1405	1620	Arteon-id36-gearS34	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\36_sync.mat
 1038.12	id1038_gearS12	7.1	3000	3180	Arteon-id38-gearS12	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\38_sync.mat
 1038.23	id1038_gearS23	7.6	3375	3550	Arteon-id38-gearS23	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\38_sync.mat
 1039.12	id1039_gearS12	7.1	4950	5120	Arteon-id39-gearS12	D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_09.04.2018_dry\Syncdaten\39_sync.mat

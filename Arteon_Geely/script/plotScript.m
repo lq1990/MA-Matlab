@@ -1,6 +1,6 @@
 clear; clc; close all;
 
-load D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\149-150_sync.mat
+load D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
 
 %% Arteon
 % close all;

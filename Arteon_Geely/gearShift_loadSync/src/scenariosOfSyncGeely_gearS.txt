@@ -11,9 +11,9 @@ id	fieldname	score	t_begin	t_end	details	dir
 2037.23	id2037_gearS23	8.1	3639	3817	Geely-id37-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\37-47-1_sync.mat
 2037.34	id2037_gearS34	8.0	4041	4197	Geely-id37-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\37-47-1_sync.mat
 2037.45	id2037_gearS45	8.2	4535	4737	Geely-id37-gearS45	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\37-47-1_sync.mat
-2038.12	id2037_gearS12	8.0	2781	2939	Geely-id38-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\38-48_sync.mat
-2038.23	id2037_gearS23	8.1	3023	3177	Geely-id38-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\38-48_sync.mat
-2038.34	id2037_gearS34	7.6	3421	3573	Geely-id38-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\38-48_sync.mat
+2038.12	id2038_gearS12	8.0	2781	2939	Geely-id38-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\38-48_sync.mat
+2038.23	id2038_gearS23	8.1	3023	3177	Geely-id38-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\38-48_sync.mat
+2038.34	id2038_gearS34	7.6	3421	3573	Geely-id38-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\38-48_sync.mat
 2040.12	id2040_gearS12	8.0	3703	3847	Geely-id40-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\40-50_sync.mat
 2040.23	id2040_gearS23	8.2	3851	4059	Geely-id40-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\40-50_sync.mat
 2040.34	id2040_gearS34	7.6	4175	4381	Geely-id40-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\40-50_sync.mat
@@ -30,7 +30,7 @@ id	fieldname	score	t_begin	t_end	details	dir
 2043.34	id2043_gearS34	7.5	2511	2659	Geely-id43-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\43-53_sync.mat
 2045.12	id2045_gearS12	7.6	22410	22560	Geely-id45-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
 2045.23	id2045_gearS23	8.3	22560	22760	Geely-id45-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
-2045.34	id2045_gearS34	8.2	229.5	23160	Geely-id45-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
+2045.34	id2045_gearS34	8.2	22950	23160	Geely-id45-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
 2046.12	id2046_gearS12	7.9	6979	7127	Geely-id46-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\46-36_sync.mat
 2046.23	id2046_gearS23	8.2	7147	7333	Geely-id46-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\46-36_sync.mat
 2046.34	id2046_gearS34	8.2	7463	7655	Geely-id46-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\46-36_sync.mat
@@ -100,4 +100,4 @@ id	fieldname	score	t_begin	t_end	details	dir
 20150.12	id20150_gearS12	7.7	9587	9730	Geely-id150-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\149-150_sync.mat
 20150.23	id20150_gearS23	7.6	9737	9947	Geely-id150-gearS23	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\149-150_sync.mat
 20150.34	id20150_gearS34	7.7	10070	10260	Geely-id150-gearS34	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\149-150_sync.mat
-20150.45	id20150_gearS12	7.5	10870	11060	Geely-id150-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\149-150_sync.mat
+20150.45	id20150_gearS45	7.5	10870	11060	Geely-id150-gearS12	D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_16.05.18_dry_wet\Syncdaten\149-150_sync.mat
