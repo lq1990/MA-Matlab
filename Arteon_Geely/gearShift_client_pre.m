@@ -115,8 +115,9 @@ load '.\common\src\signalTable'
 listStruct = listStructTrain;
 len = length(listStruct);
 
-range_id = [1 : len/10]; % 
-range_signal = [1:17]; % total_signal: 17
+range_id = [ floor(len/10 * 7) : len/10 * 8]; % 
+% range_id = [1];
+range_signal = [1,13]; % total_signal: 17
 plotZScore = 1;
 amp = 10;
 MyPlot.plotSignalsOfListStruct(listStruct, signalTable, range_id, range_signal, plotZScore, {'-', '-'}, amp);
