@@ -8,6 +8,67 @@ classdef MyPredict
     end
     
     methods(Static)
+        function printAllLSTMOneHidden(list_data, Wf, Wi, Wc, Wo, Wy, bf, bi, bc, bo, by, maxScore, minScore, numClasses, title)
+            fprintf('============================== LSTM, 1 hidden layer ================================\n');
+            % use FP to predict score_classes of all scenarios of list_data
+            true_false_list = [];
+            for i = 1 : length(list_data) % loop over each scenarios of Geely
+                id = list_data(i).id;
+                score = list_data(i).score;
+                target_class =MyPredict.score2class(score, maxScore, minScore, numClasses);
+                matData = list_data(i).matDataZScore; % use matDataZScore
+
+                [prob_list, pred_class_list]=MyPredict.predictOneScenarioLSTMOneHidden(matData, Wf, Wi, Wc, Wo, Wy, bf, bi, bc, bo, by );
+                pred_score_list = MyPredict.class2score(pred_class_list, maxScore, minScore, numClasses);
+                
+                if target_class == pred_class_list(1) % 和最大的prob比较
+                    true_false = 'true';
+                    true_false_list = [true_false_list, 1];
+                else
+                    true_false = '---false---';
+                     true_false_list = [true_false_list, 0];
+                end
+                
+                fprintf('id: %g,\t target | [pred1, pred2, pred3], class: %d | [%d, %d, %d], score: %.1f | [%.1f, %.1f, %.1f], prob: [%.2f, %.2f, %.2f], pred1: %s\n',...
+                            id,  target_class, [pred_class_list(1),pred_class_list(2),pred_class_list(3)],...
+                                            score, [pred_score_list(1), pred_score_list(2), pred_score_list(3)],...
+                                                        [prob_list(1), prob_list(2), prob_list(3)],...
+                                                        true_false);
+            end
+            
+            fprintf('%s, accu: %g\n', title, mean(true_false_list));
+        end
+        
+        function [ prob_list, pred_class_list ] = predictOneScenarioLSTMOneHidden(matData, Wf, Wi, Wc, Wo, Wy, bf, bi, bc, bo, by)
+            
+            n_hidden = size(Wi, 2);  
+            hs_ = zeros(1, n_hidden);
+            cs_ = zeros(1, n_hidden);
+           
+           for t = 1 : length(matData)
+               xst = matData(t, :); % (1, n_features)
+               Xt =[hs_, xst]; % (1, n_hidden+n_features)
+
+               h_fst = NeuronPattern.sigmoid(Xt * Wf + bf); % (1, n_h+n_f) * (n_h+h_f, n_h) = (1, n_h)
+               h_ist = NeuronPattern.sigmoid(Xt * Wi + bi);
+               h_ost = NeuronPattern.sigmoid(Xt * Wo + bo);
+               h_cst = tanh(Xt * Wc + bc);
+
+               cst = h_fst .* cs_ + h_ist .* h_cst; % (1,h)
+               hst = h_ost .* tanh(cst); % hst 最终与 output相连, (1,h)
+                % update hs_ cs_
+               hs_ = hst;
+               cs_ = cst;
+
+               if t == length(matData)
+                   yst = hst * Wy + by; % (1,y)
+                   pst = softmax(yst');    
+                   [prob_list, pred_class_list] = MyUtil.findFirstThreeHighValAndIdx(pst);
+
+               end
+            end
+        end
+        
         function printAllOneHidden( list_data, Wxh, Whh, Why, bh, by, maxScore, minScore, numClasses )
             fprintf('================================= one hidden layer ===============================\n');
             % use FP to predict score_classes of all scenarios of list_data
@@ -35,7 +96,7 @@ classdef MyPredict
         end
         
         function printAllTwoHidden( list_data, Wxh1, Wh1h1, Wh1h2, Wh2h2, Wh2y, bh1, bh2, by, maxScore, minScore, numClasses )
-            fprintf('============================== two hidden layers ================================\n');
+            fprintf('============================== RNN two hidden layers ================================\n');
             % use FP to predict score_classes of all scenarios of list_data
             for i = 1 : length(list_data) % loop over each scenarios of Geely
                 id = list_data(i).id;

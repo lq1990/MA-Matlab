@@ -50,7 +50,9 @@ save '.\gearShift_loadSync\DataFinalSave\dataS_SArr\dataSArr_Geely' dataSArr_Gee
 
 %% 2. concat data of Arteon and Geely
 load('.\gearShift_loadSync\DataFinalSave\dataS_SArr\dataS.mat');
+load('.\gearShift_loadSync\DataFinalSave\dataS_SArr\dataSArr.mat');
 load('.\gearShift_loadSync\DataFinalSave\dataS_SArr\dataS_Geely.mat');
+load('.\gearShift_loadSync\DataFinalSave\dataS_SArr\dataSArr_Geely.mat');
 load('.\gearShift_loadSync\src\scenarioTable_Geely');
 load '.\common\src\signalTable.mat'
 
@@ -73,8 +75,12 @@ clearvars fieldname fieldname_cell i idx_scenario dataS dataS_Geely scenarioTabl
 % struct 2 listStruct [{id, score, matData},{},...]
 % list比struct更方便操作。matData每一列对应于 signalTable 而非txt文件。
 
+listStructArteon = SceSigDataTrans.allSce2ListStruct(dataSArr, signalTable);
+listStructGeely = SceSigDataTrans.allSce2ListStruct(dataSArr_Geely, signalTable);
 listStructAll = SceSigDataTrans.allSce2ListStruct(dataStructArrAll, signalTable);
 save '.\gearShift_loadSync\DataFinalSave\list_data\listStructAll' listStructAll
+save '.\gearShift_loadSync\DataFinalSave\list_data\listStructArteon' listStructArteon
+save '.\gearShift_loadSync\DataFinalSave\list_data\listStructGeely' listStructGeely
 
 %% 3. train/CV/test dataset split, listStructAll split. 0.6/0.2/0.2
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructAll'
@@ -117,7 +123,7 @@ len = length(listStruct);
 
 range_id = [ floor(len/10 * 7) : len/10 * 8]; % 
 % range_id = [1];
-range_signal = [1,13]; % total_signal: 17
+range_signal = [1:21]; % total_signal: 21
 plotZScore = 1;
 amp = 10;
 MyPlot.plotSignalsOfListStruct(listStruct, signalTable, range_id, range_signal, plotZScore, {'-', '-'}, amp);
@@ -129,24 +135,13 @@ load '.\gearShift_loadSync\DataFinalSave\list_data\listStructAll'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructTrain'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructCV'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructTest'
-
-len = length(listStructAll);
-
-left = 4.9;
-interval = 0.3;
-right = 9.1;
-classes = (right-left)/interval; % 14 classes
-
-edges = left : interval : right;
-xlimit = [left,right];
-titleStr = strcat('Arteon and Geely, total len: ', num2str(len), ', classes: ', num2str(classes));
-MyPlot.plotHistogram(listStructAll, edges, xlimit, titleStr);
-
-set(gca,'XTick', left : interval : right);
+load '.\gearShift_loadSync\DataFinalSave\list_data\listStructArteon'
+load '.\gearShift_loadSync\DataFinalSave\list_data\listStructGeely'
 
 
-MyPlot.plotHistogram(listStructTrain, edges, xlimit, 'Train dataset');
-% MyPlot.plotHistogram(listStructCV, edges, xlimit, 'CV dataset');
-% MyPlot.plotHistogram(listStructTest, edges, xlimit, 'Test dataset');
+MyPlot.plotHist( listStructAll, 4.9, 0.3, 9.1, 'Arteon and Geely');
+ylim([0, 40]);
 
-clearvars len  left interval right classes edges xlimit titleStr;
+MyPlot.plotHist( listStructArteon, 4.9, 0.3, 9.1, 'Arteon'); ylim([0, 40]);
+MyPlot.plotHist( listStructGeely, 4.9, 0.3, 9.1, 'Geely'); ylim([0, 40]);
+

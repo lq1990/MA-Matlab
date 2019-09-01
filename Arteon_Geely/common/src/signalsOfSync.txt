@@ -19,3 +19,4 @@ BrakePressure	sync_t9	sync_CAN2_ESP_05_ESP_Bremsdruck_t9	bar	8952
 SteerWheelAngle	sync_t53	sync_CAN6_LWI_01_LWI_Lenkradwinkel_t53	Grad	17903
 SteerWheelSpeed	sync_t55	sync_CAN6_LWI_01_LWI_Lenkradw_Geschw_t55	Grad/s	17903
 AccStatus	sync_t57	sync_CAN2_ACC_06_ACC_Status_ACC_t57	-	8952
+isArteon

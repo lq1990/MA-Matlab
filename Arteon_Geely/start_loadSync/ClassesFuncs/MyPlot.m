@@ -247,6 +247,20 @@ classdef MyPlot
             score_min = min(score_list);
         end
         
+        function plotHist( listStruct, left, interval, right, title)
+            len = length(listStruct);
+
+            classes = (right-left)/interval; 
+
+            edges = left : interval : right;
+            xlimit = [left,right];
+            titleStr = strcat(title, ', len: ', num2str(len), ', classes: ', num2str(classes));
+            MyPlot.plotHistogram(listStruct, edges, xlimit, titleStr);
+
+            set(gca,'XTick', left : interval : right);
+
+        end
+        
         function plotHistogram(listStruct, edges, xlimit, titleStr)
             score_list = [];
             for i = 1 : length(listStruct)
@@ -320,6 +334,13 @@ classdef MyPlot
                 
             elseif strcmp(param_str, 'by')
                 data = importfile_by(file); 
+                
+            % lstm 1hidden
+            elseif strcmp(param_str, 'Wi')
+                data = importfile_Wi(file); 
+            elseif strcmp(param_str, 'Wy')
+                data = importfile_Wy(file); 
+            
             end
 
             MyPlot.showMatrix(param_str,data, ifaxisequal, '');

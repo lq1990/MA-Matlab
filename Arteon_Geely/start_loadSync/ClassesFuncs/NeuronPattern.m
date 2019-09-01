@@ -26,7 +26,7 @@ classdef NeuronPattern
 
                 % 外层循环取得每个neuron，一个neuron 对应所有的signals，由多个figure的subplot展示
 
-                numSignals = 17;
+                numSignals = height(signalTable);
                 numFig = ceil(numSignals / (subplotRows * subplotCols)); % num of fig needed
 
                 % generate figureid_list, it saves figure id
@@ -366,7 +366,91 @@ classdef NeuronPattern
            out_negative = mystruct_negative;
         end
 
+        function [out_positive, out_negative] = neuronActTimeInSceLSTM1hidden(listStructTrain, Wf, Wi, Wc, Wo, bf, bi, bc, bo, margin) 
+            % 记录，每个neuron将被何种pattern激活。这个pattern会在不同的场景中出现。
+            % 有两个隐层，分别记录
+            % 用struct存储，每个neuron在不同场景，当value值 >=margin时，记录时间
+            n_hidden = size(Wi, 2);
+            n_features = size(Wi, 1) - n_hidden;
 
+            mystruct_positive = struct;
+            mystruct_negative = struct;
+
+            % init mystruct
+             for jj = 1 : length(listStructTrain)
+               % 遍历每个场景
+               id = listStructTrain(jj).id;
+
+               % 考虑到 id有小数的情况, 将 . 用 _ 替代
+               id_str = strrep(num2str(id), '.', '_');
+
+               for ii = 1 : n_hidden
+                   mystruct_positive.(['neuron', num2str(ii)]).(['id', id_str]) = [];
+                   mystruct_negative.(['neuron', num2str(ii)]).(['id', id_str]) = [];
+               end
+             end
+
+           % --------------- forward_lstm -----------
+           % lstm中默认行向量
+           for j = 1 : length(listStructTrain)
+               % 遍历每个场景
+               id = listStructTrain(j).id; 
+               id_str = strrep(num2str(id), '.', '_'); % replace . with _
+               matData = listStructTrain(j).matDataZScore; % train 的是zscore，所以此处也用
+               fprintf('idx: %d, id: %g\n', j, id);
+
+               hs_ = zeros(1, n_hidden);
+               cs_ = zeros(1, n_hidden);
+
+               for t = 1 : length(matData)
+                   % 遍历matData每行。t时刻的 H(i)若很大的话，t 将被记录下来
+                   % 前传，找到 最大(>=margin) 激活当前神经元的时刻
+                   xst = matData(t, :); % (1, n_features)
+                   Xt =[hs_, xst]; % (1, n_hidden+n_features)
+                   
+                   h_fst = NeuronPattern.sigmoid(Xt * Wf + bf); % (1, n_h+n_f) * (n_h+h_f, n_h) = (1, n_h)
+                   h_ist = NeuronPattern.sigmoid(Xt * Wi + bi);
+                   h_ost = NeuronPattern.sigmoid(Xt * Wo + bo);
+                   h_cst = tanh(Xt * Wc + bc);
+                   
+                   cst = h_fst .* cs_ + h_ist .* h_cst; % (1,h)
+                   hst = h_ost .* tanh(cst); % hst 最终与 output相连, (1,h)
+                   
+                   hs_ = hst;
+                   cs_ = cst;
+
+                   for i = 1 :  n_hidden
+                       % 遍历每个 hidden1 neuron
+                       % 取到当前neuron对应的行的值
+                       neuronRowVal = hst(i);
+                       if abs(neuronRowVal) >= margin % +/-
+                           % t 保存
+                            if neuronRowVal > 0
+                                % positive activate at the moment in the scenario of id
+                                mystruct_positive.(['neuron', num2str(i)]).(['id', id_str]) = [ mystruct_positive.(['neuron', num2str(i)]).(['id', id_str]), t ];
+                            else
+                                % negative activate
+                                mystruct_negative.(['neuron', num2str(i)]).(['id', id_str]) = [ mystruct_negative.(['neuron', num2str(i)]).(['id', id_str]), t ];
+                            end
+                       end
+
+                   end
+                   
+                   
+
+               end
+
+           end
+
+           fprintf('--- over --- \n');
+           out_positive = mystruct_positive;
+           out_negative = mystruct_negative;
+            
+        end
+        
+        function out = sigmoid(inp)
+            out = 1 ./ (1 + exp(-inp));
+        end
         
     end
     

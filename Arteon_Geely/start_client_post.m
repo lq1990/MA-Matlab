@@ -6,6 +6,7 @@
 clear; close all; clc;
 
 addpath(genpath(pwd));
+rmpath(genpath(strcat(pwd, '\script\')));
 
 % select params
 rmpath([pwd, '/ModelParamsFromC++/oneHidden/DownSampling10hz, n_h 50, classes 5, alpha 0.1, epoches 501, Adagrad, loss 0.01, accu 1']);
