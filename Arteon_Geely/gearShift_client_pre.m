@@ -138,10 +138,13 @@ load '.\gearShift_loadSync\DataFinalSave\list_data\listStructTest'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructArteon'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructGeely'
 
+minScore = 4.9;
+maxScore = 9.4;
+inter = 0.3;
 
-MyPlot.plotHist( listStructAll, 4.9, 0.3, 9.1, 'Arteon and Geely');
+MyPlot.plotHist( listStructAll, minScore, 0.3, maxScore, 'Arteon and Geely');
 ylim([0, 40]);
 
-MyPlot.plotHist( listStructArteon, 4.9, 0.3, 9.1, 'Arteon'); ylim([0, 40]);
-MyPlot.plotHist( listStructGeely, 4.9, 0.3, 9.1, 'Geely'); ylim([0, 40]);
+MyPlot.plotHist( listStructArteon, minScore, 0.3, maxScore, 'Arteon'); ylim([0, 40]);
+MyPlot.plotHist( listStructGeely, minScore, 0.3, maxScore, 'Geely'); ylim([0, 40]);
 

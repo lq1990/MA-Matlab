@@ -3,6 +3,8 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans_start(sc
     % 根据 场景和signal 两个txt文件，对原生进行进行预处理。
     % 输出：存储所有场景（行）对应的所有signal（列）
     % sampling_factor = 100 ; % 原始采样频率是100，下采样后是10，上采样为100hz
+    
+    % example
 
     t0 = clock; % 统计运行时间
     %% txt to table

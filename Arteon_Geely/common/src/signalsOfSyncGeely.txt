@@ -19,4 +19,3 @@ BrakePressure	sync_t50	sync_ESP_Mcylinder_Pressure_t50	bar	86319
 SteerWheelAngle	sync_t51	sync_SAS_SteerWheelAngle_t51	Grad	172629
 SteerWheelSpeed	sync_t52	sync_SAS_SteerWheelRotSpd_t52	Grad/s	172629
 AccStatus	sync_t53	sync_EMS_CruiseControlSts_t53	-	172638
-isArteon
