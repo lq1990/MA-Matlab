@@ -100,7 +100,7 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans_start(sc
                 % 按照场景时间，找到val中 idx起止裁剪.
             % 单个场景中虽然 t_begin t_end一样，但由于不同signal采样频率不同，使idx就略有不同。
             % 通过不同signal的sync_t找到 t_begin对应的idx_t_begin，往后延一些算出 idx_t_end。可保证signal数据准确
-                [idx_t_begin, idx_t_end] = asignal.findIdxTT(t_begin, t_end, factor, sampling_factor);
+                [idx_t_begin, idx_t_end] = asignal.findIdxTT(t_begin, t_end, factor, sampling_factor); % 每个信号单独找自己的index 是准确的，相比于所有信号通用index。
 
     %             disp(signalName);
     %             fprintf('length(asignal_alldata): %d \n',length(asignal_alldata));

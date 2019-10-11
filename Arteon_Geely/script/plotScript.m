@@ -1,10 +1,13 @@
+% 确定场景起止点。对于换挡场景而言，使用 shalt ablauf, target gear
+
+
 clear; clc; close all;
 
-load D:\MA\Daten\Messdaten\Messdaten_Arteon\Testdaten_13.02.18_dry\Syncdaten\356-357-358-374-375-376392-393-394_sync.mat
+load D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_10.08.18_dry\Syncdaten\66_sync.mat
 
 
 %% car
-car = 1; % 1: Arteon
+car = 2; % 1: Arteon
 
 if car == 1
     % Arteon

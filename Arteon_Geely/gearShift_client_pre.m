@@ -84,7 +84,7 @@ save '.\gearShift_loadSync\DataFinalSave\list_data\listStructGeely' listStructGe
 
 %% 3. train/CV/test dataset split, listStructAll split. 0.6/0.2/0.2
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructAll'
-listStructAll_shuffle = MyUtil.shuffleListStruct(listStructAll, 1); % rand('seed', seed); ¥Ú¬“À≥–Ú
+listStructAll_shuffle = MyUtil.shuffleListStruct(listStructAll, 6); % rand('seed', seed); ¥Ú¬“À≥–Ú
 
 len = length(listStructAll);
 % 6/2/2
@@ -121,7 +121,7 @@ load '.\common\src\signalTable'
 listStruct = listStructTrain;
 len = length(listStruct);
 
-range_id = [ floor(len/10 * 7) : len/10 * 8]; % 
+range_id = [ floor(len/10 * 7.5) : len/10 * 8]; % 
 % range_id = [1];
 range_signal = [1:21]; % total_signal: 21
 plotZScore = 1;
@@ -139,12 +139,17 @@ load '.\gearShift_loadSync\DataFinalSave\list_data\listStructArteon'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructGeely'
 
 minScore = 4.9;
-maxScore = 9.4;
-inter = 0.3;
+maxScore = 9.5;
+inter = 0.5;
 
-MyPlot.plotHist( listStructAll, minScore, 0.3, maxScore, 'Arteon and Geely');
+MyPlot.plotHist( listStructAll, minScore, inter, maxScore, 'Arteon and Geely');
 ylim([0, 40]);
 
-MyPlot.plotHist( listStructArteon, minScore, 0.3, maxScore, 'Arteon'); ylim([0, 40]);
-MyPlot.plotHist( listStructGeely, minScore, 0.3, maxScore, 'Geely'); ylim([0, 40]);
+MyPlot.plotHist( listStructArteon, minScore, inter, maxScore, 'Arteon'); ylim([0, 40]);
+MyPlot.plotHist( listStructGeely, minScore, inter, maxScore, 'Geely'); ylim([0, 40]);
+
+% training/validation/test dataset
+MyPlot.plotHist( listStructTrain, minScore, inter, maxScore, 'Training dataset hist');
+MyPlot.plotHist( listStructCV, minScore, inter, maxScore, 'Validation dataset hist');
+MyPlot.plotHist( listStructTest, minScore, inter, maxScore, 'Test dataset hist');
 
