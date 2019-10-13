@@ -3,7 +3,7 @@
 
 clear; clc; close all;
 
-load D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_10.08.18_dry\Syncdaten\66_sync.mat
+load D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_15.06.18_dry\Syncdaten\431-432-433-434437-438-439-440_sync.mat
 
 
 %% car
@@ -17,7 +17,7 @@ if car == 1
     plot(sync_t5, sync_CAN2_Motor_12_MO_Drehzahl_01_t5); % EngineSpeed
     hold on; grid on;
     plot(sync_t2, sync_CAN2_Getriebe_11_GE_Schaltablauf_t2* 500); % ShiftProcess
-    plot(sync_t3, sync_CAN2_Getriebe_11_GE_Zielgang_t3*100, 'k', 'LineWidth', 2); % TargetGear
+    plot(sync_t3, sync_CAN2_Getriebe_11_GE_Zielgang_t3*1000, 'k', 'LineWidth', 2); % TargetGear
 
     title('Arteon');
     legend('n motor', 'schaltablauf', 'targetGear');
