@@ -14,6 +14,8 @@ DrivingProgram	sync_t45	sync_CAN2_Getriebe_17_GE_Fahrprogramm_t45	-	1790
 CurrentGear	sync_t46	sync_CAN2_Motor_04_MO_Istgang_t46	-	8953
 TargetGear	sync_t3	sync_CAN2_Getriebe_11_GE_Zielgang_t3	-	3581
 EngineIntervention	sync_t48	sync_CAN2_Getriebe_11_GE_MMom_Soll_02_t48	Nm	3581
+ShiftProcess	sync_t2	sync_CAN2_Getriebe_11_GE_Schaltablauf_t2	0/1	3581
+ShiftInProgress
 BrakePressure	sync_t9	sync_CAN2_ESP_05_ESP_Bremsdruck_t9	bar	8952
 SteerWheelAngle	sync_t53	sync_CAN6_LWI_01_LWI_Lenkradwinkel_t53	Grad	17903
 SteerWheelSpeed	sync_t55	sync_CAN6_LWI_01_LWI_Lenkradw_Geschw_t55	Grad/s	17903

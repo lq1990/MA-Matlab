@@ -218,65 +218,66 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans_gearS(sc
     disp('--------------- composite TransmInpSpeed over -----------------');
     
     %% 给所有的场景加入一个 feature：isArteon
-    for i = 1 : height(scenarioTable)
-        fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
-        es = dataS.(fieldname).EngineSpeed;
-        length_target = length(es); % 目标长度
-         
-        dataS.(fieldname).isArteon = linspace(0, 0, length_target)';
-        
-        if str2num( fieldname(3)) == 1
-            % fieldname of Arteon = 'id10xx'
-            dataS.(fieldname).isArteon = linspace(1, 1, length_target)';
-        end
-        
-    end
-    
-    out_dataS = dataS;
-    
-    
-     disp('--------------- add feature: isArteon,  over -----------------');
+%     for i = 1 : height(scenarioTable)
+%         fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+%         es = dataS.(fieldname).EngineSpeed;
+%         length_target = length(es); % 目标长度
+%          
+%         dataS.(fieldname).isArteon = linspace(0, 0, length_target)';
+%         
+%         if str2num( fieldname(3)) == 1
+%             % fieldname of Arteon = 'id10xx'
+%             dataS.(fieldname).isArteon = linspace(1, 1, length_target)';
+%         end
+%         
+%     end
+%     
+%     out_dataS = dataS;
+%     
+%     
+%      disp('--------------- add feature: isArteon,  over -----------------');
     
     %% 两种车，都把 TransmInpSpeedOdd/Even and CurrentGear 去掉，同时把 signalTable.mat中 Odd/Even and CurrentGear去掉
     
-%     out_dataS = struct;
-%     out_scenarioTable = scenarioTable;
-%     
-%     % out_dataS
-%     for i = 1 : height(scenarioTable)
-%         fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
-% 
-%         out_dataS.(fieldname).id = dataS.(fieldname).id;
-%         out_dataS.(fieldname).fieldname = dataS.(fieldname).fieldname;
-%         out_dataS.(fieldname).score = dataS.(fieldname).score;
-%         out_dataS.(fieldname).details = dataS.(fieldname).details;
-%          
-%         for j = 1: height(signalTable)
-%             signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
-% 
-%             if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear' )
-%                 continue
-%             end
-%             
-%             out_dataS.(fieldname).(signalName) = dataS.(fieldname).(signalName);
-%             
-%          end
-%     end
-%     
-%     % out_signalTable
-%     tmp = []; % 存储要保留的行
-%     for j = 1: height(signalTable)
-%             signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
-%             if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear')
-%                 continue
-%             end
-%             tmp = [tmp, j];
-%     end
-%     out_signalTable = signalTable(tmp, :);
-% 
-%     disp('--------------- remove Odd/Even and CurrentGear of dataS & signalTable   over -----------------');
+    out_dataS = struct;
+    out_scenarioTable = scenarioTable;
+    
+    % out_dataS
+    for i = 1 : height(scenarioTable)
+        fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+
+        out_dataS.(fieldname).id = dataS.(fieldname).id;
+        out_dataS.(fieldname).fieldname = dataS.(fieldname).fieldname;
+        out_dataS.(fieldname).score = dataS.(fieldname).score;
+        out_dataS.(fieldname).details = dataS.(fieldname).details;
+         
+        for j = 1: height(signalTable)
+            signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+
+            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear' )
+                continue
+            end
+            
+            out_dataS.(fieldname).(signalName) = dataS.(fieldname).(signalName);
+            
+         end
+    end
+    
+    % out_signalTable
+    tmp = []; % 存储要保留的行
+    for j = 1: height(signalTable)
+            signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear')
+                continue
+            end
+            tmp = [tmp, j];
+    end
+    out_signalTable = signalTable(tmp, :);
+
+    disp('--------------- remove Odd/Even and CurrentGear of dataS & signalTable   over -----------------');
     
     %% ShiftProcess of Arteon -> ShiftInProgress
+    % 由于两车不一致，即使把Arteon的强行修改为0/1, 也不精确。干脆不用此信号，不用反而对结果影响小。
     
 %     if strcmp(car_type, 'Arteon')
 %         

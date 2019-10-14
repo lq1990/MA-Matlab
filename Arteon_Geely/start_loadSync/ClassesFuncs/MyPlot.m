@@ -336,10 +336,27 @@ classdef MyPlot
                 data = importfile_by(file); 
                 
             % lstm 1hidden
-            elseif strcmp(param_str, 'Wi')
-                data = importfile_Wi(file); 
-            elseif strcmp(param_str, 'Wy')
-                data = importfile_Wy(file); 
+            elseif strcmp(param_str, 'Wi1')
+                data = importfile_Wi1(file); 
+            elseif strcmp(param_str, 'Wo1')
+                data = importfile_Wo1(file); 
+            elseif strcmp(param_str, 'Whh1')
+                data = importfile_Whh1(file); 
+            elseif strcmp(param_str, 'Wc1')
+                data = importfile_Wc1(file); 
+            elseif strcmp(param_str, 'Wf1')
+                data = importfile_Wf1(file); 
+                
+            elseif strcmp(param_str, 'bi1')
+                data = importfile_bi1(file); 
+            elseif strcmp(param_str, 'bo1')
+                data = importfile_bo1(file); 
+            elseif strcmp(param_str, 'bhh1')
+                data = importfile_bhh1(file); 
+            elseif strcmp(param_str, 'bc1')
+                data = importfile_bc1(file); 
+            elseif strcmp(param_str, 'bf1')
+                data = importfile_bf1(file); 
             
             end
 

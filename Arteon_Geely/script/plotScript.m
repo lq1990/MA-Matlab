@@ -3,7 +3,7 @@
 
 clear; clc; close all;
 
-load D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_15.06.18_dry\Syncdaten\431-432-433-434437-438-439-440_sync.mat
+load D:\MA\Daten\Messdaten\Messdaten_Geely\Messdaten_29.08.18_dry\Syncdaten\45-35_sync.mat
 
 
 %% car

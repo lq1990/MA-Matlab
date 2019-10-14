@@ -250,63 +250,67 @@ function [out_dataS, out_scenarioTable, out_signalTable] = srcDataTrans_start(sc
     disp('--------------- composite TransmInpSpeed over -----------------');
     
     %% 两种车，都把 TransmInpSpeedOdd/Even and CurrentGear 去掉，同时把 signalTable.mat中 Odd/Even and CurrentGear去掉
-    out_dataS = struct;
+    out_dataS = dataS;
     out_scenarioTable = scenarioTable;
     
-    % out_dataS
-    for i = 1 : height(scenarioTable)
-        fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
-
-        out_dataS.(fieldname).id = dataS.(fieldname).id;
-        out_dataS.(fieldname).fieldname = dataS.(fieldname).fieldname;
-        out_dataS.(fieldname).score = dataS.(fieldname).score;
-        out_dataS.(fieldname).details = dataS.(fieldname).details;
-         
-        for j = 1: height(signalTable)
-            signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
-
-            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear' )
-                continue
-            end
-            
-            out_dataS.(fieldname).(signalName) = dataS.(fieldname).(signalName);
-            
-         end
-    end
     
-    % out_signalTable
-    tmp = []; % 存储要保留的行
-    for j = 1: height(signalTable)
-            signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
-            if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear')
-                continue
-            end
-            tmp = [tmp, j];
-    end
-    out_signalTable = signalTable(tmp, :);
-
-    disp('--------------- remove Odd/Even and CurrentGear of dataS & signalTable   over -----------------');
+%     out_dataS = struct;
+%     out_scenarioTable = scenarioTable;
+%     % out_dataS
+%     for i = 1 : height(scenarioTable)
+%         fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+% 
+%         out_dataS.(fieldname).id = dataS.(fieldname).id;
+%         out_dataS.(fieldname).fieldname = dataS.(fieldname).fieldname;
+%         out_dataS.(fieldname).score = dataS.(fieldname).score;
+%         out_dataS.(fieldname).details = dataS.(fieldname).details;
+%          
+%         for j = 1: height(signalTable)
+%             signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+% 
+%             if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear' )
+%                 continue
+%             end
+%             
+%             out_dataS.(fieldname).(signalName) = dataS.(fieldname).(signalName);
+%             
+%          end
+%     end
+%     
+%     % out_signalTable
+%     tmp = []; % 存储要保留的行
+%     for j = 1: height(signalTable)
+%             signalName_cell = signalTable.signalName(j); signalName = signalName_cell{1,1};
+%             if strcmp(signalName, 'TransmInpSpeedOdd') || strcmp(signalName, 'TransmInpSpeedEven') || strcmp(signalName, 'CurrentGear')
+%                 continue
+%             end
+%             tmp = [tmp, j];
+%     end
+%     out_signalTable = signalTable(tmp, :);
+% 
+%     disp('--------------- remove Odd/Even and CurrentGear of dataS & signalTable   over -----------------');
     
     %% ShiftProcess of Arteon -> ShiftInProgress
-    if strcmp(car_type, 'Arteon')
-        
-        for i = 1 : height(scenarioTable)
-             fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
-             old = out_dataS.(fieldname).ShiftInProgress;
-             
-             for j = 1 : length(old)
-                 if old(j) > 0
-                     out_dataS.(fieldname).ShiftInProgress(j) = 1;
-                 else
-                     out_dataS.(fieldname).ShiftInProgress(j) = 0;
-                 end
-             end
-             
-        end
-        
-    end
     
-    disp('--------------- ShiftProcess -> ShiftInProgress   over -----------------');
-    fprintf('time needed: %.1f s\n', etime(clock, t0));
+%     if strcmp(car_type, 'Arteon')
+%         
+%         for i = 1 : height(scenarioTable)
+%              fieldname_cell = scenarioTable.fieldname(i); fieldname = fieldname_cell{1,1};
+%              old = out_dataS.(fieldname).ShiftInProgress;
+%              
+%              for j = 1 : length(old)
+%                  if old(j) > 0
+%                      out_dataS.(fieldname).ShiftInProgress(j) = 1;
+%                  else
+%                      out_dataS.(fieldname).ShiftInProgress(j) = 0;
+%                  end
+%              end
+%              
+%         end
+%         
+%     end
+%     
+%     disp('--------------- ShiftProcess -> ShiftInProgress   over -----------------');
+%     fprintf('time needed: %.1f s\n', etime(clock, t0));
 
 end

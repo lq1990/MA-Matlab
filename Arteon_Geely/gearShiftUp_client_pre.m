@@ -121,7 +121,7 @@ load '.\common\src\signalTable'
 listStruct = listStructTrain;
 len = length(listStruct);
 
-range_id = [ floor(len/10 * 7) : len/10 * 8]; % 
+range_id = [ floor(len/10 * 7.5) : len/10 * 8]; % 
 % range_id = [1];
 range_signal = [1:21]; % total_signal: 21
 plotZScore = 1;
@@ -138,13 +138,19 @@ load '.\gearShiftUp_loadSync\DataFinalSave\list_data\listStructTest'
 load '.\gearShiftUp_loadSync\DataFinalSave\list_data\listStructArteon'
 load '.\gearShiftUp_loadSync\DataFinalSave\list_data\listStructGeely'
 
-minScore = 4.9;
-maxScore = 9.4;
-inter = 0.3;
+minScore = 4;
+maxScore = 10;
+inter = 1;
 
-MyPlot.plotHist( listStructAll, minScore, 0.3, maxScore, 'Arteon and Geely');
+MyPlot.plotHist( listStructAll, minScore, inter, maxScore, 'Arteon and Geely');
 ylim([0, 40]);
 
-MyPlot.plotHist( listStructArteon, minScore, 0.3, maxScore, 'Arteon'); ylim([0, 40]);
-MyPlot.plotHist( listStructGeely, minScore, 0.3, maxScore, 'Geely'); ylim([0, 40]);
+MyPlot.plotHist( listStructArteon, minScore, inter, maxScore, 'Arteon'); ylim([0, 40]);
+MyPlot.plotHist( listStructGeely, minScore, inter, maxScore, 'Geely'); ylim([0, 40]);
+
+% training/validation/test dataset
+MyPlot.plotHist( listStructTrain, minScore, inter, maxScore, 'Training dataset hist');
+MyPlot.plotHist( listStructCV, minScore, inter, maxScore, 'Validation dataset hist');
+MyPlot.plotHist( listStructTest, minScore, inter, maxScore, 'Test dataset hist');
+
 
