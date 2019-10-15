@@ -17,6 +17,8 @@ clc; close all; clear;
 
 addpath(genpath(pwd));
 rmpath(genpath(strcat(pwd, '\script\')));
+rmpath(genpath(strcat(pwd, '\gearShiftUp_loadSync\')));
+rmpath(genpath(strcat(pwd, '\gearShiftDown_loadSync\')));
 
 %% 1.1 Arteon, txt 2 struct
 % 数据被过滤，下采样，按照场景时间做clip
@@ -138,9 +140,9 @@ load '.\gearShift_loadSync\DataFinalSave\list_data\listStructTest'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructArteon'
 load '.\gearShift_loadSync\DataFinalSave\list_data\listStructGeely'
 
-minScore = 4.9;
-maxScore = 9.5;
-inter = 0.5;
+minScore = 4;
+maxScore = 10;
+inter = 1.2;
 
 MyPlot.plotHist( listStructAll, minScore, inter, maxScore, 'Arteon and Geely');
 ylim([0, 40]);

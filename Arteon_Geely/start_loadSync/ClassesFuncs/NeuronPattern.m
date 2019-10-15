@@ -65,7 +65,7 @@ classdef NeuronPattern
                         % loop over each signal
                         figureID = figureid_list( ceil(i_signal/(subplotRows * subplotCols)) );
                         subplotID = [subplotRows, subplotCols, mod(i_signal - 1, (subplotRows*subplotCols))+1];
-                        item_matData = listStructTrain(j).matData(:, i_signal);
+                        item_matData = listStructTrain(j).matData(:, i_signal); % matData not matDataZScore
                         signalName = signalTable.signalName(i_signal);
                         if i_signal==1
                             % legend_cell 在这个for内部 只更新一次。避免受for影响。
@@ -96,6 +96,11 @@ classdef NeuronPattern
 
             plot(item_matData,'-', 'LineWidth', (item_score-score_min)/(score_max-score_min+1e-8) * amp+0.5); 
             grid on; hold on;
+            xlabel('time step');
+            ylabel('value');
+            set(gca, 'FontSize', 10);
+            set(gca,'fontweight','bold');
+            
             if ifShowLegend==1 % 只有要show legend的那个figure才有必要存储legend_cell
                 legend_cell = [legend_cell, ['score: ', num2str(item_score), ', ', item_details]];
             end
