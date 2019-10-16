@@ -19,6 +19,7 @@ addpath(genpath(pwd));
 rmpath(genpath(strcat(pwd, '\script\')));
 rmpath(genpath(strcat(pwd, '\gearShiftUp_loadSync\')));
 rmpath(genpath(strcat(pwd, '\gearShiftDown_loadSync\')));
+rmpath(genpath(strcat(pwd, '\gearShift_loadSync - Copy\')));
 
 %% 1.1 Arteon, txt 2 struct
 % 数据被过滤，下采样，按照场景时间做clip
@@ -147,8 +148,8 @@ inter = 1.2;
 MyPlot.plotHist( listStructAll, minScore, inter, maxScore, 'Arteon and Geely');
 ylim([0, 40]);
 
-MyPlot.plotHist( listStructArteon, minScore, inter, maxScore, 'Arteon'); ylim([0, 40]);
-MyPlot.plotHist( listStructGeely, minScore, inter, maxScore, 'Geely'); ylim([0, 40]);
+% MyPlot.plotHist( listStructArteon, minScore, inter, maxScore, 'Arteon'); ylim([0, 40]);
+% MyPlot.plotHist( listStructGeely, minScore, inter, maxScore, 'Geely'); ylim([0, 40]);
 
 % training/validation/test dataset
 MyPlot.plotHist( listStructTrain, minScore, inter, maxScore, 'Training dataset hist');

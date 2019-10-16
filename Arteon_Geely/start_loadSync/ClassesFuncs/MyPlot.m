@@ -415,6 +415,7 @@ classdef MyPlot
             title([titleStr, ' ', param_str, ' maxVal: ', num2str(val_max), ', minVal: ', num2str(val_min), ', red: +, blue: - ']);
             grid on;
             set(gca, 'YTick', 0:2:n_rows);
+            set(gca, 'XTick', 0:1:n_cols);
             axis ij
             if ifaxisequal == 1
                 axis equal

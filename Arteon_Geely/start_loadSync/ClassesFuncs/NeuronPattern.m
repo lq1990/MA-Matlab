@@ -98,7 +98,7 @@ classdef NeuronPattern
             grid on; hold on;
             xlabel('time step');
             ylabel('value');
-            set(gca, 'FontSize', 10);
+            set(gca, 'FontSize', 20);
             set(gca,'fontweight','bold');
             
             if ifShowLegend==1 % 只有要show legend的那个figure才有必要存储legend_cell
