@@ -92,7 +92,7 @@ bc = importfile_bc1('bc1.txt');
 bo = importfile_bo1('bo1.txt');
 by = importfile_bhh1('bhh1.txt');
 
-margin = 0.45 ; % 'max.' excite the neuron
+margin = 0.6 ; % 'max.' excite the neuron
 
 % train dataset
 [neuronPatternS_lstm_positive, neuronPatternS_lstm_negative ]= NeuronPattern.neuronActTimeInSceLSTM1hidden(listStructTrain, Wf, Wi, Wc, Wo, bf, bi, bc, bo, margin);
@@ -121,8 +121,8 @@ load('common\src\signalTable.mat');
 load '.\gearShift_loadSync\DataFinalSave\neuronPattern\neuronPatternSArr_lstm_positive'
 
 listStruct = listStructTrain;
-range_neurons = [ 25 ]; %
-range_id = [14, 34:42]; % total train
+range_neurons = [ 7 ]; %
+range_id = [ 21 : 26, 28:31 ]; % total train
 subplotRows = 1; % subplot(subplotRows, subplotCols, ?)
 subplotCols = 1;
 
@@ -130,16 +130,17 @@ NeuronPattern.plotNeuronPatternRawSignals( listStruct, neuronPatternSArr_lstm_po
 
 
 %% plot neuron : pattern (part of scenarios), LSTM, train, negative
+close all;
 
 load('gearShift_loadSync\DataFinalSave\list_data\listStructTrain.mat');
 load('common\src\signalTable.mat');
 load '.\gearShift_loadSync\DataFinalSave\neuronPattern\neuronPatternSArr_lstm_negative.mat'
 
 listStruct = listStructTrain;
-range_neurons = [ 28, 38 ]; % 28+, 38-
-range_id = [1:22]; % total trian 22 
-subplotRows = 2; % subplot(subplotRows, subplotCols, ?)
-subplotCols = 2;
+range_neurons = [ 46 ]; % negative 36 -> class 1
+range_id = [ 1:10 ]; % total trian 22 
+subplotRows = 1; % subplot(subplotRows, subplotCols, ?)
+subplotCols = 1;
 
 NeuronPattern.plotNeuronPatternRawSignals( listStruct, neuronPatternSArr_lstm_negative, signalTable, range_neurons, range_id, subplotRows, subplotCols );
 
